@@ -19,6 +19,15 @@ body {
   margin: 1rem 3rem;
 }
 
+div.closing {
+  padding-bottom: 3rem;
+}
+
+header img {
+  max-width: 100%;
+  height: auto;
+}
+
 .from {
   grid-area: from;
 }

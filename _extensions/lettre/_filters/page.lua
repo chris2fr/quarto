@@ -1,6 +1,36 @@
 -- Stores rendered header/footer content to inject into metadata
 local extracted = {}
 
+-- For LaTeX, a standalone image paragraph inside \fancyhead/\fancyfoot causes
+-- "Float(s) lost" because figure environments are floats. Replace them with a
+-- plain \includegraphics so the image renders inline inside the header/footer box.
+local function replace_images_for_latex(blocks)
+  local result = {}
+  for _, block in ipairs(blocks) do
+    local img = nil
+    if (block.t == 'Para' or block.t == 'Plain') and
+       #block.content == 1 and block.content[1].t == 'Image' then
+      img = block.content[1]
+    elseif block.t == 'Figure' and block.content and #block.content == 1 then
+      -- pandoc 3.x wraps standalone images in a Figure AST node
+      local inner = block.content[1]
+      if (inner.t == 'Plain' or inner.t == 'Para') and
+         inner.content and #inner.content == 1 and
+         inner.content[1].t == 'Image' then
+        img = inner.content[1]
+      end
+    end
+    if img then
+      local latex = '\\includegraphics[keepaspectratio,max width=\\linewidth]{'
+                    .. img.src .. '}'
+      table.insert(result, pandoc.RawBlock('latex', latex))
+    else
+      table.insert(result, block)
+    end
+  end
+  return result
+end
+
 -- Intercept ::: header ::: and ::: footer ::: divs.
 -- Each matching div is rendered to the current output format and stored as
 -- `page-header` / `page-footer` metadata, then removed from the document body.
@@ -12,8 +42,10 @@ function Div(el)
       local fmt = FORMAT:match('html') and 'html'
                or FORMAT:match('markdown') and 'markdown'
                or FORMAT
+      local content = (fmt == 'latex') and replace_images_for_latex(el.content)
+                                        or el.content
       -- Render the div's content and strip the trailing newline pandoc adds
-      local rendered = pandoc.write(pandoc.Pandoc(el.content), fmt):gsub('\n$', '')
+      local rendered = pandoc.write(pandoc.Pandoc(content), fmt):gsub('\n$', '')
       -- Wrap in MetaBlocks so templates receive a block-level value.
       -- Skip empty renders so $if(page-header)$ stays false when the div has no content.
       if rendered ~= '' then
