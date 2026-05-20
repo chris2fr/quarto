@@ -1,0 +1,68 @@
+---
+title: Objet de la lettre
+author: Prénom Nom
+# ref: ref-YYYY-MM-DD
+date: today
+lang: fr
+place: Paris
+format:
+  compte-rendu-html: 
+    output-file: compte-rendu.html
+  compte-rendu-pdf: 
+    output-file: compte-rendu.pdf
+  compte-rendu-typst: 
+    output-file: compte-rendu-typst.pdf
+  compte-rendu-docx: 
+    output-file: compte-rendu.docx
+  compte-rendu-odt: 
+    output-file: compte-rendu.odt
+  compte-rendu-md: 
+    output-file: compte-rendu.md
+  compte-rendu-plain: 
+    output-file: compte-rendu.txt
+---
+
+::: header
+![**Les Grands Voisins** --- Association d'intérêt général](logo-lesgrandsvoisins-900-150-white.png)
+:::
+
+::: participants
+- Participant 1
+- Participant 2
+:::
+
+::: agenda
+1. Point 1
+2. Point 2
+:::
+
+::: decisions
+- Décision 1
+- Décision 2
+:::
+
+::: actions
+- Action 1
+- Action 2
+:::
+
+::: next-meeting
+- Date de la prochaine réunion
+:::
+
+::: approval
+Compte-rende en attente d'approbation.
+:::
+
+::: body
+
+# Notes de réunion
+
+Notes de la réunion.
+:::
+
+::: footer
+[+33 7 81 81 18 11](tel:+33781811811) --- [chris@lesgrandsvoisins.com](mailto:chris@lesgrandsvoisins.com)
+Siège : chez C. LHOMME - 146 bd de Montparnasse 75014 PARIS
+Association d'intérêt général de loi 1901 RNA W751240710 SIREN 832760102
+:::

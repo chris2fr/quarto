@@ -9,7 +9,8 @@ bibliography: biblio.bib
 format:
   lettre-html: default
   lettre-pdf: default
-  lettre-typst: default
+  lettre-typst: 
+    output-file: lettre-typst.pdf
   lettre-docx: default
   lettre-odt: default
   lettre-md: default
@@ -17,7 +18,7 @@ format:
 ---
 
 ::: header
-![**Les Grands Voisins** --- Association d'intérêt général](logo-lesgrandsvoisins-600-72.png)
+![**Les Grands Voisins** --- Association d'intérêt général](logo-lesgrandsvoisins-900-150-white.png)
 :::
 
 ::: from

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="$lang$">
+
+<head>
+  <meta charset="utf-8">
+  <title>$title$</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  $for(css)$
+  <link rel="stylesheet" href="$css$">
+  $endfor$
+</head>
+
+<body>
+  $if(page-header)$
+  <header class="page-header">$page-header$</header>
+  $endif$
+
+  <div class="compte-rendu">
+    <div class="cr-title-block">
+      $if(organization)$<p class="cr-organization">$organization$</p>$endif$
+      <h1 class="cr-title">$title$</h1>
+      <p class="cr-meta">
+        $date$$if(place)$ &mdash; $place$$endif$
+      </p>
+      $if(ref)$<p class="cr-ref">Réf.&nbsp;: $ref$</p>$endif$
+    </div>
+
+    $body$
+  </div>
+
+  $if(page-footer)$
+  <footer class="page-footer">$page-footer$</footer>
+  $endif$
+</body>
+
+</html>

@@ -6,13 +6,34 @@ date: today
 lang: fr
 place: Paris
 format:
-  lettre-html: default
-  lettre-pdf: default
-  lettre-typst: default
-  lettre-docx: default
-  lettre-odt: default
-  lettre-md: default
-  lettre-plain: default
+  lettre-html: 
+    output-file: template-lettre.html
+  lettre-pdf: 
+    output-file: template-lettre.pdf
+  lettre-typst: 
+    output-file: template-lettre-typst.pdf
+  lettre-docx: 
+    output-file: template-lettre.docx
+  lettre-odt: 
+    output-file: template-lettre.odt
+  lettre-md: 
+    output-file: template-lettre.md
+  lettre-plain: 
+    output-file: template-lettre.txt
+  compte-rendu-html: 
+    output-file: template-compte-rendu.html
+  compte-rendu-pdf: 
+    output-file: template-compte-rendu.pdf
+  compte-rendu-typst: 
+    output-file: template-compte-rendu-typst.pdf
+  compte-rendu-docx: 
+    output-file: template-compte-rendu.docx
+  compte-rendu-odt: 
+    output-file: template-compte-rendu.odt
+  compte-rendu-md: 
+    output-file: template-compte-rendu.md
+  compte-rendu-plain: 
+    output-file: template-compte-rendu.txt
 ---
 
 ::: header
@@ -49,8 +70,37 @@ réf. {{< meta ref >}}
 Madame, Monsieur,
 :::
 
+::: participants
+- Participant 1
+- Participant 2
+:::
+
+::: agenda
+1. Point 1
+2. Point 2
+:::
+
+::: decisions
+- Décision 1
+- Décision 2
+:::
+
+::: actions
+- Action 1
+- Action 2
+:::
+
+::: next-meeting
+- Date de la prochaine réunion
+:::
+
+::: approval
+Compte-rende en attente d'approbation.
+:::
+
+
 ::: body
-Corps de la lettre.
+Corps de la lettre ou du compte-rendu.
 :::
 
 ::: closing
@@ -60,6 +110,7 @@ Veuillez agréer, Madame, Monsieur, l'expression de mes salutations distinguées
 ::: signature
 {{< meta author >}}
 :::
+
 
 ::: footer
 Téléphone --- courriel@example.com\

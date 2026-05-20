@@ -1,0 +1,47 @@
+---
+title: "{{title}}"
+author: "{{author}}"
+date: today
+place: "{{place}}"
+organization: "{{organization}}"
+lang: fr
+format:
+  compte-rendu-html: default
+  compte-rendu-pdf: default
+  compte-rendu-typst: default
+---
+
+::: participants
+**Présents :** {{participants}}
+
+**Excusés :**
+:::
+
+::: agenda
+1. ...
+2. ...
+:::
+
+::: body
+## Premier point
+
+...
+:::
+
+::: decisions
+- ...
+:::
+
+::: actions
+| Action | Responsable | Échéance |
+|--------|-------------|---------|
+| ...    | ...         | ...     |
+:::
+
+::: next-meeting
+...
+:::
+
+::: approval
+{{author}}
+:::

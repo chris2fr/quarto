@@ -1,10 +1,5 @@
-\documentclass[a4paper,11pt,french]{article} 
+\documentclass[a4paper,11pt,french]{article}
 
-\def \thetitle {$title$}
-\def \theauthor {$author$}
-\def \thedate {$date$}
-\def \myreference {$ref$}
-% \def \defernumbers true
 %
 % Packages
 %
@@ -13,17 +8,13 @@
 \usepackage{parskip}
 \usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
-% \usepackage[inner=20mm, outer=20mm, top=15mm, bottom=25mm, headheight=22mm, headsep=8mm, includehead, bindingoffset=0cm, showframe=false]{geometry}
 \usepackage[inner=20mm, outer=20mm, top=5mm, bottom=25mm, headheight=15mm, headsep=5mm, showframe=false,includehead]{geometry}
-
 \usepackage[french]{babel}
 \usepackage[osf]{libertinus}
 \usepackage{csquotes}
 \usepackage{enumitem}
 \usepackage{soul}
 \usepackage{bookmark}
-% \usepackage[style=numeric,backend=biber,block=ragged,defernumbers=true,sorting=none]{biblatex}
-% \usepackage[style=numeric,backend=biber,block=ragged,sorting=none]{biblatex}
 \usepackage{longtable}
 \usepackage{booktabs}
 \usepackage{calc}
@@ -31,111 +22,35 @@
 \usepackage{xcolor}
 \usepackage{fancyvrb}
 \usepackage{framed}
+\usepackage{titlesec}
 \newcounter{none}
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{afterpage}
 
-% \usepackage{lipsum}
-% BIBTEX ORDERING
-% \DeclareNameAlias{shorthand}{family-given}
 \usepackage[export]{adjustbox}
 \usepackage{fancyhdr}
-\usepackage{afterpage}
 \renewcommand{\headrulewidth}{0pt}
 
-% Default style for pages 2+: no header, footer with page number
+% Section styling
+\titleformat{\section}{\large\bfseries\sffamily}{}{0em}{}[\vspace{-0.5em}\rule{\linewidth}{0.4pt}]
+\titleformat{\subsection}{\normalsize\bfseries\sffamily}{}{0em}{}
+\titlespacing*{\section}{0pt}{1.2em}{0.5em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.3em}
+
+% Default page style: footer with page number
 \pagestyle{fancy}
 \fancyhf{}
 \fancyfoot[C]{\small \thepage\\ $if(page-footer)$$page-footer$$endif$}
 
-% First page only: header with logo, footer without page number
+% First page: header with logo, footer without number
 \fancypagestyle{firstpage}{%
   \fancyhf{}
   \renewcommand{\headrulewidth}{0pt}
-  $if(page-header)$\fancyhead[C]{\centering$page-header$}$endif$
+  $if(page-header)$\fancyhead[C]{$page-header$}$endif$
   \fancyfoot[C]{\small $if(page-footer)$$page-footer$$endif$}
 }
 
-
 \MakeOuterQuote{"}
-
-\title{$title$}
-\author{$author$}
-\date{$date$}
-
-% TODO: Add custom LaTeX header directives here
-
-\newenvironment{div-date}{
-  \begin{flushright}\small
-}{
-  \end{flushright}
-  \vspace{1em}
-}
-
-\newenvironment{div-from}{
-}{
-  \vspace{1em}
-}
-
-\newenvironment{div-to}{
-\begin{flushright}
-  \begin{minipage}[leftmargin=[8cm]{9cm}
-}{
-  \end{minipage}
-\end{flushright}
-\vspace{1em}
-}
-
-\newenvironment{div-subject}{
-\begin{flushright}
-  \begin{minipage}[leftmargin=4cm]{13cm}
-}{
-  \end{minipage}
-\end{flushright}
-}
-
-\newenvironment{div-ref}{
-\begin{flushright}
-  \begin{minipage}[leftmargin=4cm]{13cm}\small
-}{
-  \end{minipage}
-\end{flushright}
-}
-
-
-
-\newenvironment{div-opening}{
-  \vspace{1em}
-\begin{flushright}
-  \begin{minipage}[leftmargin=4cm]{13cm}
-}{
-  \end{minipage}
-\end{flushright}
-}
-
-\newenvironment{div-body}{
-}{
-  \vspace{1em}
-}
-
-
-\newenvironment{div-closing}{
-\begin{flushright}
-  \begin{minipage}{13cm}
-}{
-\end{minipage}
-\end{flushright}
-  \vspace{1em}
-
-}
-
-\newenvironment{div-signature}{
-\begin{flushright}
-  \begin{minipage}[leftmargin=4cm]{13cm}
-}{
-  \end{minipage}
-\end{flushright}
-}
-
 
 $if(csl-refs)$
 \NewDocumentCommand\citeproctext{}{}
@@ -173,10 +88,67 @@ $for(header-includes)$
 $header-includes$
 $endfor$
 
+% ── CR section environments ────────────────────────────────────────────────────
+
+\newenvironment{div-participants}{%
+  \section*{Participants}
+}{\vspace{0.5em}}
+
+\newenvironment{div-agenda}{%
+  \section*{Ordre du jour}
+}{\vspace{0.5em}}
+
+\newenvironment{div-body}{%
+}{\vspace{0.5em}}
+
+\newenvironment{div-decisions}{%
+  \section*{Décisions}
+  \begin{leftbar}
+}{\end{leftbar}\vspace{0.5em}}
+
+\newenvironment{div-actions}{%
+  \section*{Actions}
+}{\vspace{0.5em}}
+
+\newenvironment{div-next-meeting}{%
+  \section*{Prochaine réunion}
+}{\vspace{0.5em}}
+
+\newenvironment{div-approval}{%
+  % \vspace{2em}
+  \section*{Approbation du compte-rendu}
+  \begin{flushright}
+    \begin{minipage}{10cm}
+}{%
+    \end{minipage}
+  \end{flushright}
+}
+
+% ──────────────────────────────────────────────────────────────────────────────
+
 \begin{document}
 
 \thispagestyle{firstpage}
+
+% Title block
+\begin{center}
+$if(organization)$
+  {\small\sffamily\textcolor{gray}{\MakeUppercase{$organization$}}}\\[0.5em]
+$endif$
+  {\LARGE\bfseries\sffamily Compte-rendu de réunion}\\[0.5em]
+  {\large $title$}\\[0.4em]
+  {\itshape $date$$if(place)$\enspace---\enspace{}$place$$endif$}\\[0.2em]
+$if(ref)$
+  {\small Réf.\,: $ref$}\\
+$endif$
+\end{center}
+
+% \noindent\rule{\linewidth}{0.8pt}
+\vspace{1em}
+
+\thispagestyle{firstpage}
 \afterpage{\newgeometry{inner=20mm,outer=20mm,top=25mm,bottom=15mm}}
+
 $body$
 
 \end{document}
