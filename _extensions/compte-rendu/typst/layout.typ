@@ -21,7 +21,7 @@ $endfor$
 
 #set page(
   paper: "$if(papersize)$$papersize$$else$a4$endif$",
-  margin: (top: 15mm, bottom: 15mm, left: 20mm, right: 20mm),
+  margin: (top: 25mm, bottom: 25mm, left: 20mm, right: 20mm),
 $if(page-header)$
   header: align(center, text(size: 9pt)[
 $page-header$

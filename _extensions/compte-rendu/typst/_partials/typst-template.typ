@@ -10,7 +10,7 @@
 ) = {
   set page(
     paper: paper,
-    margin: (top: 20mm, bottom: 30mm, left: 25mm, right: 25mm),
+    margin: (top: 25mm, bottom: 25mm, left: 25mm, right: 25mm),
     header: if page-header != none {
       align(center, text(size: 9pt, page-header))
     },
