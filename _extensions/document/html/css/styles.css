@@ -1,0 +1,119 @@
+body {
+  background-color: white;
+  margin: 1rem 3rem;
+  font-family: Georgia, serif;
+  color: #1a1a1a;
+}
+
+.document {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* ── Title block ─────────────────────────────────────────── */
+
+.doc-title-block {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #333;
+}
+
+.doc-organization {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #666;
+  margin: 0 0 0.5rem;
+}
+
+.doc-title {
+  font-size: 1.6rem;
+  margin: 0.3rem 0;
+}
+
+.doc-subtitle {
+  font-size: 1.1rem;
+  font-weight: normal;
+  font-style: italic;
+  margin: 0.3rem 0;
+  border: none;
+}
+
+.doc-meta {
+  font-size: 0.9rem;
+  color: #444;
+  margin: 0.3rem 0;
+}
+
+.doc-ref {
+  font-size: 0.8rem;
+  color: #666;
+  margin: 0.3rem 0;
+}
+
+/* ── Body content ────────────────────────────────────────── */
+
+.document h1 { font-size: 1.3rem; border-bottom: 1px solid #bbb; padding-bottom: 0.2rem; }
+.document h2 { font-size: 1.1rem; }
+.document h3 { font-size: 1rem; }
+
+.document p { line-height: 1.6; }
+
+/* ── Page header / footer ────────────────────────────────── */
+
+header.page-header,
+footer.page-footer {
+  font-size: 0.75rem;
+  color: #555;
+  text-align: center;
+}
+
+header.page-header {
+  margin-bottom: 2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #ccc;
+}
+
+footer.page-footer {
+  margin-top: 2rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #ccc;
+}
+
+header img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── Tables ──────────────────────────────────────────────── */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  margin: 1rem 0;
+}
+
+th {
+  background: #eee;
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  font-family: sans-serif;
+}
+
+td {
+  padding: 0.3rem 0.6rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* ── Definition lists ────────────────────────────────────── */
+
+dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.15rem 1rem;
+}
+
+dt { font-weight: bold; }
+dd { margin: 0; }

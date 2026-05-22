@@ -1,0 +1,48 @@
+\documentclass[a4paper,11pt,french]{quarto-lettre}
+\usepackage{titlesec}
+
+$if(page-footer)$\QLsetfooter{$page-footer$}$endif$
+$if(page-header)$\QLsetfirstpageheader{$page-header$}$endif$
+
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+% ── Section styling ───────────────────────────────────────────────────────────
+\titleformat{\section}{\large\bfseries\sffamily}{}{0em}{}[\vspace{-0.5em}\rule{\linewidth}{0.4pt}]
+\titleformat{\subsection}{\normalsize\bfseries\sffamily}{}{0em}{}
+\titlespacing*{\section}{0pt}{1.2em}{0.5em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.3em}
+
+\begin{document}
+
+\thispagestyle{firstpage}
+
+% Title block
+\begin{center}
+$if(organization)$
+  {\small\sffamily\textcolor{gray}{\MakeUppercase{$organization$}}}\\[0.5em]
+$endif$
+  {\LARGE\bfseries\sffamily $title$}\\[0.3em]
+$if(subtitle)$
+  {\large\sffamily $subtitle$}\\[0.3em]
+$endif$
+$if(author)$
+  {\normalsize $author$}\\[0.2em]
+$endif$
+  {\itshape $date$$if(place)$\enspace---\enspace{}$place$$endif$}\\[0.2em]
+$if(ref)$
+  {\small Réf.\,: $ref$}\\
+$endif$
+\end{center}
+
+\vspace{0.5em}
+\rule{\linewidth}{0.4pt}
+\vspace{1em}
+
+\thispagestyle{firstpage}
+\afterpage{\newgeometry{inner=20mm,outer=20mm,top=25mm,bottom=15mm}}
+
+$body$
+
+\end{document}

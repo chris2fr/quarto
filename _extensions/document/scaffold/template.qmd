@@ -1,0 +1,19 @@
+---
+title: "{{title}}"
+subtitle: "{{subtitle}}"
+author: "{{author}}"
+date: today
+lang: fr
+format:
+  document-html: default
+  document-pdf: default
+  document-typst: default
+---
+
+## Premier titre
+
+...
+
+## Deuxième titre
+
+...
