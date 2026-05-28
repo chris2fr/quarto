@@ -38,6 +38,15 @@
 \RequirePackage[export]{adjustbox}
 \RequirePackage{fancyhdr}
 \RequirePackage{afterpage}
+\RequirePackage{titlesec}
+
+\titleformat{\section}
+  {\normalfont\normalsize\bfseries}{\thesection}{0pt}{}
+  [\vspace{2pt}\titlerule]
+\titleformat{\subsection}
+  {\normalfont\small\bfseries\itshape}{\thesubsection}{0pt}{}
+\titlespacing*{\section}{0pt}{1.5ex plus 0.5ex minus 0.2ex}{1ex plus 0.2ex}
+\titlespacing*{\subsection}{0pt}{1.2ex plus 0.3ex minus 0.2ex}{0.5ex plus 0.1ex}
 
 \setcounter{secnumdepth}{0}
 \newcounter{none}
