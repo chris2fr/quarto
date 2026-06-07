@@ -1,8 +1,17 @@
-outdir = ./out
-inputfilebase = noheadfoot
-
 all:
 	quarto render
 
-preview:
-	quarto preview $(inputfilebase)
+lettre:
+	quarto render lettre.qmd
+
+lettre-noheadfoot:
+	quarto render lettre-noheadfoot.qmd
+
+compte-rendu:
+	quarto render compte-rendu.qmd
+
+document:
+	quarto render document.qmd
+
+clean:
+	rm -rf _output

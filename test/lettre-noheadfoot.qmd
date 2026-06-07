@@ -1,0 +1,117 @@
+---
+title: Test lettre sans en-tête ni pied de page
+author: Chris Mann
+ref: test-noheadfoot-2026-06-07
+date: 2026-06-07
+lang: fr
+place: Lyon
+bibliography: biblio.bib
+format:
+  lettre-html: default
+  lettre-pdf: default
+  lettre-typst:
+    output-file: lettre-noheadfoot-typst.pdf
+  lettre-docx: default
+  lettre-odt: default
+  lettre-md: default
+  lettre-plain: default
+---
+
+::: header
+:::
+
+::: from
+{{< meta author >}}\
+7 place de l'Église\
+92260 Fontenay-aux-Roses
+:::
+
+::: date
+{{< meta place >}}, le {{< meta date >}}
+:::
+
+::: to
+Le développeur Quarto\
+À qui de droit
+:::
+
+::: subject
+## {{< meta title >}}
+:::
+
+::: ref
+réf. {{< meta ref >}}
+:::
+
+::: opening
+Madame, Monsieur,
+:::
+
+::: body
+La présente lettre teste le rendu sans en-tête ni pied de page^[Le div `::: header` et le div `::: footer` sont laissés vides.]. Tous les autres éléments de mise en forme restent identiques[@something].
+
+# Niveau 1 — Introduction
+
+Ce test vérifie que l'absence d'en-tête graphique et de pied de page n'affecte pas la mise en forme du corps de la lettre. L'image ci-dessous est intégrée directement dans le corps :
+
+![Logo Les Grands Voisins](logo-lesgrandsvoisins-900-150-white.png)
+
+Texte en **gras**, en *italique*, lien vers [Quarto](https://quarto.org) et note de bas de page^[Deuxième note pour tester la numérotation.].
+
+## Niveau 2 — Listes et tableaux
+
+Liste à puces :
+
+- Premier élément
+- Deuxième élément
+  - Sous-élément
+- Troisième élément
+
+Liste numérotée[@otherthing] :
+
+1. Étape une
+2. Étape deux
+3. Étape trois
+
+Tableau de comparaison :
+
+| Format | En-tête | Pied de page | Corps |
+|:-------|:-------:|:------------:|:-----:|
+| lettre | optionnel | optionnel | requis |
+| document | optionnel | optionnel | requis |
+
+### Niveau 3 — Image avec taille réduite
+
+Image affichée à 50 % de la largeur de la colonne :
+
+![Logo réduit](logo-lesgrandsvoisins-900-150-white.png){width=50%}
+
+Bloc de code :
+
+```yaml
+format:
+  lettre-pdf: default
+  lettre-html: default
+```
+
+#### Niveau 4 — Détails d'implémentation
+
+Quand le div `::: header` est vide, l'espace réservé à l'en-tête n'est pas rendu. Il en va de même pour `::: footer`. Ce comportement est contrôlé par les filtres Lua de l'extension :
+
+```lua
+if #el.content == 0 then
+  return pandoc.Null()
+end
+```
+:::
+
+::: closing
+Dans l'attente de votre retour, je vous adresse mes sincères salutations.
+:::
+
+::: signature
+{{< meta author >}}
+:::
+
+::: footer
+:::
