@@ -15,3 +15,5 @@ document:
 
 clean:
 	rm -rf _output
+	rm *.typ
+	rm *.tex

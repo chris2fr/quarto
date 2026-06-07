@@ -19,7 +19,7 @@ contributes:
         - html/css/styles.css
         - html/css/boilerplate.css
       filters:
-        - ../lettre/_filters/page.lua
+        - ../base/_filters/page.lua
         - _filters/validate.lua
     typst:
       base-format: typst
@@ -32,26 +32,26 @@ contributes:
       keep-typ: true
       toc: false
       filters:
-        - ../lettre/_filters/page.lua
+        - ../base/_filters/page.lua
         - _filters/validate.lua
         - typst/_filters/divs.lua
     plain:
       base-format: plain
-      template: plain/layout.txt
+      template: ../base/plain/layout.txt
       filters:
-        - ../lettre/_filters/page.lua
+        - ../base/_filters/page.lua
         - _filters/validate.lua
     md:
       base-format: markdown
       toc: false
-      template: md/layout.md
+      template: ../base/md/layout.md
       wrap: none
       tabstop: 2
       preserve-tabs: false
       filters:
-        - ../lettre/_filters/page.lua
+        - ../base/_filters/page.lua
         - _filters/validate.lua
-        - md/_filters/tables.lua
+        - ../base/md/_filters/tables.lua
         - md/_filters/divs.lua
     pdf:
       base-format: pdf
@@ -63,10 +63,10 @@ contributes:
       lof: false
       lot: false
       keep-tex: true
-      csl: ../lettre/resources/biblio.csl
+      csl: ../base/resources/biblio.csl
       include-before-body: pdf/_partials/body-before.tex
       include-after-body: pdf/_partials/body-after.tex
       filters:
-        - ../lettre/_filters/page.lua
+        - ../base/_filters/page.lua
         - _filters/validate.lua
         - pdf/_filters/divs.lua
