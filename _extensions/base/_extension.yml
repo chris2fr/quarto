@@ -1,0 +1,8 @@
+title: Base
+author: Chris Mann
+version: 0.1.9
+quarto-required: ">=1.9.0"
+contributes:
+  filters:
+    - _filters/page.lua
+    - md/_filters/tables.lua
