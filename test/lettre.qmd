@@ -6,6 +6,10 @@ date: 2026-06-07
 lang: fr
 place: Paris
 bibliography: biblio.bib
+# margin-inner: 20mm
+# margin-outer: 20mm
+# margin-top: 25mm
+# margin-bottom: 15mm
 format:
   lettre-html: default
   lettre-pdf: default

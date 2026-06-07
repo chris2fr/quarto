@@ -1,39 +1,28 @@
-# Lettre — Quarto Extension
+# Quarto Lettre — Extension family
 
-A Quarto format extension for composing formal French letters from a single `.qmd` source file, with output to **seven formats**: HTML, PDF (LaTeX), PDF (Typst), Word, OpenDocument, Markdown, and plain text.
+Three Quarto format extensions for composing formal French documents from a single `.qmd` source file:
+
+| Extension | Purpose | Formats |
+|---|---|---|
+| `lettre` | Formal letter | HTML, PDF, Typst, DOCX, ODT, Markdown, plain text |
+| `compte-rendu` | Meeting minutes | HTML, PDF, Typst, Markdown, plain text |
+| `document` | General document | HTML, PDF, Typst, Markdown, plain text |
+
+All three share a common `_extensions/base/` resource directory (Lua filters, CSL style, templates).
+
+---
 
 ## Requirements
 
 - Quarto ≥ 1.9.0
-- A LaTeX distribution — for `lettre-pdf`
-- Typst — for `lettre-typst` (bundled with Quarto ≥ 1.4)
+- A LaTeX distribution — for `*-pdf` formats
+- Typst — for `*-typst` formats (bundled with Quarto ≥ 1.4)
 
-## Installation
+---
 
-```bash
-quarto use template chris2fr/quarto-content
-```
+## lettre
 
-This copies `template.qmd`, `_extensions/lettre/`, and `_quarto.yml` into your project. Two starting files are provided:
-
-| File | Purpose |
-|---|---|
-| `template.qmd` | Blank template — fill in to write your letter |
-| `_quarto.yml` | Project config — renders `template.qmd` to `_output/` |
-
-### Interactive scaffold
-
-After installation, run the setup script to fill in the metadata interactively:
-
-```bash
-lua _extensions/lettre/scaffold/setup.lua
-```
-
-It reads the current values from `template.qmd` as defaults and lets you override each field.
-
-## Usage
-
-Declare the desired output formats in your YAML front matter:
+### Metadata
 
 ```yaml
 ---
@@ -54,82 +43,166 @@ format:
 ---
 ```
 
-Then structure your letter using named divs:
+### Divs
 
-### Page divs (header and footer on every page)
+| Div | Role | Required |
+|---|---|:---:|
+| `::: header` | Page header — printed on every page | ✓ |
+| `::: from` | Sender's address | ✓ |
+| `::: date` | Place and date | ✓ |
+| `::: to` | Recipient's address | ✓ |
+| `::: subject` | Subject line | ✓ |
+| `::: ref` | Reference number | |
+| `::: opening` | Salutation | ✓ |
+| `::: body` | Body of the letter | ✓ |
+| `::: closing` | Closing formula | ✓ |
+| `::: signature` | Sender's name and title | ✓ |
+| `::: footer` | Page footer — printed on every page | ✓ |
+
+Leave `::: header` or `::: footer` empty to suppress the header/footer area.
+
+YAML metadata values are reusable anywhere in the document via `{{< meta key >}}`.
+
+---
+
+## compte-rendu
+
+### Metadata
+
+```yaml
+---
+title: Réunion du projet
+author: Prénom Nom
+organization: Nom de l'organisation
+date: today
+place: Paris
+lang: fr
+format:
+  compte-rendu-html: default
+  compte-rendu-pdf: default
+  compte-rendu-typst: default
+  compte-rendu-md: default
+  compte-rendu-plain: default
+---
+```
+
+### Divs
 
 | Div | Role |
 |---|---|
 | `::: header` | Page header — printed on every page |
+| `::: participants` | Attendees and apologies |
+| `::: agenda` | Meeting agenda (ordered list) |
+| `::: body` | Meeting notes — supports headings H1–H4, images, tables |
+| `::: decisions` | Decisions taken |
+| `::: actions` | Action items — typically a Markdown table |
+| `::: next-meeting` | Date and details of the next meeting |
+| `::: approval` | Approval statement |
 | `::: footer` | Page footer — printed on every page |
 
-### Letter divs
+---
 
-| Div | Role |
-|---|---|
-| `::: from` | Sender's address |
-| `::: date` | Place and date (e.g. `Paris, le {{< meta date >}}`) |
-| `::: to` | Recipient's address |
-| `::: subject` | Subject line |
-| `::: ref` | Reference number |
-| `::: opening` | Salutation (e.g. `Madame, Monsieur,`) |
-| `::: body` | Body of the letter |
-| `::: closing` | Closing formula |
-| `::: signature` | Sender's name and title |
+## document
 
-YAML metadata values are reusable anywhere in the document via `{{< meta key >}}`.
+### Metadata
 
-All letter divs are required. The filter raises an error if any are missing.
+```yaml
+---
+title: Titre du document
+subtitle: Sous-titre
+author: Prénom Nom
+date: today
+lang: fr
+format:
+  document-html: default
+  document-pdf: default
+  document-typst: default
+  document-md: default
+  document-plain: default
+---
+```
 
-## Output formats
+No special divs — use standard Markdown headings (H1–H4), paragraphs, tables, lists, and images directly in the document body.
 
-| Format | Description |
-|---|---|
-| `lettre-html` | HTML page — CSS Grid layout reproducing an A4 letter |
-| `lettre-pdf` | PDF via LaTeX — Libertinus font, A4, fancyhdr header/footer |
-| `lettre-typst` | PDF via Typst — A4, matching LaTeX layout |
-| `lettre-docx` | Word document — dedicated paragraph styles |
-| `lettre-odt` | OpenDocument — dedicated paragraph styles |
-| `lettre-md` | GitHub Flavored Markdown |
-| `lettre-plain` | Plain text |
+---
+
+## PDF margin overrides
+
+All three extensions support per-document margin overrides for PDF output via YAML metadata:
+
+| Key | Default | Applies to |
+|---|---|---|
+| `margin-inner` | `20mm` | All pages (inner / left) |
+| `margin-outer` | `20mm` | All pages (outer / right) |
+| `margin-top` | `25mm` | Body pages only |
+| `margin-bottom` | `15mm` | Body pages only |
+
+```yaml
+margin-inner: 25mm
+margin-outer: 25mm
+margin-top: 30mm
+margin-bottom: 20mm
+```
+
+These can be set at the document level (affects all PDF formats) or under a specific format:
+
+```yaml
+format:
+  lettre-pdf:
+    margin-inner: 30mm
+    margin-outer: 30mm
+```
+
+> The first-page top margin is fixed — it is sized to accommodate the header area. Only body pages (from page 2 onward) are affected by `margin-top`.
+
+---
 
 ## Render
 
 ```bash
-# Render the example letter
-quarto render lettre.qmd
-
-# Render your own letter
-quarto render template.qmd
+quarto render my-letter.qmd
 ```
+
+---
 
 ## Extension structure
 
 ```
-_extensions/lettre/
-├── _extension.yml               # Extension manifest
-├── _filters/
-│   ├── page.lua                 # Extracts ::: header / ::: footer to page metadata
-│   └── validate.lua             # Validates required divs and metadata fields
-├── html/
-│   ├── layout.html              # HTML template
-│   └── css/                     # CSS styles
-├── pdf/
-│   ├── layout.tex               # LaTeX template (fancyhdr, Libertinus, A4)
-│   ├── _partials/               # LaTeX include files (header, body wrappers)
-│   └── _filters/divs.lua        # Maps divs to LaTeX environments
-├── typst/
-│   ├── layout.typ               # Typst Pandoc template
-│   ├── _partials/               # Typst template partials (lettre function)
-│   └── _filters/divs.lua        # Maps divs to Typst layout primitives
-├── docx/
-│   ├── reference.docx           # Reference document with Letter* paragraph styles
-│   └── _filters/divs.lua        # Applies custom-style attributes
-├── odt/
-│   └── reference.odt            # Reference document with Letter* paragraph styles
-├── md/layout.md                 # Markdown template
-└── plain/layout.txt             # Plain text template
+_extensions/
+├── base/                          # Shared resources (not a format)
+│   ├── _filters/page.lua          # Extracts ::: header / ::: footer to page metadata
+│   ├── md/
+│   │   ├── _filters/tables.lua    # Markdown table filter
+│   │   └── layout.md              # Markdown template
+│   ├── plain/layout.txt           # Plain text template
+│   └── resources/biblio.csl       # CSL bibliography style
+│
+├── lettre/
+│   ├── _extension.yml
+│   ├── _filters/validate.lua      # Validates required divs and metadata
+│   ├── html/{layout.html,css/}
+│   ├── pdf/{layout.tex,quarto-lettre.cls,_filters/,_partials/}
+│   ├── typst/{layout.typ,_filters/,_partials/}
+│   ├── docx/{reference.docx,_filters/}
+│   └── odt/reference.odt
+│
+├── compte-rendu/
+│   ├── _extension.yml
+│   ├── _filters/validate.lua
+│   ├── html/{layout.html,css/}
+│   ├── pdf/{layout.tex,quarto-lettre.cls,_filters/,_partials/}
+│   ├── typst/{layout.typ,_filters/,_partials/}
+│   └── md/_filters/divs.lua
+│
+└── document/
+    ├── _extension.yml
+    ├── _filters/validate.lua
+    ├── html/{layout.html,css/}
+    ├── pdf/{layout.tex,quarto-lettre.cls,_filters/,_partials/}
+    └── typst/{_filters/,_partials/}
 ```
+
+---
 
 ## Author
 
