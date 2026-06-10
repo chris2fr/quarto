@@ -57,7 +57,7 @@ La présente lettre teste l'ensemble des fonctionnalités de l'extension **Lettr
 
 # Niveau 1 — Présentation générale
 
-L'extension **Lettre** permet de rédiger des lettres formelles en *Markdown* et de les exporter vers sept formats de sortie simultanément. Voici un exemple de logo intégré dans le corps :
+L'extension "**Lettre**" permet de rédiger des lettres formelles en *Markdown* et de les exporter vers sept formats de sortie simultanément. Voici un exemple de logo intégré dans le corps :
 
 ![Logo Les Grands Voisins](logo-lesgrandsvoisins-900-150-white.png)
 

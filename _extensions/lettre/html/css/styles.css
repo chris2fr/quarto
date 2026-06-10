@@ -11,7 +11,8 @@ div.lettre {
                "body body body body"
                "c closing closing closing"
                "c signature signature signature"
-               "footnotes footnotes footnotes footnotes";
+               "footnotes footnotes footnotes footnotes"
+               "biblio biblio biblio biblio";
 }
 
 body {
@@ -40,6 +41,7 @@ header img {
 .to {
   grid-area: to;
   /* background-color: aqua; */
+  text-align: right;
 }
 
 .subject {
@@ -75,6 +77,11 @@ header img {
 
 .signature {
   grid-area: signature;
+}
+
+.bibliography-wrapper,
+.references {
+  grid-area: biblio;
 }
 
 #footnotes {

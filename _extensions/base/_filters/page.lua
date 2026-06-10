@@ -1,6 +1,12 @@
 -- Stores rendered header/footer content to inject into metadata
 local extracted = {}
 
+local french_quotes = false
+
+function Meta(m)
+  french_quotes = m['french-quotes'] == true
+end
+
 -- Extract a standalone image from a block, or return nil.
 -- Handles both a bare Para/Plain(Image) and Pandoc 3.x Figure(Plain(Image)).
 local function extract_image(block)
@@ -96,6 +102,10 @@ function Quoted(el)
     local inner = pandoc.write(pandoc.Pandoc({ pandoc.Plain(el.content) }), 'typst')
                     :gsub('\n$', '')
     return pandoc.RawInline('typst', '"' .. inner .. '"')
+  elseif FORMAT:match('html') and french_quotes then
+    local inner = pandoc.write(pandoc.Pandoc({ pandoc.Plain(el.content) }), 'html')
+                    :gsub('\n$', '')
+    return pandoc.RawInline('html', '\u{00AB}\u{00A0}' .. inner .. '\u{00A0}\u{00BB}')
   end
 end
 

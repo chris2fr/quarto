@@ -1,6 +1,6 @@
 title: Lettre
 author: Chris Mann
-version: 0.1.9
+version: 0.1.10
 quarto-required: ">=1.9.0"
 contributes:
   project:
@@ -14,6 +14,7 @@ contributes:
       date-format: long
       date: today
     html:
+      french-quotes: true
       base-format: html
       page-layout: custom
       template: html/layout.html
@@ -25,6 +26,7 @@ contributes:
       filters:
         - ../base/_filters/page.lua
         - _filters/validate.lua
+        - html/_filters/biblio.lua
     typst:
       base-format: typst
       # csl: resources/biblio.csl
