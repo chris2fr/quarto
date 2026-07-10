@@ -1,8 +1,10 @@
 logo: 
-  small:
-  medium: logo.png
-  large:
-  
+  medium: images/logo-lesgrandsvoisins-900-150-white.png
+
+meta:
+  name: Les Grands Voisins
+  link: https://www.lesgrandsvoisins.com
+
 # color:
 #   palette:
 #     dark-grey: "#222222"
