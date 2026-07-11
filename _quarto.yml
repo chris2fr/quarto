@@ -1,5 +1,5 @@
 project:
-  type: default
+  type: lettre
   output-dir: _output
   post-render:
     - _extensions/base/scripts/clean-artifacts.sh
