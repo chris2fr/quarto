@@ -1,5 +1,6 @@
 project:
   type: default
   output-dir: _output
+  brand: _brand/_brand.yml
   post-render:
     - _extensions/base/scripts/clean-artifacts.sh

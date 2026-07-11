@@ -352,9 +352,24 @@ local function expand_meta_shortcodes(text)
   end))
 end
 
+-- Expand `{{< brand logo <name> >}}` shortcodes by hand, same reason as
+-- expand_meta_shortcodes above. Quarto's own brand shortcode also emits a
+-- dark-mode variant for HTML theme switching, but the rest of this
+-- extension's image handling (extract_image and friends) only understands a
+-- single image, so this resolves to one: light if the brand defines it,
+-- dark otherwise.
+local function expand_brand_shortcodes(text)
+  return (text:gsub('{{<%s*brand%s+logo%s+([%w_%-]+)%s*>}}', function(name)
+    local mode = quarto.brand.has_mode('light') and 'light' or 'dark'
+    local ok, logo = pcall(quarto.brand.get_logo, mode, name)
+    if not ok or not logo or not logo.path then return '' end
+    return '![](' .. logo.path .. ')'
+  end))
+end
+
 -- Read a part .qmd, strip any YAML front matter, expand `{{< meta ... >}}`
--- shortcodes, and parse it into blocks the same way a ::: header/footer :::
--- div's content would arrive.
+-- and `{{< brand logo ... >}}` shortcodes, and parse it into blocks the same
+-- way a ::: header/footer ::: div's content would arrive.
 local function read_part_file(path)
   local f = io.open(path, 'r')
   if not f then return nil end
@@ -362,6 +377,7 @@ local function read_part_file(path)
   f:close()
   text = text:gsub('^%-%-%-\n.-\n%-%-%-\n', '')
   text = expand_meta_shortcodes(text)
+  text = expand_brand_shortcodes(text)
   return pandoc.read(text, 'markdown').blocks
 end
 

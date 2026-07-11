@@ -3,6 +3,7 @@
 meta:
   name: Les Grands Voisins
   url: https://www.lesgrandsvoisins.com
+
 logo: 
   small: logo/logo-lesgrandsvoisins-300-50-white.png
   medium: logo/logo-lesgrandsvoisins-600-100-white.png
@@ -13,6 +14,7 @@ typography:
       source: google
   base: Jura
   headings: Jura
+
 color:
   background:
     light: "#eee"
