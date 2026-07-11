@@ -3,6 +3,15 @@ local extracted = {}
 
 local french_quotes = false
 
+-- This filter is shared by the lettre, compte-rendu and document extensions,
+-- but the generic-layout fallback (further down) is lettre's own vocabulary —
+-- compte-rendu and document use different div classes (or none at all) and
+-- must not have lettre content spliced into them.
+-- quarto.format.format_identifier()['extension-name'] reliably names the
+-- extension supplying the current output format, for every format
+-- (unlike `base-format` in doc.meta, which is inconsistent for `md`).
+local is_lettre = false
+
 -- Whether an actual div was found for each fallback-eligible class while
 -- walking the document (see find_generic_layout further down).
 local seen = {}
@@ -14,6 +23,7 @@ local seen = {}
 -- each format's filter pass, so reset here.
 function Meta(m)
   french_quotes = m['french-quotes'] == true
+  is_lettre = quarto.format.format_identifier()['extension-name'] == 'lettre'
   extracted = {}
   seen = {}
 end
@@ -160,15 +170,15 @@ end
 -- (see fill_missing_body_divs).
 local FALLBACK_CLASSES = {
   header = true, footer = true,
-  date = true, to = true, subject = true, ref = true,
+  from = true, date = true, to = true, subject = true, ref = true,
   opening = true, closing = true, signature = true,
 }
 local HEADER_FOOTER = { header = true, footer = true }
 
--- Canonical position of every body div in a lettre document. 'from' and
--- 'body' anchor the sequence but never get a generic fallback (sender
--- address and letter content are never generic) — they just mark where
--- fallback divs around them should be inserted.
+-- Canonical position of every body div in a lettre document. 'body' anchors
+-- the sequence but never gets a generic fallback (the letter's actual
+-- content is never generic) — it just marks where fallback divs around it
+-- should be inserted.
 local BODY_ORDER = { 'from', 'date', 'to', 'subject', 'ref', 'opening', 'body', 'closing', 'signature' }
 
 -- Every class fill_missing_body_divs needs presence tracked for, including
@@ -297,8 +307,8 @@ end
 -- copied through as-is (along with anything interleaved before them, e.g. a
 -- header div still sitting in front of ::: from :::); divs that are missing
 -- but have a generic/<class>.qmd fallback are synthesized right there, in
--- their canonical position relative to the divs that do exist. Classes with
--- no fallback (from, body, or any without a generic file) are simply left
+-- their canonical position relative to the divs that do exist. 'body' (and
+-- any class without a generic file) has no fallback and is simply left
 -- absent, same as today — validate.lua still catches a genuinely missing
 -- required div.
 local function fill_missing_body_divs(doc)
@@ -330,24 +340,16 @@ end
 
 -- Inject the extracted values into document metadata so layout templates can
 -- reference $page-header$ and $page-footer$; fill in any of
--- date/to/subject/ref/opening/closing/signature missing from the document,
--- in their canonical position; then do the same for header/footer, which
--- instead prepend/append (they sit outside the from…signature sequence).
---
--- This filter is shared by the lettre, compte-rendu and document extensions,
--- but this whole fallback vocabulary (date/to/subject/... and the generic-
--- layout header/footer) is lettre's own — compte-rendu and document use
--- different div classes (or none at all) and must not have lettre content
--- spliced into them. A ::: from ::: div is unique to (and required by)
--- lettre documents, so its presence is used as a reliable, format-agnostic
--- signal instead of inspecting metadata like `base-format` (whose value is
--- inconsistent across lettre's own output formats).
+-- from/date/to/subject/ref/opening/closing/signature missing from the
+-- document, in their canonical position; then do the same for header/footer,
+-- which instead prepend/append (they sit outside the from…signature
+-- sequence). Restricted to the lettre extension — see `is_lettre` above.
 function Pandoc(doc)
   for key, value in pairs(extracted) do
     doc.meta[key] = value
   end
 
-  if seen['from'] then
+  if is_lettre then
     fill_missing_body_divs(doc)
 
     for _, class in ipairs({ 'header', 'footer' }) do
