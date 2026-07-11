@@ -303,27 +303,57 @@ local function load_generic(class)
   return nil
 end
 
--- Walk doc.blocks once, following BODY_ORDER: divs that were found are
--- copied through as-is (along with anything interleaved before them, e.g. a
--- header div still sitting in front of ::: from :::); divs that are missing
--- but have a generic/<class>.qmd fallback are synthesized right there, in
--- their canonical position relative to the divs that do exist. 'body' (and
--- any class without a generic file) has no fallback and is simply left
--- absent, same as today — validate.lua still catches a genuinely missing
--- required div.
-local function fill_missing_body_divs(doc)
-  local new_blocks = {}
-  local idx = 1
-  for _, class in ipairs(BODY_ORDER) do
-    if seen[class] then
-      while idx <= #doc.blocks do
-        local block = doc.blocks[idx]
-        idx = idx + 1
-        table.insert(new_blocks, block)
-        if block.t == 'Div' and block.classes:includes(class) then
+-- Sort doc.blocks into: known-class divs (from/date/to/subject/ref/opening/
+-- body/closing/signature — one each — plus header/footer, kept aside so
+-- they can be re-prepended/appended untouched), and everything else
+-- ("loose" content: bare paragraphs, headings, tables, custom divs with no
+-- recognized class...). A qmd doesn't have to wrap its letter content in
+-- ::: body :::: any loose content, wherever it appears in the document, is
+-- concatenated into the body — but only when no explicit ::: body ::: was
+-- written, so an author who does wrap it keeps full control.
+local function bucket_blocks(doc)
+  local by_class, loose, header_block, footer_block = {}, {}, nil, nil
+  for _, block in ipairs(doc.blocks) do
+    local class = nil
+    if block.t == 'Div' then
+      for _, c in ipairs(block.classes) do
+        if c == 'header' or c == 'footer' or ALL_BODY_CLASSES[c] then
+          class = c
           break
         end
       end
+    end
+    if class == 'header' then
+      header_block = block
+    elseif class == 'footer' then
+      footer_block = block
+    elseif class then
+      by_class[class] = block
+    else
+      table.insert(loose, block)
+    end
+  end
+  return by_class, loose, header_block, footer_block
+end
+
+-- Rebuild doc.blocks in BODY_ORDER: divs that were found are used as-is;
+-- divs that are missing but have a generic/<class>.qmd fallback are
+-- synthesized in their canonical position. 'body' additionally falls back to
+-- the document's loose content (see bucket_blocks) before falling back to a
+-- generic file. Any class still missing (or without a fallback) is simply
+-- left absent, same as today — validate.lua still catches a genuinely
+-- missing required div.
+local function fill_missing_body_divs(doc)
+  local by_class, loose, header_block, footer_block = bucket_blocks(doc)
+
+  local new_blocks = {}
+  if header_block then table.insert(new_blocks, header_block) end
+  for _, class in ipairs(BODY_ORDER) do
+    if by_class[class] then
+      table.insert(new_blocks, by_class[class])
+    elseif class == 'body' and not seen['body'] and #loose > 0 then
+      table.insert(new_blocks, pandoc.Div(loose, pandoc.Attr('', { 'body' })))
+      seen['body'] = true
     elseif FALLBACK_CLASSES[class] then
       local blocks = load_generic(class)
       if blocks then
@@ -331,10 +361,7 @@ local function fill_missing_body_divs(doc)
       end
     end
   end
-  while idx <= #doc.blocks do
-    table.insert(new_blocks, doc.blocks[idx])
-    idx = idx + 1
-  end
+  if footer_block then table.insert(new_blocks, footer_block) end
   doc.blocks = new_blocks
 end
 
