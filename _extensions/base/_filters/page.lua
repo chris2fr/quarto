@@ -142,53 +142,128 @@ function Quoted(el)
   end
 end
 
--- Intercept ::: header ::: and ::: footer ::: divs.
--- For docx/odt the div stays in the body (see below). For every other format
--- it is rendered and stored as `page-header` / `page-footer` metadata, then
--- removed from the document body.
+-- Classes handled by this filter, and whether an actual ::: header/footer :::
+-- div was found for each while walking the document (see find_brand_layout).
+local seen = { header = false, footer = false }
+
+-- Format-specific rendering shared by both a real div and a brand-layout
+-- fallback file. For docx/odt returns a content list to place in the body
+-- (wrapped in a Div so docx/_filters/divs.lua can still style it); for every
+-- other format it stashes `page-<class>` metadata for the layout templates.
+-- `doc` is nil when called while still walking the tree (a real div, before
+-- Pandoc(doc) exists) — the metadata is queued in `extracted` and applied
+-- once Pandoc(doc) runs. When called from Pandoc(doc) itself (brand-layout
+-- fallback) `doc` is passed through so metadata can be set directly.
+local function apply_section(class, content, doc)
+  -- Normalise format variants: html* → 'html', markdown* → 'markdown'
+  local fmt = FORMAT:match('html') and 'html'
+           or FORMAT:match('markdown') and 'markdown'
+           or FORMAT
+
+  -- Binary formats: docx/odt have no template to consume page-header /
+  -- page-footer metadata, so keep the content in the body (styled by
+  -- docx/_filters/divs.lua) instead of stashing it where it would be
+  -- silently dropped.
+  if fmt == 'docx' or fmt == 'odt' then
+    return pandoc.Div(replace_images_inline(content), pandoc.Attr('', { class }))
+  end
+
+  -- Text formats: keep as native AST (stored in metadata) rather than
+  -- pre-rendering to a string. Pre-rendering via pandoc.write() here would
+  -- freeze any not-yet-resolved shortcode/custom nodes (e.g. `{{< brand ... >}}`)
+  -- as inert text, since those are only expanded in a later pass that walks
+  -- the final document, not raw strings produced mid-filter-chain.
+  local rendered
+  if     fmt == 'latex' then rendered = replace_images_for_latex(content)
+  elseif fmt == 'typst' then rendered = replace_images_for_typst(content)
+  elseif fmt == 'html'  then rendered = replace_images_for_html(content)
+  else                       rendered = content
+  end
+
+  if #rendered > 0 then
+    local key = 'page-' .. class
+    if doc then
+      doc.meta[key] = pandoc.MetaBlocks(rendered)
+    else
+      extracted[key] = pandoc.MetaBlocks(rendered)
+    end
+  end
+  return nil
+end
+
+-- Intercept ::: header ::: and ::: footer ::: divs and hand their content to
+-- apply_section. The docx/odt Div returned here is spliced back in place;
+-- every other format is removed from the body (its content lives in metadata).
 function Div(el)
   for _, class in ipairs({ 'header', 'footer' }) do
     if el.classes:includes(class) then
-      -- Normalise format variants: html* → 'html', markdown* → 'markdown'
-      local fmt = FORMAT:match('html') and 'html'
-               or FORMAT:match('markdown') and 'markdown'
-               or FORMAT
-
-      -- Binary formats: docx/odt have no template to consume page-header /
-      -- page-footer metadata, so keep the div in the body (styled by
-      -- docx/_filters/divs.lua) instead of stashing it where it would be
-      -- silently dropped.
-      if fmt == 'docx' or fmt == 'odt' then
-        el.content = replace_images_inline(el.content)
-        return el
-      end
-
-      -- Text formats: keep as native AST (stored in metadata) rather than
-      -- pre-rendering to a string. Pre-rendering via pandoc.write() here would
-      -- freeze any not-yet-resolved shortcode/custom nodes (e.g. `{{< brand ... >}}`)
-      -- as inert text, since those are only expanded in a later pass that walks
-      -- the final document, not raw strings produced mid-filter-chain.
-      local content
-      if     fmt == 'latex'    then content = replace_images_for_latex(el.content)
-      elseif fmt == 'typst'    then content = replace_images_for_typst(el.content)
-      elseif fmt == 'html'     then content = replace_images_for_html(el.content)
-      else                          content = el.content
-      end
-
-      if #content > 0 then
-        extracted['page-' .. class] = pandoc.MetaBlocks(content)
-      end
-      return {}
+      seen[class] = true
+      return apply_section(class, el.content, nil) or {}
     end
   end
 end
 
+-- A brand can ship a ready-made `_brand/layout/header.qmd` / `footer.qmd`
+-- snippet. When the document itself has no ::: header/footer ::: div, fall
+-- back to that file's content, resolved next to the project (or, lacking a
+-- project, next to the rendered .qmd).
+local function find_brand_layout(class)
+  local dirs = {}
+  if quarto and quarto.project and quarto.project.directory and quarto.project.directory ~= '' then
+    table.insert(dirs, quarto.project.directory)
+  end
+  if PANDOC_STATE and PANDOC_STATE.input_files and #PANDOC_STATE.input_files > 0 then
+    table.insert(dirs, pandoc.path.directory(PANDOC_STATE.input_files[1]))
+  end
+  for _, dir in ipairs(dirs) do
+    local path = pandoc.path.join({ dir, '_brand', 'layout', class .. '.qmd' })
+    local f = io.open(path, 'r')
+    if f then
+      f:close()
+      return path
+    end
+  end
+  return nil
+end
+
+-- Read a brand layout .qmd, strip any YAML front matter, and parse it into
+-- blocks the same way a ::: header/footer ::: div's content would arrive.
+local function read_brand_layout(path)
+  local f = io.open(path, 'r')
+  if not f then return nil end
+  local text = f:read('a')
+  f:close()
+  text = text:gsub('^%-%-%-\n.-\n%-%-%-\n', '')
+  return pandoc.read(text, 'markdown').blocks
+end
+
 -- Inject the extracted values into document metadata so layout templates
--- can reference $page-header$ and $page-footer$
+-- can reference $page-header$ and $page-footer$, and fill in any
+-- header/footer missing from the document from the brand's layout files.
 function Pandoc(doc)
   for key, value in pairs(extracted) do
     doc.meta[key] = value
   end
+
+  for _, class in ipairs({ 'header', 'footer' }) do
+    if not seen[class] then
+      local path = find_brand_layout(class)
+      if path then
+        local blocks = read_brand_layout(path)
+        if blocks and #blocks > 0 then
+          local div = apply_section(class, blocks, doc)
+          if div then
+            if class == 'header' then
+              table.insert(doc.blocks, 1, div)
+            else
+              table.insert(doc.blocks, div)
+            end
+          end
+        end
+      end
+    end
+  end
+
   return doc
 end
 
