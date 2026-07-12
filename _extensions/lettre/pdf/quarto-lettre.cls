@@ -74,6 +74,8 @@
 % \RequirePackage{FiraMono}
 
 \setmainfont{IBM Plex Serif}
+\setsansfont{IBM Plex Sans}
+\setmonofont{IBM Plex Mono}
 
 % Set by brand_fonts_latex (page.lua) via \IfFontExistsTF when brand.yml
 % declares a headings font that's actually available; empty (no-op) otherwise.
