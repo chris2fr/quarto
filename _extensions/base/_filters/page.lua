@@ -553,33 +553,33 @@ end
 -- \QLheadingfont (defined empty in each quarto-lettre.cls, used inside its
 -- \titleformat calls) is how the headings font reaches \section etc.
 local function brand_fonts_latex(doc)
-  if not FORMAT:match('latex') then return end
-  local fonts = brand_font_families()
-  if not fonts then return end
+  -- if not FORMAT:match('latex') then return end
+  -- local fonts = brand_font_families()
+  -- if not fonts then return end
 
-  local latex = {}
-  if fonts.base then
-    table.insert(latex, '\\IfFontExistsTF{' .. fonts.base .. '}{\\setmainfont{' .. fonts.base .. '}}{}')
-  end
-  if fonts.headings then
-    table.insert(latex, '\\IfFontExistsTF{' .. fonts.headings .. '}{\\renewcommand{\\QLheadingfont}{\\fontspec{' .. fonts.headings .. '}}}{}')
-  end
-  if fonts.monospace then
-    table.insert(latex, '\\IfFontExistsTF{' .. fonts.monospace .. '}{\\setmonofont{' .. fonts.monospace .. '}}{}')
-  end
-  if #latex == 0 then return end
+  -- local latex = {}
+  -- if fonts.base then
+  --   table.insert(latex, '\\IfFontExistsTF{' .. fonts.base .. '}{\\setmainfont{' .. fonts.base .. '}}{}')
+  -- end
+  -- if fonts.headings then
+  --   table.insert(latex, '\\IfFontExistsTF{' .. fonts.headings .. '}{\\renewcommand{\\QLheadingfont}{\\fontspec{' .. fonts.headings .. '}}}{}')
+  -- end
+  -- if fonts.monospace then
+  --   table.insert(latex, '\\IfFontExistsTF{' .. fonts.monospace .. '}{\\setmonofont{' .. fonts.monospace .. '}}{}')
+  -- end
+  -- if #latex == 0 then return end
 
-  -- header-includes is a *list* of include-groups (each rendered as its own
-  -- pass of $header-includes$ inside layout.tex's $for(header-includes)$),
-  -- not a flat list of blocks — append our group rather than merging blocks.
-  local groups = {}
-  if doc.meta['header-includes'] then
-    for _, g in ipairs(doc.meta['header-includes']) do
-      table.insert(groups, g)
-    end
-  end
-  table.insert(groups, pandoc.MetaBlocks({ pandoc.RawBlock('latex', table.concat(latex, '\n')) }))
-  doc.meta['header-includes'] = pandoc.MetaList(groups)
+  -- -- header-includes is a *list* of include-groups (each rendered as its own
+  -- -- pass of $header-includes$ inside layout.tex's $for(header-includes)$),
+  -- -- not a flat list of blocks — append our group rather than merging blocks.
+  -- local groups = {}
+  -- if doc.meta['header-includes'] then
+  --   for _, g in ipairs(doc.meta['header-includes']) do
+  --     table.insert(groups, g)
+  --   end
+  -- end
+  -- table.insert(groups, pandoc.MetaBlocks({ pandoc.RawBlock('latex', table.concat(latex, '\n')) }))
+  -- doc.meta['header-includes'] = pandoc.MetaList(groups)
 end
 
 -- Inject the extracted values into document metadata so layout templates can

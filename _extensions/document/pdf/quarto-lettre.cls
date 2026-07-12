@@ -41,9 +41,55 @@
 \RequirePackage{afterpage}
 \RequirePackage{titlesec}
 
+% ── Fonts ───────────────────────────────────────────────────────────
+% \RequirePackage{libertinus} % Libertinus Mono, Libertinus Sans, Libertinus Serif
+% \RequirePackage{fourier}
+% \RequirePackage{newcent}
+% \RequirePackage{charter}
+% \RequirePackage{bookman}
+% \RequirePackage{avant}
+% \RequirePackage{mathpazo}
+% \RequirePackage{helvet}
+% \RequirePackage{mathptmx}
+% \RequirePackage{lmodern}
+% \RequirePackage{newpxmath} 
+% \RequirePackage{kpfonts}
+% \RequirePackage{cochineal}
+% \RequirePackage{cabin}
+% \RequirePackage{garamondx}
+% \RequirePackage{inconsolata}
+% \RequirePackage{FiraSans}
+% \RequirePackage{roboto}
+% \RequirePackage{inter}
+% \RequirePackage{MinionPro}
+% \RequirePackage{mathastext}
+% \RequirePackage{fbb} % Bembo-like fbb
+\RequirePackage{plex-serif}
+% % \RequirePackage[sfdefault]{plex-sans}
+\RequirePackage[sfdefault,condensed]{plex-sans}
+\RequirePackage{plex-mono}
+% \RequirePackage{FiraSerif}
+% \RequirePackage[sfdefault]{FiraSans}
+% \RequirePackage{FiraMono}
+
+
 % Set by brand_fonts_latex (page.lua) via \IfFontExistsTF when brand.yml
 % declares a headings font that's actually available; empty (no-op) otherwise.
-\newcommand{\QLheadingfont}{}
+% \newcommand{\QLheadingfont}{}
+\newcommand{\QLheadingfont}{\plexsams}
+
+\titleformat{\section}
+  {\normalfont\QLheadingfont\LARGE\bfseries}{\thesection}{0pt}{}
+  [\vspace{0.5em}\titlerule]
+\titleformat{\subsection}
+  {\normalfont\QLheadingfont\Large\bfseries}{\thesubsection}{0pt}{}
+  [\vspace{0.5em}]
+\titleformat{\subsubsection}
+  {\normalfont\QLheadingfont\large\bfseries}{\thesubsubsection}{0pt}{}
+  [\vspace{0.25em}]
+\titlespacing*{\section}{0pt}{1.5cm}{1ex plus 0.2ex}
+\titlespacing*{\subsection}{0pt}{1cm}{0.5ex plus 0.1ex}
+\titlespacing*{\subsubsection}{0pt}{0.6cm}{0.25ex plus 0.05ex}
 
 \titleformat{\section}
   {\normalfont\QLheadingfont\normalsize\bfseries}{\thesection}{0pt}{}
