@@ -64,19 +64,23 @@
 % \RequirePackage{MinionPro}
 % \RequirePackage{mathastext}
 % \RequirePackage{fbb} % Bembo-like fbb
-\RequirePackage{plex-serif}
 % % \RequirePackage[sfdefault]{plex-sans}
-\RequirePackage[sfdefault,condensed]{plex-sans}
+% \RequirePackage[sfdefault,condensed]{plex-sans}
+\RequirePackage{plex-sans}
+\RequirePackage{plex-serif}
 \RequirePackage{plex-mono}
 % \RequirePackage{FiraSerif}
 % \RequirePackage[sfdefault]{FiraSans}
 % \RequirePackage{FiraMono}
 
+\setmainfont{IBM Plex Serif}
+\setsansfont{IBM Plex Sans}
+\setmonofont{IBM Plex Mono}
 
 % Set by brand_fonts_latex (page.lua) via \IfFontExistsTF when brand.yml
 % declares a headings font that's actually available; empty (no-op) otherwise.
 % \newcommand{\QLheadingfont}{}
-\newcommand{\QLheadingfont}{\plexsans}
+\newcommand{\QLheadingfont}{\sfdefault}
 
 \titleformat{\section}
   {\normalfont\QLheadingfont\LARGE\bfseries}{\thesection}{0pt}{}
