@@ -1,14 +1,8 @@
 # minimal brand.yml enabling dark mode
 # replace with your brand colors, logos, and typography!
 meta:
-  name: Les Grands Voisins depuis _extensions
-  url: https://www.lesgrandsvoisins.com
-
-logo: 
-  small: logo/logo-lesgrandsvoisins-300-50-white.png
-  medium: logo/logo-lesgrandsvoisins-600-100-white.png
-  large: logo/logo-lesgrandsvoisins-900-150-white.png
-
+  name: ""
+  url: ""
 typography:
   fonts:
     - family: IBM Plex Mono
@@ -33,7 +27,7 @@ typography:
     #   source: google
     # - family: Inter
     #   source: google
-  base: IBM Plex Sans
+  base: IBM Plex Serif
   headings: IBM Plex Sans
   monospace: IBM Plex Mono
   # base: IBM Plex Sans Condensed
@@ -45,14 +39,6 @@ typography:
   # monospace: Fira Mono
   # base: Inter
   # headings: Inter
-  link:
-    decoration: underline
-  # monospace-inline:
-  #   color: "#222222"
-  #   background-color: "#ddeaf1" # or use a named color from `color`
-  # monospace-block: 
-  #   background-color: "#eef4f8"
-
 color:
   background:
     light: "#fff"

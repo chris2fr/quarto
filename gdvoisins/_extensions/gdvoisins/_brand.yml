@@ -1,7 +1,7 @@
 # minimal brand.yml enabling dark mode
 # replace with your brand colors, logos, and typography!
 meta:
-  name: Les Grands Voisins depuis gdvoisins/_extensions
+  name: Les Grands Voisins
   url: https://www.lesgrandsvoisins.com
 
 logo: 
