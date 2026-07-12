@@ -14,10 +14,61 @@ All three share a common `_extensions/base/` resource directory (Lua filters, CS
 
 ## Quickstarts
 
-```
-quarto use template chris2fr/quarto/doc
+L'extension est requise :
+
+```bash
 quarto add chris2fr/quarto
 ```
+
+Vous pouvez utiliser un template :
+
+```
+quarto use template chris2fr/quarto/document
+quarto use template chris2fr/quarto/lettre
+quarto use template chris2fr/quarto/compte-rendu
+quarto use template chris2fr/quarto/gdvoisins/document
+quarto use template chris2fr/quarto/gdvoisins/lettre
+quarto use template chris2fr/quarto/gdvoisins/compte-rendu
+```
+
+Vous pouvez utiliser un brand :
+
+
+```
+quarto use brand chris2fr/quarto
+quarto use brand chris2fr/quarto/gdvoisins
+```
+
+Types de documents:
+
+- document
+- lettre
+- compte-rendu
+
+Formats de sorti
+
+- -pdf
+- -html
+- -typst
+- -plain
+- -md
+- -odt
+- -docx
+
+Brands :
+
+- quarto use brand chris2fr/quarto
+- quarto use brand chris2fr/quarto/gdvoisins
+
+Templates :
+
+- quarto use template chris2fr/quarto
+- quarto use template chris2fr/quarto/document
+- quarto use template chris2fr/quarto/lettre
+- quarto use template chris2fr/quarto/compte-rendu
+- quarto use template chris2fr/quarto/gdvoisins/document
+- quarto use template chris2fr/quarto/gdvoisins/lettre
+- quarto use template chris2fr/quarto/gdvoisins/compte-rendu
 
 ---
 
