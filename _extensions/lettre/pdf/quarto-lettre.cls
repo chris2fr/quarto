@@ -68,7 +68,7 @@
 % \RequirePackage[sfdefault,condensed]{plex-sans}
 \RequirePackage{plex-sans}
 % \RequirePackage{plex-serif}
-\RequirePackage[sfdefault]{plex-serif}
+\RequirePackage{plex-serif}
 \RequirePackage{plex-mono}
 % \RequirePackage{FiraSerif}
 % \RequirePackage[sfdefault]{FiraSans}
