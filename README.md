@@ -43,6 +43,8 @@ format:
 ---
 ```
 
+`title`, `author`, `lang`, `date`, `place`, and `ref` are all required — rendering stops with an error listing whichever are missing.
+
 ### Divs
 
 | Div | Role | If missing |

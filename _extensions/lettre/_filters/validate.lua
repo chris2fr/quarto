@@ -1,5 +1,5 @@
 -- Required YAML front-matter keys
-local required_meta = { 'title', 'author', 'lang', 'date' }
+local required_meta = { 'title', 'author', 'lang', 'date', 'place', 'ref' }
 
 -- Required named divs that the letter document must contain
 local required_divs = { 'from', 'date', 'to', 'subject', 'opening', 'body', 'closing', 'signature' }
@@ -38,6 +38,7 @@ function Pandoc(doc)
   end
 
   -- Validate required divs (populated by the Div walker above)
+  missing = {}
   for _, class in ipairs(required_divs) do
     if not seen[class] then
       table.insert(missing, '::: ' .. class .. ' :::')
