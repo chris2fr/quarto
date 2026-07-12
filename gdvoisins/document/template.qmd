@@ -28,7 +28,7 @@ L'extension **Document** fournit un gabarit de mise en page pour des documents f
 
 Logo intégré en tête de document :
 
-![Logo Les Grands Voisins](logo-lesgrandsvoisins-900-150-white.png)
+![Logo Les Grands Voisins](_parts/logo/logo-lesgrandsvoisins-900-150-white.png)
 
 Du texte en **gras**, en *italique*, en ***gras italique*** et du `code inline`. Un lien vers [Quarto](https://quarto.org) et une note de bas de page^[L'extension requiert Quarto 1.9 ou supérieur.].
 
@@ -67,7 +67,7 @@ Tableau des formats supportés :
 
 Image à largeur réduite insérée dans le flux du document :
 
-![Logo 50 %](logo-lesgrandsvoisins-900-150-white.png){width=50%}
+![Logo 50 %](_parts/logo/logo-lesgrandsvoisins-900-150-white.png){width=50%}
 
 ## Niveau 2 — Blocs de code
 
@@ -118,7 +118,7 @@ Budget prévisionnel
 
 ### Niveau 3 — Image avec légende
 
-![Logo Les Grands Voisins — format original](logo-lesgrandsvoisins-900-150-white.png)
+![Logo Les Grands Voisins — format original](_parts/logo/logo-lesgrandsvoisins-900-150-white.png)
 
 #### Niveau 4 — Filtres Lua
 

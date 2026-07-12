@@ -23,7 +23,7 @@ format:
 ---
 
 ::: header
-![**Les Grands Voisins** --- Association d'intérêt général](logo-lesgrandsvoisins-900-150-white.png)
+![**Les Grands Voisins** --- Association d'intérêt général](_parts/logo/logo-lesgrandsvoisins-900-150-white.png)
 :::
 
 ::: participants
@@ -46,7 +46,7 @@ L'extension **Compte-rendu** permet de structurer des comptes-rendus de réunion
 
 Logo intégré dans le corps des notes :
 
-![Logo Les Grands Voisins](logo-lesgrandsvoisins-900-150-white.png)
+![Logo Les Grands Voisins](_parts/logo/logo-lesgrandsvoisins-900-150-white.png)
 
 > Alice rappelle que la prochaine version de l'extension sera compatible avec Quarto 2.0.
 
@@ -71,7 +71,7 @@ Liste des tâches en cours :
 
 ## Sous-point 1.2 — Image réduite
 
-![Logo 40 %](logo-lesgrandsvoisins-900-150-white.png){width=40%}
+![Logo 40 %](_parts/logo/logo-lesgrandsvoisins-900-150-white.png){width=40%}
 
 Texte en **gras**, en *italique*, `code inline` et lien vers [Quarto](https://quarto.org).
 

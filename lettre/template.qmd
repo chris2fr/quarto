@@ -30,7 +30,7 @@ La présente "lettre" teste l'ensemble des fonctionnalités de l'extension **Let
 
 L'extension "**Lettre**" permet de rédiger des lettres formelles en *Markdown* et de les exporter vers sept formats de sortie simultanément. Voici un exemple de logo intégré dans le corps :
 
-![Logo Les Grands Voisins](logo-lesgrandsvoisins-900-150-white.png)
+![Logo Les Grands Voisins](_parts/logo/logo-lesgrandsvoisins-900-150-white.png)
 
 > Une citation mise en valeur dans un bloc. Elle peut s'étendre sur plusieurs lignes et illustre la mise en forme d'un extrait ou d'une référence.
 
@@ -65,7 +65,7 @@ Tableau standard :
 
 Image réduite à 40 % de la largeur :
 
-![Logo réduit](logo-lesgrandsvoisins-900-150-white.png){width=40%}
+![Logo réduit](_parts/logo/logo-lesgrandsvoisins-900-150-white.png){width=40%}
 
 ### Niveau 3 — Tableau de facturation
 
