@@ -284,6 +284,21 @@ format:
 
 ---
 
+## PDF class customization
+
+For PDF output, an optional `_parts/custom.cls` at the project root (next to `_quarto.yml`) can override anything from `quarto-lettre.cls` or the format's own `layout.tex` preamble — fonts, `\titleformat`, packages, custom environments, and so on. It's loaded last, right before `\begin{document}`, so it wins over both. Absent by default — no-op if the file doesn't exist.
+
+```tex
+% _parts/custom.cls
+\titleformat{\section}
+  {\normalfont\QLheadingfont\LARGE\bfseries\color{red}}{\thesection}{0pt}{}
+  [\vspace{0.5em}\titlerule]
+```
+
+Unlike the generated `quarto-lettre.cls`/`.tex` at the project root (removed after every render by `clean-artifacts.sh`), `_parts/custom.cls` is user-owned content and is never touched by cleanup — same guarantee as the `_parts/*.qmd` overrides above.
+
+---
+
 ## Brand fonts
 
 All three extensions use `theme: none` for HTML (a fully custom template, no Bootstrap) and a fully custom LaTeX `.cls` for PDF, so Quarto's own [brand.yml](https://quarto.org/docs/authoring/brand.html) → CSS/fontspec pipeline never runs there — `typography` in a brand file is otherwise silently ignored in both. This is filled in by hand: the resolved `base`, `headings`, and `monospace` font families are read from the active brand and applied per format.

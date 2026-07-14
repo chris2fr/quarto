@@ -88,6 +88,14 @@ $endfor$
 \end{flushright}
 }
 
+% ── User customization override ──────────────────────────────────────────────
+% Optional, project-level: create _parts/custom.cls next to _quarto.yml to
+% redefine anything above (fonts, titleformat, environments, ...). Loaded
+% last, so it wins even over this file's own preamble. Absent by default, in
+% which case this is a no-op. _parts/ is excluded from clean-artifacts.sh's
+% *.cls sweep, so this file persists across renders unlike quarto-lettre.cls.
+\IfFileExists{_parts/custom.cls}{\input{_parts/custom.cls}}{}
+
 \begin{document}
 
 \thispagestyle{firstpage}

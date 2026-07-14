@@ -24,6 +24,14 @@ $endfor$
 \titlespacing*{\subsubsection}{0pt}{0.6em}{0.2em}
 \titlespacing*{\paragraph}{0pt}{0.4em}{0.2em}
 
+% ── User customization override ──────────────────────────────────────────────
+% Optional, project-level: create _parts/custom.cls next to _quarto.yml to
+% redefine anything above (fonts, titleformat, environments, ...). Loaded
+% last, so it wins even over this file's own preamble. Absent by default, in
+% which case this is a no-op. _parts/ is excluded from clean-artifacts.sh's
+% *.cls sweep, so this file persists across renders unlike quarto-lettre.cls.
+\IfFileExists{_parts/custom.cls}{\input{_parts/custom.cls}}{}
+
 \begin{document}
 
 \thispagestyle{firstpage}
