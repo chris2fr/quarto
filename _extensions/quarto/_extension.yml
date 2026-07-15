@@ -1,6 +1,6 @@
 title: Quarto
 author: Chris Mann
-version: 0.1.15
+version: 0.1.16
 quarto-required: ">=1.9.0"
 contributes:
   metadata:
