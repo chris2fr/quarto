@@ -10,7 +10,7 @@ set -euo pipefail
 prune=(-path './_extensions' -o -path './_output' -o -path './.quarto' -o -path './.git' -o -path './_parts')
 
 find . \( "${prune[@]}" \) -prune -o \
-  -type f \( -name '*.tex' -o -name '*.cls' -o -name '*.typ' \) -print0 | xargs -0 -r rm -f
+  -type f \( -name '*.tex' -o -name '*.cls' -o -name '*.typ' \) -not -name 'custom.cls' -print0 | xargs -0 -r rm -f
 
 find . \( "${prune[@]}" \) -prune -o \
   -type d -name '*_files' -print0 | xargs -0 -r rm -rf
