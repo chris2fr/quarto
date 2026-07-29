@@ -86,6 +86,23 @@ header img {
   height: auto;
 }
 
+/* ── Table of contents ({{< toc >}}) ─────────────────────── */
+
+.toc ul {
+  list-style: none;
+  padding-left: 1.2rem;
+  margin: 0.2rem 0;
+}
+
+.toc > ul { padding-left: 0; }
+
+.toc a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.toc a:hover { text-decoration: underline; }
+
 /* ── Tables ──────────────────────────────────────────────── */
 
 table {

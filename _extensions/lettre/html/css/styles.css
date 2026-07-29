@@ -24,6 +24,23 @@ div.closing {
   padding-bottom: 3rem;
 }
 
+/* ── Table of contents ({{< toc >}}) ─────────────────────── */
+
+.toc ul {
+  list-style: none;
+  padding-left: 1.2rem;
+  margin: 0.2rem 0;
+}
+
+.toc > ul { padding-left: 0; }
+
+.toc a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.toc a:hover { text-decoration: underline; }
+
 header img {
   max-width: 100%;
   height: auto;

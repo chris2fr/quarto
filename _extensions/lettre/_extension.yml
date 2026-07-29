@@ -3,6 +3,8 @@ author: Chris Mann
 version: 0.1.16
 quarto-required: ">=1.9.0"
 contributes:
+  shortcodes:
+    - ../base/_shortcodes/toc.lua
   project:
     create:
       scaffold: scaffold/create.lua
@@ -27,6 +29,8 @@ contributes:
         - ../base/_filters/page.lua
         - _filters/validate.lua
         - html/_filters/biblio.lua
+        - path: ../base/_filters/toc.lua
+          at: post-quarto
     typst:
       base-format: typst
       # csl: resources/biblio.csl
@@ -92,3 +96,5 @@ contributes:
         - ../base/_filters/page.lua
         - _filters/validate.lua
         - pdf/_filters/divs.lua
+        - path: ../base/_filters/toc.lua
+          at: post-quarto

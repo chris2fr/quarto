@@ -241,6 +241,27 @@ No special divs — use standard Markdown headings (H1–H4), paragraphs, tables
 
 ---
 
+## Table of contents
+
+All three extensions support a `{{< toc >}}` shortcode for HTML and PDF output — place it anywhere in the document body to insert a table of contents at that spot, built from the document's own headings:
+
+```markdown
+## Table des matières
+
+{{< toc >}}
+
+# Niveau 1 — Introduction
+...
+```
+
+- **PDF**: renders as a native `\tableofcontents`, so it only lists headings that actually become numbered/unstarred LaTeX sections — `compte-rendu`'s fixed section labels (Participants, Décisions, Actions, ...) use `\section*` internally and are correctly excluded, leaving just the headings you wrote yourself.
+- **HTML**: renders as a nested list of anchor links to each heading, since these extensions use a fully custom template (`page-layout: custom`) and never emit Quarto's own `$toc$`.
+- Other formats (Typst, docx, odt, Markdown, plain text) are not currently supported — the shortcode is silently dropped, with no visible artifact.
+
+> In `lettre`, `::: subject :::` is conventionally written as a level-2 heading (`## {{< meta title >}}`) — it will show up as a table-of-contents entry like any other heading if you add `{{< toc >}}` to a letter.
+
+---
+
 ## PDF margin overrides
 
 All three extensions support per-document margin overrides for PDF output via YAML metadata, at three levels of granularity — the most specific one set wins:
@@ -340,6 +361,8 @@ quarto render my-letter.qmd
 _extensions/
 ├── base/                          # Shared resources (not a format)
 │   ├── _filters/page.lua          # ::: header/footer :::, part fallback (all 3), lettre-only body/margins, HTML+PDF brand fonts, quote style
+│   ├── _filters/toc.lua           # {{< toc >}} rendering — wired at the post-quarto entry point, after shortcode resolution
+│   ├── _shortcodes/toc.lua        # {{< toc >}} shortcode — drops a placeholder for _filters/toc.lua to expand
 │   ├── brand.yml                  # default brand (contributed to every project via _extension.yml)
 │   ├── parts/                     # bundled default section content (see _parts/ above)
 │   │   └── <div>.qmd              # header.qmd, footer.qmd (all 3); from/date/... (lettre only)

@@ -14,6 +14,8 @@ format:
   document-plain: default
 ---
 
+{{< toc >}}
+
 # Niveau 1 — Introduction
 
 L'extension **Document** fournit un gabarit de mise en page pour des documents formels. Elle partage les filtres et la feuille de style de l'extension *Lettre*, mais sans la structure épistolaire.
