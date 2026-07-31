@@ -24,8 +24,10 @@ $endfor$
 % back to a bare \stepcounter, which never registers a hyperref anchor, so
 % every \tableofcontents entry collapses onto the same "Doc-Start" target
 % instead of its own section (see quarto-lettre.cls's \renewcommand\numberline
-% for why this doesn't bring section numbers back).
-\setcounter{secnumdepth}{3}
+% for why this doesn't bring section numbers back). 4 levels deep (down to
+% \paragraph, #### in Markdown) — matches tocdepth below.
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
 \titleformat{\section}{\large\bfseries\sffamily}{}{0em}{}[\vspace{-0.5em}\rule{\linewidth}{0.4pt}]
 \titleformat{\subsection}{\normalsize\bfseries\sffamily}{}{0em}{}
 \titleformat{\subsubsection}{\normalsize\itshape\sffamily}{}{0em}{}
