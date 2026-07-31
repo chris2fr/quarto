@@ -229,6 +229,26 @@ format:
 
 Set `let-date`/`meet-date`/`doc-date` (resp. `-ref`) to override what's displayed, independent of the underlying `date`/`ref` value — the override is used verbatim (no automatic "Place, le" prefix or "réf." label), so include those yourself if you want them. Without an override, `lettre`'s own `::: date :::`/`::: ref :::` divs still behave exactly as described in the table above (falling back to a part, or an explicit div you wrote).
 
+#### Referencing other metadata inside a `let-`/`meet-`/`doc-` value
+
+`$title$`, `$author$`, `$lang$`, `$date$`, `$place$`, `$ref$` inside a `let-`/`meet-`/`doc-` value are replaced with that top-level metadata field:
+
+```yaml
+---
+title: Réunion hebdomadaire
+author: Chris Mann
+date: 2026-07-31
+place: Paris
+meet-date: "Réunion du $date$ (reportée depuis le 24, $place$)"
+let-annexes:
+  - "Copie signée par $author$"
+---
+```
+
+`$date$` comes out already formatted per `date-format`/`lang` (e.g. "31 juillet 2026"), since it's quarto's own resolved value, not a re-parsed raw string.
+
+This uses pandoc's `$var$` template-variable syntax rather than `{{< meta ... >}}` (the syntax `_parts/*.qmd` files use) because quarto runs its own shortcode resolution over *every* metadata value — not just body content — before any extension filter sees them, and that pass silently empties out `{{< meta ... >}}` written inside a metadata value that references a sibling key, with no leftover text for us to recover it from. `$key$` avoids this: pandoc's markdown reader parses a bare `$key$` as inline math regardless of context, so quarto's shortcode pass never touches it, leaving something our filter can find and replace directly. One consequence: `$title$`/etc. are recognized *only* for these six keys — any other `$...$` (e.g. `$x^2$`, a price like `$100$`) is left as ordinary math, exactly as it would be anywhere else in the document.
+
 ---
 
 ## compte-rendu

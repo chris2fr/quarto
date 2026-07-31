@@ -246,6 +246,45 @@ local META_PRIORITY_CLASSES = {
 -- that don't exist in the document at all.
 local COMPTE_RENDU_ORDER = { 'participants', 'agenda', 'decisions', 'actions', 'next-meeting', 'approval' }
 
+-- let-*/doc-*/meet- values can reference these six top-level metadata keys
+-- as `$title$`, `$author$`, `$lang$`, `$date$`, `$place$`, `$ref$` — pandoc's
+-- own template-variable syntax, reused here rather than `{{< meta ... >}}`:
+-- quarto runs its own shortcode resolution over *all* metadata values
+-- (not just body content) before any extension filter sees them, and that
+-- pass silently empties out `{{< meta ... >}}` written inside a metadata
+-- value referencing a sibling key — confirmed by testing (a nonexistent
+-- shortcode name gets the same silent treatment, plus an "unresolved
+-- shortcode" warning, proving quarto strips the whole `{{< ... >}}` span
+-- unconditionally there). There is no leftover text to recover it from by
+-- the time our filter runs, so `{{< meta ... >}}` cannot be supported here.
+-- `$key$` sidesteps this entirely: pandoc's markdown reader parses single
+-- `$...$` as inline TeX math (Math/InlineMath), same in a metadata value as
+-- in body text, so quarto's shortcode pass never touches it — leaving an
+-- AST node we can walk and replace directly. `$date$` naturally comes out
+-- already formatted per `date-format`/`lang`, since meta_snapshot.date is
+-- quarto's own resolved value, not a re-parsed raw string.
+local META_VAR_KEYS = { title = true, author = true, lang = true, date = true, place = true, ref = true }
+
+local function expand_meta_var_math(el)
+  if el.mathtype == 'InlineMath' and META_VAR_KEYS[el.text] then
+    return pandoc.Str(pandoc.utils.stringify(meta_snapshot[el.text] or ''))
+  end
+end
+
+-- Applies the $key$ substitution above to an Inlines/Blocks metadata value.
+-- Left untouched for any other pandoc.utils.type (List, string, boolean,
+-- ...); meta_value_to_blocks's own recursion into List items, and the
+-- pandoc.read() fallback branch below, each produce Inlines/Blocks in turn,
+-- so nothing is missed — this only needs to handle the two leaf cases.
+local function expand_meta_vars(value)
+  if value == nil then return nil end
+  local kind = pandoc.utils.type(value)
+  if kind == 'Blocks' or kind == 'Inlines' then
+    return value:walk({ Math = expand_meta_var_math })
+  end
+  return value
+end
+
 -- Convert a raw YAML metadata value into blocks usable as a div's content.
 -- pandoc.utils.type tells us how the value was parsed:
 --   Blocks  — already block content (e.g. a multi-paragraph YAML `|` string)
@@ -256,6 +295,7 @@ local COMPTE_RENDU_ORDER = { 'participants', 'agenda', 'decisions', 'actions', '
 -- Returns nil for a missing or empty value, so callers can treat it exactly
 -- like an absent metadata key.
 local function meta_value_to_blocks(value)
+  value = expand_meta_vars(value)
   if value == nil then return nil end
   local kind = pandoc.utils.type(value)
   local blocks
@@ -732,7 +772,7 @@ end
 -- since the div-content override above already takes priority there.
 local function apply_date_ref_overrides(doc)
   for _, key in ipairs({ 'date', 'ref' }) do
-    local override = meta_snapshot[meta_prefix .. key]
+    local override = expand_meta_vars(meta_snapshot[meta_prefix .. key])
     if override ~= nil then
       doc.meta[key] = override
     end
