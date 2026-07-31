@@ -60,6 +60,13 @@ $endfor$
 % *.cls sweep, so this file persists across renders unlike quarto-lettre.cls.
 \IfFileExists{_parts/custom.cls}{\input{_parts/custom.cls}}{}
 
+% Optional, metadata-level: a `tex-custom` YAML key (raw LaTeX) takes
+% priority over both the above and _parts/custom.cls — same "meta always
+% wins" rule as everywhere else in this extension. See README.
+$if(tex-custom)$
+$tex-custom$
+$endif$
+
 \begin{document}
 
 \thispagestyle{firstpage}

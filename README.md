@@ -391,6 +391,15 @@ For PDF output, an optional `_parts/custom.cls` at the project root (next to `_q
 
 Unlike the generated `quarto-lettre.cls`/`.tex` at the project root (removed after every render by `clean-artifacts.sh`), `_parts/custom.cls` is user-owned content and is never touched by cleanup — same guarantee as the `_parts/*.qmd` overrides above.
 
+A `tex-custom` metadata key (raw LaTeX, as a `|` block scalar) does the same thing, inline in the document's or project's YAML instead of a separate file — handy for a one-document tweak, or for keeping everything in `_quarto.yml`. It's injected right after `_parts/custom.cls`, so when both are present, `tex-custom` wins — same "metadata always wins" priority as everywhere else in this extension:
+
+```yaml
+tex-custom: |
+  \titleformat{\section}
+    {\normalfont\QLheadingfont\LARGE\bfseries\color{red}}{\thesection}{0pt}{}
+    [\vspace{0.5em}\titlerule]
+```
+
 ---
 
 ## Brand fonts
