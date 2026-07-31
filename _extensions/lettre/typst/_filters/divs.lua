@@ -74,6 +74,8 @@ local handlers = {
     return '#pad(left: 4cm)[#block(width: 13cm)[\n' .. to_typst(c) .. '\n]]\n#v(1em)'
   end,
   signature = function(c, m) return render_signature(c, m) end,
+  ps        = function(c, _) return '#v(1em)\n' .. strip_leading_break(to_typst(c)) end,
+  annexes   = function(c, _) return '#v(1em)\n' .. strip_leading_break(to_typst(c)) end,
 }
 
 -- Use Pandoc (runs last) so metadata is available when we process divs.

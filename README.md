@@ -119,6 +119,8 @@ format:
 | `::: body` | Body of the letter | any content in the document that isn't inside one of these divs is concatenated into the body automatically — see below |
 | `::: closing` | Closing formula | falls back to a part |
 | `::: signature` | Sender's name and title | falls back to a part |
+| `::: ps` | Postscript, printed after the signature | falls back to a part, or omitted |
+| `::: annexes` | List of enclosures, printed after the postscript | falls back to a part, or omitted |
 | `::: footer` | Page footer — printed on every page | falls back to a part, or omitted |
 
 Leave `::: header` or `::: footer` **empty** (`::: header\n:::`) to suppress the header/footer area outright — that's different from omitting the div entirely, which triggers the part fallback below.
@@ -142,7 +144,7 @@ format:
 Le corps de la lettre, sans aucun div.
 ```
 
-Everything else (`from`, `date`, `to`, `subject`, `opening`, `closing`, `signature`, `header`, `footer`) is filled in from parts (see below). Mixing is fine: write the divs you care about, and let the rest fall back.
+Everything else (`from`, `date`, `to`, `subject`, `opening`, `closing`, `signature`, `ps`, `annexes`, `header`, `footer`) is filled in from parts (see below). Mixing is fine: write the divs you care about, and let the rest fall back.
 
 #### Logo, link and description in the header
 
@@ -172,7 +174,7 @@ Any div listed as "falls back to a part" above can be left out of the document e
 
 The first one found wins, so a project- or document-level `_parts/<div>.qmd` always takes precedence over the extension's default. Part files are plain Markdown and support `{{< meta key >}}` and `{{< brand logo <size> >}}` shortcodes.
 
-`::: header` / `::: footer` and their `_parts/header.qmd` / `_parts/footer.qmd` fallback work the same way in `compte-rendu` and `document` — a single `_parts/header.qmd` at the project root gives every letter, meeting minutes, and document in the project the same letterhead and footer. The rest of the fallback vocabulary (`from`, `date`, `to`, `subject`, `ref`, `opening`, `closing`, `signature`) is specific to `lettre`.
+`::: header` / `::: footer` and their `_parts/header.qmd` / `_parts/footer.qmd` fallback work the same way in `compte-rendu` and `document` — a single `_parts/header.qmd` at the project root gives every letter, meeting minutes, and document in the project the same letterhead and footer. The rest of the fallback vocabulary (`from`, `date`, `to`, `subject`, `ref`, `opening`, `closing`, `signature`, `ps`, `annexes`) is specific to `lettre`.
 
 Since `quarto add` has no post-install hook to scaffold `_parts/` automatically, the extension does the next best thing: the first time a document is rendered in a project (or standalone file) that has no `_parts/` yet, one is created — at the project root if there's a `_quarto.yml`, next to the document otherwise — populated with an editable copy of every fallback-eligible part for that extension (just `header.qmd`/`footer.qmd` for `compte-rendu`/`document`; the full set for `lettre`). An existing `_parts/` (even an empty one, or one missing some files) is never touched again, so this only ever runs once and never overwrites customizations.
 

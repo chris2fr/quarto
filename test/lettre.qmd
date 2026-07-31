@@ -161,6 +161,17 @@ En espérant que cette extension vous sera utile, je reste à votre disposition 
 {{< meta author >}}
 :::
 
+::: ps
+P.-S. : Le nouveau numéro de téléphone du secrétariat est le +33 7 81 81 18 11.
+:::
+
+::: annexes
+Pièces jointes :
+
+1. Copie du dernier échange
+2. Relevé d'informations
+:::
+
 ::: footer
 [+33 7 81 81 18 11](tel:+33781811811) --- [chris@lesgrandsvoisins.com](mailto:chris@lesgrandsvoisins.com)\
 Siège : chez C. LHOMME - 146 bd de Montparnasse 75014 PARIS\

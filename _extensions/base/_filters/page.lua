@@ -6,7 +6,7 @@ local french_quotes = false
 -- This filter is shared by the lettre, compte-rendu and document extensions.
 -- ::: header ::: / ::: footer ::: and their _parts/ fallback (further down)
 -- are common to all three. The rest of the fallback vocabulary
--- (from/date/to/subject/ref/opening/closing/signature) is lettre's own —
+-- (from/date/to/subject/ref/opening/closing/signature/ps/annexes) is lettre's own —
 -- compte-rendu and document use different div classes (or none at all) and
 -- must not have that content spliced into them.
 -- quarto.format.format_identifier()['extension-name'] reliably names the
@@ -178,6 +178,7 @@ local FALLBACK_CLASSES = {
   header = true, footer = true,
   from = true, date = true, to = true, subject = true, ref = true,
   opening = true, closing = true, signature = true,
+  ps = true, annexes = true,
 }
 local HEADER_FOOTER = { header = true, footer = true }
 
@@ -185,7 +186,7 @@ local HEADER_FOOTER = { header = true, footer = true }
 -- the sequence but never gets a generic fallback (the letter's actual
 -- content is never generic) — it just marks where fallback divs around it
 -- should be inserted.
-local BODY_ORDER = { 'from', 'date', 'to', 'subject', 'ref', 'opening', 'body', 'closing', 'signature' }
+local BODY_ORDER = { 'from', 'date', 'to', 'subject', 'ref', 'opening', 'body', 'closing', 'signature', 'ps', 'annexes' }
 
 -- Every class fill_missing_body_divs needs presence tracked for, including
 -- from/body which anchor positions but are never synthesized themselves.
@@ -401,7 +402,7 @@ local function load_part(class)
 end
 
 -- Sort doc.blocks into: known-class divs (from/date/to/subject/ref/opening/
--- body/closing/signature — one each — plus header/footer, kept aside so
+-- body/closing/signature/ps/annexes — one each — plus header/footer, kept aside so
 -- they can be re-prepended/appended untouched), and everything else
 -- ("loose" content: bare paragraphs, headings, tables, custom divs with no
 -- recognized class...). A qmd doesn't have to wrap its letter content in
@@ -593,7 +594,7 @@ end
 -- resolve_margins) and brand fonts for HTML/LaTeX (see brand_fonts_html /
 -- brand_fonts_latex); scaffold/fall back to _parts/header.qmd and
 -- _parts/footer.qmd for every extension; then, lettre only, fill in any of
--- from/date/to/subject/ref/opening/closing/signature missing from the
+-- from/date/to/subject/ref/opening/closing/signature/ps/annexes missing from the
 -- document, in their canonical position (see `is_lettre` above).
 function Pandoc(doc)
   for key, value in pairs(extracted) do

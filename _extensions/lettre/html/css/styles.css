@@ -11,6 +11,8 @@ div.lettre {
                "body body body body"
                "c closing closing closing"
                "c signature signature signature"
+               "ps ps ps ps"
+               "annexes annexes annexes annexes"
                "footnotes footnotes footnotes footnotes"
                "biblio biblio biblio biblio";
 }
@@ -94,6 +96,16 @@ header img {
 
 .signature {
   grid-area: signature;
+}
+
+.ps {
+  grid-area: ps;
+  margin-top: 1rem;
+}
+
+.annexes {
+  grid-area: annexes;
+  margin-top: 1rem;
 }
 
 .bibliography-wrapper,

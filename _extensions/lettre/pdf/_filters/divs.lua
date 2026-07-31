@@ -8,6 +8,8 @@ local env_for_class = {
   signature = 'div-signature',
   subject = 'div-subject',
   ref = 'div-ref',
+  ps = 'div-ps',
+  annexes = 'div-annexes',
 }
 
 local function wrap_div(el, env)

@@ -10,6 +10,8 @@ local style_for_class = {
   closing   = 'Letter Closing',
   signature = 'Letter Signature',
   footer    = 'Letter Footer',
+  ps        = 'Letter PS',
+  annexes   = 'Letter Annexes',
 }
 
 function Div(el)
