@@ -20,7 +20,12 @@ $endfor$
 \providecommand{\square}{\ensuremath{\vcenter{\hbox{\fbox{\phantom{\rule{0.55em}{0.55em}}}}}}}
 
 % ── Section styling ───────────────────────────────────────────────────────────
-\setcounter{secnumdepth}{0}
+% > 0 so \@startsection still \refstepcounter's each heading — at 0 it falls
+% back to a bare \stepcounter, which never registers a hyperref anchor, so
+% every \tableofcontents entry collapses onto the same "Doc-Start" target
+% instead of its own section (see quarto-lettre.cls's \renewcommand\numberline
+% for why this doesn't bring section numbers back).
+\setcounter{secnumdepth}{3}
 \titleformat{\section}{\large\bfseries\sffamily}{}{0em}{}[\vspace{-0.5em}\rule{\linewidth}{0.4pt}]
 \titleformat{\subsection}{\normalsize\bfseries\sffamily}{}{0em}{}
 \titleformat{\subsubsection}{\normalsize\itshape\sffamily}{}{0em}{}

@@ -84,13 +84,13 @@
 \newcommand{\QLheadingfont}{\plexsans}
 
 \titleformat{\section}
-  {\normalfont\QLheadingfont\LARGE\bfseries}{\thesection}{0pt}{}
+  {\normalfont\QLheadingfont\LARGE\bfseries}{}{0pt}{}
   [\vspace{0.5em}\titlerule]
 \titleformat{\subsection}
-  {\normalfont\QLheadingfont\Large\bfseries}{\thesubsection}{0pt}{}
+  {\normalfont\QLheadingfont\Large\bfseries}{}{0pt}{}
   [\vspace{0.5em}]
 \titleformat{\subsubsection}
-  {\normalfont\QLheadingfont\large\bfseries}{\thesubsubsection}{0pt}{}
+  {\normalfont\QLheadingfont\large\bfseries}{}{0pt}{}
   [\vspace{0.25em}]
 \titlespacing*{\section}{0pt}{1.5cm}{1ex plus 0.2ex}
 \titlespacing*{\subsection}{0pt}{1cm}{0.5ex plus 0.1ex}
@@ -104,6 +104,13 @@
 % \titlespacing*{\section}{0pt}{1.5ex plus 0.5ex minus 0.2ex}{1ex plus 0.2ex}
 % \titlespacing*{\subsection}{0pt}{1.2ex plus 0.3ex minus 0.2ex}{0.5ex plus 0.1ex}
 
+% secnumdepth is set in layout.tex (must stay > 0 for \@startsection to
+% \refstepcounter each heading, so \tableofcontents hyperlinks resolve to
+% their own section instead of all collapsing onto the same "Doc-Start"
+% target); \numberline is neutralized here regardless, since secnumdepth > 0
+% would otherwise make titlesec prefix TOC lines with \numberline{N} even
+% though the empty titleformat labels above already hide it in the body.
+\renewcommand{\numberline}[1]{}
 \newcounter{none}
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 

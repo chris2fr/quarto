@@ -84,19 +84,29 @@
 \newcommand{\QLheadingfont}{\plexsans}
 
 \titleformat{\section}
-  {\normalfont\QLheadingfont\Large\bfseries}{\thesection}{0pt}{}
+  {\normalfont\QLheadingfont\Large\bfseries}{}{0pt}{}
   [\vspace{0.5em}\titlerule]
 \titleformat{\subsection}
-  {\normalfont\QLheadingfont\Large\bfseries}{\thesubsection}{0pt}{}
+  {\normalfont\QLheadingfont\Large\bfseries}{}{0pt}{}
   [\vspace{0.5em}]
 \titleformat{\subsubsection}
-  {\normalfont\QLheadingfont\large\bfseries}{\thesubsubsection}{0pt}{}
+  {\normalfont\QLheadingfont\large\bfseries}{}{0pt}{}
   [\vspace{0.25em}]
 \titlespacing*{\section}{0pt}{1.5cm}{1ex plus 0.2ex}
 \titlespacing*{\subsection}{0pt}{1cm}{0.5ex plus 0.1ex}
 \titlespacing*{\subsubsection}{0pt}{0.6cm}{0.25ex plus 0.05ex}
 
-\setcounter{secnumdepth}{0}
+% secnumdepth must stay > 0 (unlike a plain \thesection-suppressing 0) so
+% \@startsection still \refstepcounter's each heading: at 0 it falls back to
+% a bare \stepcounter, which never registers the heading as a hyperref
+% anchor, so every \tableofcontents entry (and TOC hyperlink) collapses onto
+% the same "Doc-Start" target instead of its own section — invisible on a
+% one-page letter, glaringly wrong once headings span several pages. Numbers
+% themselves stay hidden via the empty titleformat labels above; secnumdepth
+% would otherwise also make titlesec prefix TOC lines with \numberline{N},
+% which \renewcommand{\numberline} below strips back out.
+\setcounter{secnumdepth}{3}
+\renewcommand{\numberline}[1]{}
 \newcounter{none}
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 

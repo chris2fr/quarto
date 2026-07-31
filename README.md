@@ -333,6 +333,8 @@ All three extensions support a `{{< toc >}}` shortcode for HTML and PDF output �
 
 > In `lettre`, `::: subject :::` is conventionally written as a level-2 heading (`## {{< meta title >}}`) — it will show up as a table-of-contents entry like any other heading if you add `{{< toc >}}` to a letter.
 
+> Headings are never visibly numbered (empty `\titleformat` label), but `secnumdepth` is kept above 0 regardless — set it to 0 and LaTeX stops `\refstepcounter`-ing headings, so every PDF TOC entry silently links to the same anchor (page 1) instead of its own section. Harmless-looking on a one-page letter, obviously wrong once headings span several pages.
+
 ---
 
 ## PDF margin overrides
