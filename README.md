@@ -178,6 +178,41 @@ The first one found wins, so a project- or document-level `_parts/<div>.qmd` alw
 
 Since `quarto add` has no post-install hook to scaffold `_parts/` automatically, the extension does the next best thing: the first time a document is rendered in a project (or standalone file) that has no `_parts/` yet, one is created — at the project root if there's a `_quarto.yml`, next to the document otherwise — populated with an editable copy of every fallback-eligible part for that extension (just `header.qmd`/`footer.qmd` for `compte-rendu`/`document`; the full set for `lettre`). An existing `_parts/` (even an empty one, or one missing some files) is never touched again, so this only ever runs once and never overwrites customizations.
 
+#### Filling a div straight from metadata
+
+Any div listed as "falls back to a part" above — plus, in `compte-rendu`, `participants`, `agenda`, `decisions`, `actions`, `next-meeting`, `approval` — can also be filled directly from the document's own YAML front matter, instead of writing a `::: div ::: ... :::` block or a `_parts/<div>.qmd` file. The metadata key is the div's class name prefixed per extension — `let-` for `lettre`, `meet-` for `compte-rendu`, `doc-` for `document` — e.g. `let-to`, `let-ps`, `meet-agenda`, `doc-footer`:
+
+```yaml
+---
+title: Objet de la lettre
+author: Prénom Nom
+lang: fr
+let-to: |
+  Le développeur Quarto
+  À qui de droit
+let-ps: "P.-S. : Merci de répondre avant vendredi."
+let-annexes:
+  - Copie du dernier échange
+  - Relevé d'informations
+format:
+  lettre-html: default
+---
+```
+
+The prefix isn't just a naming convention: a bare `to:` or `from:` key collides with pandoc's own reserved `to`/`from` metadata (the writer/reader format) and silently breaks rendering ("Unknown output format ..."), so every div is namespaced the same way — prefix included — even where no such collision exists, for one predictable rule.
+
+When set, the metadata value **always wins** — over an explicit `::: div ::: ... :::` written in the body, and over `_parts/`. Priority, most to least specific:
+
+1. `let-<div>` / `meet-<div>` / `doc-<div>` metadata key
+2. `::: <div> ::: ... :::` in the document body
+3. `_parts/<div>.qmd` fallback chain (document, then project, then extension default) — `lettre`'s own divs and `header`/`footer` only; `compte-rendu`'s divs have no `_parts/` fallback
+
+`date` and `ref` are deliberately excluded: both are already required top-level metadata, consumed by `_parts/date.qmd` and `_parts/ref.qmd`'s own default templates ("Place, le Date" / "réf. XXX") — giving them the same treatment would make those two templates unreachable, since `date`/`ref` are always set.
+
+The value can be a plain string, a multi-paragraph block scalar (`let-ps: |`), or a YAML list — rendered as a bullet list (`let-annexes: [...]`).
+
+For a `compte-rendu` div with no `_parts/` fallback to place it by, a metadata-provided one that's entirely absent from the body is appended at the end, in this order: `participants`, `agenda`, `decisions`, `actions`, `next-meeting`, `approval` — ahead of `footer`. Write the div yourself (even empty, e.g. `::: agenda\n:::`) if you need it placed elsewhere.
+
 ---
 
 ## compte-rendu
@@ -215,7 +250,7 @@ format:
 | `::: approval` | Approval statement |
 | `::: footer` | Page footer — printed on every page |
 
-`::: header` and `::: footer` can be omitted — see "`_parts/` — overriding or omitting a section" under `lettre` above (the rest of this table has no fallback here; unlike `lettre`, a missing `::: participants` or `::: body` is still an error).
+`::: header` and `::: footer` can be omitted — see "`_parts/` — overriding or omitting a section" under `lettre` above. The rest of this table has no `_parts/` fallback, but every div in it (`participants`, `agenda`, `decisions`, `actions`, `next-meeting`, `approval`, plus `header`/`footer`) can be filled from a `meet-<div>` metadata key instead — see "Filling a div straight from metadata" under `lettre` above; a missing `::: participants` or `::: body` with no `meet-participants` metadata either is still an error.
 
 ---
 
@@ -239,7 +274,7 @@ format:
 ---
 ```
 
-No special divs — use standard Markdown headings (H1–H4), paragraphs, tables, lists, and images directly in the document body. It does, however, support `::: header` and `::: footer`, with the same `_parts/` fallback as `compte-rendu` above — omit them and the page header/footer come from `_parts/header.qmd` / `_parts/footer.qmd` if present.
+No special divs — use standard Markdown headings (H1–H4), paragraphs, tables, lists, and images directly in the document body. It does, however, support `::: header` and `::: footer`, with the same `_parts/` fallback as `compte-rendu` above — omit them and the page header/footer come from `_parts/header.qmd` / `_parts/footer.qmd` if present, or from a `doc-header` / `doc-footer` metadata key (see "Filling a div straight from metadata" under `lettre` above), which takes priority over both.
 
 ---
 

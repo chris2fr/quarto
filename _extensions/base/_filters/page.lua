@@ -21,6 +21,29 @@ local extension_name = nil
 -- walking the document (see find_part further down).
 local seen = {}
 
+-- Snapshot of the document's own YAML metadata, captured by Meta() before
+-- the Div/Pandoc pass runs. Lets meta_value_to_blocks look up e.g.
+-- doc.meta['let-ps'] while still walking the body, without threading `doc`
+-- through every function.
+local meta_snapshot = {}
+
+-- Metadata keys for META_PRIORITY_CLASSES (further down) are namespaced per
+-- extension — `let-to`, `meet-agenda`, `doc-header`... — rather than bare
+-- (`to`, `agenda`, `header`...). Pandoc itself reserves bare `to`/`from` as
+-- metadata keys for the writer/reader format (`to: html` is a valid, real
+-- pandoc default): a bare `to:` in a lettre document's front matter is
+-- silently read as an output-format override and breaks rendering entirely
+-- ("Unknown output format ..."), not just this extension's own div. Since
+-- one bare collision like that is enough to rule out unprefixed keys
+-- altogether, every class uses its extension's prefix, including ones with
+-- no actual collision (ps, agenda, ...), for one uniform, predictable rule.
+local META_PREFIX_FOR_EXTENSION = {
+  lettre = 'let-',
+  ['compte-rendu'] = 'meet-',
+  document = 'doc-',
+}
+local meta_prefix = ''
+
 -- Quarto can run several output formats of the same document through one
 -- persistent Lua state (not a fresh process per format), so every module-
 -- level table above must be cleared per format or state leaks from one
@@ -32,6 +55,8 @@ function Meta(m)
   is_lettre = extension_name == 'lettre'
   extracted = {}
   seen = {}
+  meta_snapshot = m
+  meta_prefix = META_PREFIX_FOR_EXTENSION[extension_name] or ''
 end
 
 -- Unwrap a single inline into (image, link-target). The image may be bare
@@ -193,6 +218,64 @@ local BODY_ORDER = { 'from', 'date', 'to', 'subject', 'ref', 'opening', 'body', 
 local ALL_BODY_CLASSES = {}
 for _, class in ipairs(BODY_ORDER) do ALL_BODY_CLASSES[class] = true end
 
+-- Divs that can be filled directly from a same-named YAML metadata key,
+-- taking priority over both an explicit ::: class ::: div in the body and
+-- the _parts/ fallback chain. 'date' and 'ref' are deliberately excluded:
+-- both are already required top-level metadata (see validate.lua) consumed
+-- by base/parts/date.qmd ("{{< meta place >}}, le {{< meta date >}}") and
+-- base/parts/ref.qmd ("réf. {{< meta ref >}}") — giving them the same
+-- meta-priority treatment would make those two templates unreachable for
+-- every document (date/ref are always set), silently dropping the "Place,
+-- le" / "réf." formatting. 'body' is never meta-driven — a letter's actual
+-- content is never a one-off metadata value.
+local META_PRIORITY_CLASSES = {
+  header = true, footer = true,
+  from = true, to = true, subject = true, opening = true, closing = true, signature = true,
+  ps = true, annexes = true,
+  participants = true, agenda = true, decisions = true, actions = true,
+  ['next-meeting'] = true, approval = true,
+}
+
+-- Canonical position for compte-rendu's own divs, used only to place ones
+-- synthesized from metadata when entirely absent from the body (mirrors
+-- what BODY_ORDER/fill_missing_body_divs does for lettre). compte-rendu
+-- doesn't otherwise reorder body content, so this only matters for divs
+-- that don't exist in the document at all.
+local COMPTE_RENDU_ORDER = { 'participants', 'agenda', 'decisions', 'actions', 'next-meeting', 'approval' }
+
+-- Convert a raw YAML metadata value into blocks usable as a div's content.
+-- pandoc.utils.type tells us how the value was parsed:
+--   Blocks  — already block content (e.g. a multi-paragraph YAML `|` string)
+--   Inlines — a single-paragraph value (the common case: a plain string)
+--   List    — a YAML list (e.g. `annexes: [...]`); rendered as a bullet list
+--   anything else (string, boolean, MetaMap...) — stringified and
+--     re-parsed as Markdown, covering edge cases like a bare `true`/number
+-- Returns nil for a missing or empty value, so callers can treat it exactly
+-- like an absent metadata key.
+local function meta_value_to_blocks(value)
+  if value == nil then return nil end
+  local kind = pandoc.utils.type(value)
+  local blocks
+  if kind == 'Blocks' then
+    blocks = pandoc.Blocks(value)
+  elseif kind == 'Inlines' then
+    if #value > 0 then blocks = pandoc.Blocks({ pandoc.Para(value) }) end
+  elseif kind == 'List' then
+    if #value > 0 then
+      local items = {}
+      for _, item in ipairs(value) do
+        table.insert(items, meta_value_to_blocks(item) or pandoc.Blocks({}))
+      end
+      blocks = pandoc.Blocks({ pandoc.BulletList(items) })
+    end
+  else
+    local text = pandoc.utils.stringify(value)
+    if text ~= '' then blocks = pandoc.read(text, 'markdown').blocks end
+  end
+  if blocks and #blocks > 0 then return blocks end
+  return nil
+end
+
 -- Format-specific rendering shared by both a real div and a generic-layout
 -- fallback file. For docx/odt returns a content list to place in the body
 -- (wrapped in a Div so docx/_filters/divs.lua can still style it); for every
@@ -245,8 +328,26 @@ end
 -- removed from the body, its content living in metadata instead). The rest
 -- are left alone here — they're plain in-body divs already styled by each
 -- format's own divs.lua filter further down the chain — we only note they exist.
+--
+-- A META_PRIORITY_CLASSES metadata key, when set, wins outright: it
+-- replaces the div's own written content (matching what an author would
+-- expect from a metadata override — the last thing set, wins), same as an
+-- explicit ::: class ::: div elsewhere getting a same-named metadata key
+-- would. This is checked first and independently of the class dispatch
+-- below, since a class can be both META_PRIORITY_CLASSES and
+-- HEADER_FOOTER/ALL_BODY_CLASSES at once.
 function Div(el)
   for _, class in ipairs(el.classes) do
+    if META_PRIORITY_CLASSES[class] then
+      local blocks = meta_value_to_blocks(meta_snapshot[meta_prefix .. class])
+      if blocks then
+        seen[class] = true
+        if HEADER_FOOTER[class] then
+          return apply_section(class, blocks, nil) or {}
+        end
+        return pandoc.Div(blocks, pandoc.Attr('', { class }))
+      end
+    end
     if HEADER_FOOTER[class] then
       seen[class] = true
       return apply_section(class, el.content, nil) or {}
@@ -434,10 +535,12 @@ local function bucket_blocks(doc)
   return by_class, loose, header_block, footer_block
 end
 
--- Rebuild doc.blocks in BODY_ORDER: divs that were found are used as-is;
--- divs that are missing but have a <class>.qmd fallback are
--- synthesized in their canonical position. 'body' additionally falls back to
--- the document's loose content (see bucket_blocks) before falling back to a
+-- Rebuild doc.blocks in BODY_ORDER: divs that were found are used as-is
+-- (already meta-overridden by Div() above, if applicable); divs that are
+-- entirely missing fall back first to a same-named metadata key (for the
+-- META_PRIORITY_CLASSES among them — excludes 'date'/'ref', see there),
+-- then to a <class>.qmd fallback. 'body' additionally falls back to the
+-- document's loose content (see bucket_blocks) before falling back to a
 -- generic file. Any class still missing (or without a fallback) is simply
 -- left absent, same as today — validate.lua still catches a genuinely
 -- missing required div.
@@ -453,9 +556,11 @@ local function fill_missing_body_divs(doc)
       table.insert(new_blocks, pandoc.Div(loose, pandoc.Attr('', { 'body' })))
       seen['body'] = true
     elseif FALLBACK_CLASSES[class] then
-      local blocks = load_part(class)
+      local blocks = (META_PRIORITY_CLASSES[class] and meta_value_to_blocks(meta_snapshot[meta_prefix .. class]))
+        or load_part(class)
       if blocks then
         table.insert(new_blocks, pandoc.Div(blocks, pandoc.Attr('', { class })))
+        seen[class] = true
       end
     end
   end
@@ -589,13 +694,33 @@ local function brand_fonts_latex(doc)
   -- doc.meta['header-includes'] = pandoc.MetaList(groups)
 end
 
+-- compte-rendu's own divs (participants/agenda/decisions/actions/
+-- next-meeting/approval) have no _parts/ fallback — bucket_blocks/BODY_ORDER
+-- is lettre-only — so unlike lettre's classes, a metadata-driven one that's
+-- entirely absent from the body has nowhere else to be synthesized. Appended
+-- in COMPTE_RENDU_ORDER at the end of the body (ahead of a footer, which is
+-- spliced back in separately below); an author who cares about exact
+-- placement can still just write the div themselves.
+local function fill_missing_meta_only_divs(doc)
+  for _, class in ipairs(COMPTE_RENDU_ORDER) do
+    if not seen[class] then
+      local blocks = meta_value_to_blocks(meta_snapshot[meta_prefix .. class])
+      if blocks then
+        table.insert(doc.blocks, pandoc.Div(blocks, pandoc.Attr('', { class })))
+        seen[class] = true
+      end
+    end
+  end
+end
+
 -- Inject the extracted values into document metadata so layout templates can
 -- reference $page-header$ and $page-footer$; resolve margin fallbacks (see
 -- resolve_margins) and brand fonts for HTML/LaTeX (see brand_fonts_html /
 -- brand_fonts_latex); scaffold/fall back to _parts/header.qmd and
 -- _parts/footer.qmd for every extension; then, lettre only, fill in any of
 -- from/date/to/subject/ref/opening/closing/signature/ps/annexes missing from the
--- document, in their canonical position (see `is_lettre` above).
+-- document, in their canonical position (see `is_lettre` above); then,
+-- compte-rendu only, do the same for its own metadata-driven divs.
 function Pandoc(doc)
   for key, value in pairs(extracted) do
     doc.meta[key] = value
@@ -609,11 +734,13 @@ function Pandoc(doc)
 
   if is_lettre then
     fill_missing_body_divs(doc)
+  elseif extension_name == 'compte-rendu' then
+    fill_missing_meta_only_divs(doc)
   end
 
   for _, class in ipairs({ 'header', 'footer' }) do
     if not seen[class] then
-      local blocks = load_part(class)
+      local blocks = meta_value_to_blocks(meta_snapshot[meta_prefix .. class]) or load_part(class)
       if blocks then
         local div = apply_section(class, blocks, doc)
         if div then
