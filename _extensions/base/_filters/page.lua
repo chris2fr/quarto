@@ -218,19 +218,22 @@ local BODY_ORDER = { 'from', 'date', 'to', 'subject', 'ref', 'opening', 'body', 
 local ALL_BODY_CLASSES = {}
 for _, class in ipairs(BODY_ORDER) do ALL_BODY_CLASSES[class] = true end
 
--- Divs that can be filled directly from a same-named YAML metadata key,
--- taking priority over both an explicit ::: class ::: div in the body and
--- the _parts/ fallback chain. 'date' and 'ref' are deliberately excluded:
--- both are already required top-level metadata (see validate.lua) consumed
--- by base/parts/date.qmd ("{{< meta place >}}, le {{< meta date >}}") and
--- base/parts/ref.qmd ("réf. {{< meta ref >}}") — giving them the same
--- meta-priority treatment would make those two templates unreachable for
--- every document (date/ref are always set), silently dropping the "Place,
--- le" / "réf." formatting. 'body' is never meta-driven — a letter's actual
+-- Divs that can be filled directly from a same-named (namespaced, see
+-- meta_prefix above) YAML metadata key, taking priority over both an
+-- explicit ::: class ::: div in the body and the _parts/ fallback chain.
+-- 'date' and 'ref' are included like any other class here — this only
+-- overrides the *div's own content* (the ::: date ::: / ::: ref ::: block),
+-- which is a separate matter from the plain top-level `date`/`ref` metadata
+-- fields (required/optional, consumed by base/parts/date.qmd's
+-- "{{< meta place >}}, le {{< meta date >}}" and base/parts/ref.qmd's
+-- "réf. {{< meta ref >}}", and directly by non-lettre extensions' title
+-- blocks) — see the doc.meta.date/doc.meta.ref override further down in
+-- Pandoc(doc) for that. 'body' is never meta-driven — a letter's actual
 -- content is never a one-off metadata value.
 local META_PRIORITY_CLASSES = {
   header = true, footer = true,
   from = true, to = true, subject = true, opening = true, closing = true, signature = true,
+  date = true, ref = true,
   ps = true, annexes = true,
   participants = true, agenda = true, decisions = true, actions = true,
   ['next-meeting'] = true, approval = true,
@@ -537,11 +540,11 @@ end
 
 -- Rebuild doc.blocks in BODY_ORDER: divs that were found are used as-is
 -- (already meta-overridden by Div() above, if applicable); divs that are
--- entirely missing fall back first to a same-named metadata key (for the
--- META_PRIORITY_CLASSES among them — excludes 'date'/'ref', see there),
--- then to a <class>.qmd fallback. 'body' additionally falls back to the
--- document's loose content (see bucket_blocks) before falling back to a
--- generic file. Any class still missing (or without a fallback) is simply
+-- entirely missing fall back first to a namespaced metadata key (for the
+-- META_PRIORITY_CLASSES among them), then to a <class>.qmd fallback. 'body'
+-- additionally falls back to the document's loose content (see
+-- bucket_blocks) before falling back to a generic file. Any class still
+-- missing (or without a fallback) is simply
 -- left absent, same as today — validate.lua still catches a genuinely
 -- missing required div.
 local function fill_missing_body_divs(doc)
@@ -713,6 +716,29 @@ local function fill_missing_meta_only_divs(doc)
   end
 end
 
+-- `let-date`/`meet-date`/`doc-date` (resp. `-ref`) override the plain
+-- top-level `date`/`ref` metadata itself, separately from any div-content
+-- override above. This is what compte-rendu and document actually need:
+-- neither has a `date`/`ref` div at all — their typst/PDF/HTML title blocks
+-- (compte-rendu/typst/_filters/divs.lua, document/typst/_filters/title.lua,
+-- both layout.tex's `$date$`/`$ref$`, both layout.html's `$date$`/`$ref$`)
+-- read doc.meta.date/doc.meta.ref directly, wrapping it in their own
+-- "date --- place" / "Réf. : ..." formatting, so overriding the raw value
+-- here is enough — and simpler than reconstructing each extension's title
+-- block from scratch. For lettre, this same reassignment reaches its own
+-- typst render_date's raw meta.place/meta.date rebuild (used only when the
+-- ::: date ::: div's content is itself empty, which in practice it never is
+-- once meta-priority or a _parts/date.qmd default has filled it) — harmless
+-- since the div-content override above already takes priority there.
+local function apply_date_ref_overrides(doc)
+  for _, key in ipairs({ 'date', 'ref' }) do
+    local override = meta_snapshot[meta_prefix .. key]
+    if override ~= nil then
+      doc.meta[key] = override
+    end
+  end
+end
+
 -- Inject the extracted values into document metadata so layout templates can
 -- reference $page-header$ and $page-footer$; resolve margin fallbacks (see
 -- resolve_margins) and brand fonts for HTML/LaTeX (see brand_fonts_html /
@@ -726,6 +752,7 @@ function Pandoc(doc)
     doc.meta[key] = value
   end
 
+  apply_date_ref_overrides(doc)
   resolve_margins(doc)
   brand_fonts_html(doc)
   brand_fonts_latex(doc)

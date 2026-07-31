@@ -1,5 +1,8 @@
 local required_meta = { 'title', 'lang' }
-local optional_meta = { 'author', 'date', 'subtitle', 'ref', 'organization', 'place' }
+local optional_meta = {
+  'author', 'date', 'subtitle', 'ref', 'organization', 'place',
+  'doc-date', 'doc-ref', 'doc-header', 'doc-footer',
+}
 
 function Pandoc(doc)
   local known_meta = {}

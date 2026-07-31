@@ -22,10 +22,21 @@ local function render_from(content, meta)
   return head .. body .. '\n#v(1em)'
 end
 
--- date: right-aligned small text, built entirely from metadata.
+-- date: right-aligned small text, built entirely from metadata — never from
+-- the div's own content. A `{{< meta ... >}}` shortcode written directly in
+-- an explicit ::: date ::: div's body content is not yet resolved by the
+-- time this filter runs (extension filters run before quarto's own
+-- shortcode-expansion pass, unlike _parts/*.qmd, which page.lua expands by
+-- hand — see expand_meta_shortcodes there), so using that content directly
+-- would render blank. `let-date` metadata (see base/_filters/page.lua's
+-- META_PRIORITY_CLASSES) is the one exception: it's plain YAML text, never
+-- a shortcode, so when set it's used verbatim as the whole line, with no
+-- "place, le" prefix — the author fully owns the text at that point.
 local function render_date(meta)
+  local rendered = meta.date_override ~= '' and meta.date_override
+    or (meta.place .. ', le ' .. meta.date)
   return '#align(right)[#text(size: 9pt)[\n' ..
-         meta.place .. ', le ' .. meta.date ..
+         rendered ..
          '\n]]\n#v(1em)'
 end
 
@@ -86,6 +97,7 @@ function Pandoc(doc)
     title  = s(doc.meta.title),
     ref    = s(doc.meta.ref),
     date   = s(doc.meta.date),
+    date_override = s(doc.meta['let-date']),
   }
 
   local new_blocks = {}

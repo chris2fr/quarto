@@ -207,11 +207,27 @@ When set, the metadata value **always wins** — over an explicit `::: div ::: .
 2. `::: <div> ::: ... :::` in the document body
 3. `_parts/<div>.qmd` fallback chain (document, then project, then extension default) — `lettre`'s own divs and `header`/`footer` only; `compte-rendu`'s divs have no `_parts/` fallback
 
-`date` and `ref` are deliberately excluded: both are already required top-level metadata, consumed by `_parts/date.qmd` and `_parts/ref.qmd`'s own default templates ("Place, le Date" / "réf. XXX") — giving them the same treatment would make those two templates unreachable, since `date`/`ref` are always set.
-
 The value can be a plain string, a multi-paragraph block scalar (`let-ps: |`), or a YAML list — rendered as a bullet list (`let-annexes: [...]`).
 
 For a `compte-rendu` div with no `_parts/` fallback to place it by, a metadata-provided one that's entirely absent from the body is appended at the end, in this order: `participants`, `agenda`, `decisions`, `actions`, `next-meeting`, `approval` — ahead of `footer`. Write the div yourself (even empty, e.g. `::: agenda\n:::`) if you need it placed elsewhere.
+
+#### `let-date`/`meet-date`/`doc-date` and `let-ref`/`meet-ref`/`doc-ref`
+
+`date` and `ref` follow the same `let-`/`meet-`/`doc-` prefix convention, but override the plain top-level `date`/`ref` metadata value itself, rather than a div's content — `date` and `ref` are already required/optional top-level metadata (see each extension's Metadata section above), used well beyond `lettre`'s own `::: date :::`/`::: ref :::` divs: `compte-rendu` and `document` have no such divs at all, and instead read `date`/`ref` directly to build their own title block (meeting date, "Réf. : ..." line), in every format (HTML, PDF, Typst).
+
+```yaml
+---
+title: Réunion du 31 juillet
+author: Chris Mann
+date: 2026-07-31
+meet-date: "31 juillet 2026 (reporté depuis le 24)"
+meet-ref: "CR-2026-042"
+format:
+  compte-rendu-html: default
+---
+```
+
+Set `let-date`/`meet-date`/`doc-date` (resp. `-ref`) to override what's displayed, independent of the underlying `date`/`ref` value — the override is used verbatim (no automatic "Place, le" prefix or "réf." label), so include those yourself if you want them. Without an override, `lettre`'s own `::: date :::`/`::: ref :::` divs still behave exactly as described in the table above (falling back to a part, or an explicit div you wrote).
 
 ---
 
