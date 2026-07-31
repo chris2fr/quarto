@@ -107,6 +107,14 @@
 % which \renewcommand{\numberline} below strips back out.
 \setcounter{secnumdepth}{3}
 \renewcommand{\numberline}[1]{}
+% Same leak, for the running head (\leftmark/\rightmark, e.g. a project's
+% own \fancyhead[C]{...\rightmark} via tex-custom): the kernel's default
+% \sectionmark/\subsectionmark also prepend \thesection/\thesubsection once
+% secnumdepth > 0, so without this a page header would show "0.1 Heading"
+% (0 since a subsection with no preceding \section leaves \thesection at its
+% initial value) instead of just "Heading".
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+\renewcommand{\subsectionmark}[1]{\markright{#1}}
 \newcounter{none}
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
