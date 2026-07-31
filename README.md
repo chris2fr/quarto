@@ -376,6 +376,8 @@ format:
 
 > The first-page top margin is fixed — it is sized to accommodate the header area. Only body pages (from page 2 onward) are affected by `margin-top`.
 
+`margin-inner`/`margin-outer` also bound the header and footer, not just the body — both are horizontally centered within the same width as the body text, so a header logo or footer line stays aligned with the letter's left/right edges instead of centering on the full page.
+
 ---
 
 ## PDF class customization
