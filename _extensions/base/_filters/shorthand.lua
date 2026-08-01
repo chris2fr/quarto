@@ -77,6 +77,22 @@ local function read_relative(path)
   return nil
 end
 
+-- CSL's <bibliography><sort> compares each key's *rendered text*, even for
+-- variables the spec calls "numeric" (verified: sorting by the standard
+-- `number` variable is still lexicographic in pandoc's citeproc) — so a
+-- plain shorthand sort would put "10" before "2". Zero-padded to the same
+-- width, string order and numeric order coincide. Written to the unused
+-- `version` variable (not read anywhere in biblio.csl's own macros, unlike
+-- `number`, which already prints `[N]` in the bibliography body) purely as
+-- a sort key — `citation-label` keeps the plain, unpadded value for display.
+local function widest(shorthands)
+  local width = 0
+  for _, v in pairs(shorthands) do
+    if v:match('^%d+$') then width = math.max(width, #v) end
+  end
+  return width
+end
+
 -- Returns the path to an augmented CSL-JSON file, or nil if augmentation
 -- wasn't possible/needed (no shorthand fields, file unreadable, pandoc.pipe
 -- failed, ...) — caller falls back to the original path untouched.
@@ -86,6 +102,7 @@ local function augment(path)
 
   local shorthands = extract_shorthands(bibtext)
   if next(shorthands) == nil then return nil end
+  local width = widest(shorthands)
 
   local ok, json_text = pcall(pandoc.pipe, 'pandoc', { '-f', 'bibtex', '-t', 'csljson' }, bibtext)
   if not ok then return nil end
@@ -94,7 +111,10 @@ local function augment(path)
 
   for _, entry in ipairs(entries) do
     local sh = shorthands[entry.id]
-    if sh then entry['citation-label'] = sh end
+    if sh then
+      entry['citation-label'] = sh
+      entry['version'] = sh:match('^%d+$') and string.rep('0', width - #sh) .. sh or sh
+    end
   end
 
   local tmp = os.tmpname()

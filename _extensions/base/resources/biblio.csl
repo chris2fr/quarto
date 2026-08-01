@@ -270,6 +270,7 @@
   </citation>
   <bibliography>
     <sort>
+      <key variable="version"/>
       <key macro="author"/>
       <key variable="issued"/>
     </sort>
