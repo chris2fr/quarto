@@ -96,5 +96,6 @@ contributes:
         - ../base/_filters/page.lua
         - _filters/validate.lua
         - pdf/_filters/divs.lua
+        - ../base/_filters/tablerule.lua
         - path: ../base/_filters/toc.lua
           at: post-quarto

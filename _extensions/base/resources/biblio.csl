@@ -18,7 +18,7 @@
       <name>Michel Hardegger</name>
       <email>hardegger@gmail.com</email>
     </author>
-    <category citation-format="numeric"/>
+    <category citation-format="label"/>
     <category field="generic-base"/>
     <summary>Style based on ISO 690:2010(F), V1.1</summary>
     <updated>2022-03-24T00:29:32+00:00</updated>
@@ -253,13 +253,14 @@
   <macro name="note">
     <text variable="note" prefix=" [" suffix="] "/>
   </macro>
-  <citation collapse="number" after-collapse-delimiter="; ">
+  <citation disambiguate-add-year-suffix="true">
     <sort>
-      <key variable="citation-number"/>
+      <key macro="author"/>
+      <key variable="issued"/>
     </sort>
     <layout prefix="(" suffix=")" delimiter=", ">
       <group delimiter=", ">
-        <text variable="number"/>
+        <text variable="citation-label"/>
         <group>
           <label variable="locator" suffix=".&#160;" form="short" strip-periods="true"/>
           <text variable="locator"/>
@@ -269,10 +270,11 @@
   </citation>
   <bibliography>
     <sort>
-      <key variable="citation-number"/>
+      <key macro="author"/>
+      <key variable="issued"/>
     </sort>
     <layout>
-      <text variable="number" display="left-margin" prefix="(" suffix="). "/>
+      <text variable="citation-label" display="left-margin" prefix="(" suffix="). "/>
         <group display="right-inline">
             <text macro="responsability" suffix=". "/>
             <text macro="title" suffix=". "/>

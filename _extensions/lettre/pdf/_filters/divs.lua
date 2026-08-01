@@ -32,7 +32,7 @@ function DefinitionList(el)
   return pandoc.RawBlock('latex',
     '\\begin{longtable}{@{}p{0.3\\linewidth}p{0.7\\linewidth}@{}}\n' ..
     '\\toprule\n' ..
-    table.concat(rows, '\n') .. '\n' ..
+    table.concat(rows, '\n\\QLrowrule\n') .. '\n' ..
     '\\bottomrule\n' ..
     '\\end{longtable}')
 end

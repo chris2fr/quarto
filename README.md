@@ -406,6 +406,18 @@ tex-custom: |
 
 ---
 
+## Tables (PDF)
+
+Every Markdown table (and lettre/compte-rendu's own label/value divs like `::: ref :::` or `::: actions :::`, which render as a table internally) gets a very thin, light-gray rule between each body row in PDF output — pandoc's own table rendering only rules the table's top/bottom edge and the header separator, leaving body rows unseparated. This isn't configurable per-document; it's baked into every PDF table via `\QLrowrule` (defined in `quarto-lettre.cls`) and a `tablerule.lua` filter that splices it between rows.
+
+---
+
+## Bibliography (PDF)
+
+Citations and the bibliography use a shorthand label — the CSL `citation-label` variable — instead of a plain running number: `[@doe99]` renders as `(Doe99)` both at the citation site and in the bibliography's own margin, rather than `(1)`. Generated automatically from the author's surname and the year (no `shorthand`/`label` field needed in the `.bib` entry), and disambiguated with an `a`/`b`/... suffix if two entries would otherwise collide (e.g. two 1999 books by the same author become `Doe99a` / `Doe99b`). Defined in `_extensions/base/resources/biblio.csl`, used only by the `pdf` format in all three extensions — HTML/typst citation rendering is unaffected.
+
+---
+
 ## Brand fonts
 
 All three extensions use `theme: none` for HTML (a fully custom template, no Bootstrap) and a fully custom LaTeX `.cls` for PDF, so Quarto's own [brand.yml](https://quarto.org/docs/authoring/brand.html) → CSS/fontspec pipeline never runs there — `typography` in a brand file is otherwise silently ignored in both. This is filled in by hand: the resolved `base`, `headings`, and `monospace` font families are read from the active brand and applied per format.
@@ -448,6 +460,7 @@ _extensions/
 ├── base/                          # Shared resources (not a format)
 │   ├── _filters/page.lua          # ::: header/footer :::, part fallback (all 3), lettre-only body/margins, HTML+PDF brand fonts, quote style
 │   ├── _filters/toc.lua           # {{< toc >}} rendering — wired at the post-quarto entry point, after shortcode resolution
+│   ├── _filters/tablerule.lua     # thin rule between PDF table rows (\QLrowrule, defined in quarto-lettre.cls)
 │   ├── _shortcodes/toc.lua        # {{< toc >}} shortcode — drops a placeholder for _filters/toc.lua to expand
 │   ├── brand.yml                  # default brand (contributed to every project via _extension.yml)
 │   ├── parts/                     # bundled default section content (see _parts/ above)

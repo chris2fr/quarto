@@ -41,6 +41,16 @@
 \RequirePackage{afterpage}
 \RequirePackage{titlesec}
 
+% ── Thin rule between table data rows ───────────────────────────────────────
+% Pandoc's longtable output only rules the table edges and the header
+% separator (\toprule/\midrule/\bottomrule); there's nothing between body
+% rows. Inserted as literal text between rows by base/_filters/tablerule.lua
+% (general Markdown tables) and lettre/compte-rendu's own divs.lua
+% (definition-list-as-table divs) — not via redefining \\, which fights
+% longtable/booktabs' internal alignment bookkeeping badly enough to corrupt
+% the table (tried, reverted: broke \bottomrule with "Misplaced \noalign").
+\newcommand{\QLrowrule}{\noalign{\vskip 2pt{\color{black!15}\hrule height 0.15pt}\vskip 2pt}}
+
 % ── Fonts ───────────────────────────────────────────────────────────
 % \RequirePackage{libertinus} % Libertinus Mono, Libertinus Sans, Libertinus Serif
 % \RequirePackage{fourier}
