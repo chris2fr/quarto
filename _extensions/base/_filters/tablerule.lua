@@ -21,5 +21,10 @@ function Table(el)
   local head, body = latex:match('^(.-\\endlastfoot\n)(.*)$')
   if not head then return nil end
   body = body:gsub('\\\\\n', '\\\\\n\\QLrowrule\n')
+  -- The gsub above also lands after the *last* body row, right where
+  -- \bottomrule (declared up in \endlastfoot, but placed by longtable at the
+  -- table's true end) is about to print — doubling up into a heavy-looking
+  -- close. Drop that one trailing rule; every other row still gets one.
+  body = body:gsub('\\QLrowrule\n%s*\\end{longtable', '\\end{longtable')
   return pandoc.RawBlock('latex', head .. body)
 end
