@@ -151,6 +151,13 @@ function Div(el)
   end
 end
 ```
+
+## Niveau 2 — Bibliographie
+
+Les deux notes citées plus haut, « images intégrées[@something] » et « Liste ordonnée[@otherthing] », apparaissent ci-dessous avec leur label court (auteur + année) :
+
+::: {#refs}
+:::
 :::
 
 ::: closing

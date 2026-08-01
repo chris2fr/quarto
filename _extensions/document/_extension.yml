@@ -71,6 +71,7 @@ contributes:
       include-before-body: pdf/_partials/body-before.tex
       include-after-body: pdf/_partials/body-after.tex
       filters:
+        - ../base/_filters/shorthand.lua
         - ../base/_filters/page.lua
         - _filters/validate.lua
         - ../base/_filters/tablerule.lua
