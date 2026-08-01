@@ -50,18 +50,20 @@ end
 -- Tries each candidate base directory in turn and returns the content of
 -- the first one where `path` actually resolves to a readable file. Relative
 -- metadata paths like `bibliography:` are conventionally resolved against
--- the document's own directory, but PANDOC_STATE.input_files[1] (used
--- elsewhere in this codebase, e.g. page.lua's _parts/ lookup) is quarto's
--- *staged* copy of the source file, in a temp session directory that
--- doesn't contain sibling resources — quarto.project.directory (the real
--- project root) is what actually has them, at least for a document that
--- lives at the project root; trying both covers a document in a
--- subdirectory of a larger project too.
+-- the document's own directory: quarto.doc.input_file is the real source
+-- path and the right one for that. quarto.project.directory (project root)
+-- is a fallback for whatever it doesn't cover; PANDOC_STATE.input_files[1]
+-- is quarto's *staged* copy of the source file, in a temp session directory
+-- that never contains sibling resources like a .bib — kept as a last
+-- resort (e.g. quarto.doc unavailable) but not relied on.
 local function read_relative(path)
   if pandoc.path.is_absolute(path) then
     return read_file(path)
   end
   local candidates = {}
+  if quarto and quarto.doc and quarto.doc.input_file then
+    table.insert(candidates, pandoc.path.directory(quarto.doc.input_file))
+  end
   if quarto and quarto.project and quarto.project.directory and quarto.project.directory ~= '' then
     table.insert(candidates, quarto.project.directory)
   end

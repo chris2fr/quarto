@@ -1,0 +1,7 @@
+---
+title: Test
+bibliography: bisect.bib
+csl: /work/mannchri/git/quarto-lettre/_extensions/base/resources/biblio.csl
+---
+
+Cite [@email20250630secourscatholique0823refuspermanence].
