@@ -33,7 +33,7 @@
 \RequirePackage{booktabs}
 \RequirePackage{calc}
 \RequirePackage{array}
-\RequirePackage{xcolor}
+\RequirePackage[table]{xcolor}
 \RequirePackage{fancyvrb}
 \RequirePackage{framed}
 \RequirePackage[export]{adjustbox}
@@ -48,7 +48,15 @@
 % — not via redefining \\, which fights longtable/booktabs' internal
 % alignment bookkeeping badly enough to corrupt the table (tried, reverted:
 % broke \bottomrule with "Misplaced \noalign").
-\newcommand{\QLrowrule}{\noalign{\vskip 2pt{\color{black!15}\hrule height 0.15pt}\vskip 2pt}}
+% Built on booktabs' \specialrule rather than a raw \hrule: \hrule has no
+% notion of the table's column measure and draws at the full \hsize, which is
+% wider than an @{}-trimmed table — visibly overshooting both margins.
+% \specialrule reuses booktabs' own width-measuring machinery (same as
+% \midrule/\bottomrule), so it always matches the table exactly.
+% \arrayrulecolor (colortbl, loaded via xcolor's [table] option above) tints
+% it without a grouping brace — wrapping \specialrule's own leading \noalign
+% in one is exactly what produced the "Misplaced \noalign" above.
+\newcommand{\QLrowrule}{\arrayrulecolor{black!60}\specialrule{0.4pt}{2pt}{2pt}\arrayrulecolor{black}}
 
 % ── Fonts ───────────────────────────────────────────────────────────
 % \RequirePackage{libertinus} % Libertinus Mono, Libertinus Sans, Libertinus Serif
