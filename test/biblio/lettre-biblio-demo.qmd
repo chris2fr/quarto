@@ -1,0 +1,111 @@
+---
+title: Test — Bibliographie étendue, tri par shorthand, TOC 4 niveaux
+author: Chris Mann
+ref: TEST-biblio-demo-2026-08-01
+date: 2026-08-01
+lang: fr
+place: Villefictive
+bibliography: "refs.bib"
+format:
+  lettre-html:
+    toc: true
+    toc-depth: 4
+  lettre-pdf:
+    toc: true
+    toc-depth: 4
+margin-inner: 26mm
+margin-outer: 26mm
+margin-top: 22mm
+margin-bottom: 22mm
+let-header: "DOCUMENT DE TEST — CONTENU FICTIF"
+let-footer: "*Document de test — $ref$*"
+let-from: |
+  Chris Mann\
+  1 rue des Tests\
+  00000 VILLEFICTIVE
+let-date: $place$, le $date$
+let-to: |
+  Comité de Test Intercommunal\
+  2 place des Essais\
+  00000 VILLEFICTIVE
+let-opening: Madame, Monsieur,
+let-closing: Je vous prie d'agréer, Madame, Monsieur, l'expression de ma considération distinguée.
+let-signature: |
+  \
+  \
+  Chris Mann
+tex-custom: |
+  \fancyhead[C]{\textit\rightmark}
+---
+
+::: body
+
+{{< toc >}}
+
+Ce document est un **jeu de test entièrement fictif** pour l'extension `lettre` : aucun nom, lieu, organisation ou fait réel n'y figure. Il sert à vérifier le rendu PDF d'une bibliographie étendue avec des labels `shorthand` manuels, y compris leur tri numérique correct (mélange de nombres à un et deux chiffres) et le cas d'une entrée sans date.
+
+# Contexte général
+
+L'Association du Quartier Fictif suit depuis plusieurs mois un projet d'aménagement conduit par la Mairie de Villefictive [@web20240112villefictivereglement]. Plusieurs échanges ont eu lieu avec les services concernés [@email20240305dupontreponseassociation].
+
+## Historique des échanges
+
+Un premier dossier a été déposé au printemps [@recepisse20240410depotdossier], suivi d'un accusé de réception [@email20240412bernardconfirmation]. Un arrêté municipal est venu encadrer la circulation aux abords du chantier [@arrete20240501villefictivecirculation].
+
+### Assemblée générale de l'association
+
+Le compte-rendu de l'assemblée générale annuelle détaille les positions exprimées par les membres [@web20240502associationquartiercompterendu]. Plusieurs témoignages ont été recueillis à cette occasion [@temoignage20240503durandvoisinage].
+
+#### Point particulier sur la médiation
+
+Une demande de médiation a reçu une réponse négative [@email20240504petitreponsenegative], ce qui a conduit certains membres à consulter la littérature spécialisée sur la gestion territoriale [@2021robertrevuegestion].
+
+## Suivi administratif
+
+Le Comité de Test Intercommunal a accusé réception de la réclamation déposée par l'association [@courrier20240605richardaccusereception]. Un des membres du comité a un profil professionnel public consultable en ligne [@web20240607simonpagepublique].
+
+Des précisions complémentaires ont été demandées par courriel [@email20240608laurentdemandeprecisions], et un nouveau compte-rendu de réunion a suivi [@compterendu20240610conseilquartier].
+
+# Développement du dossier
+
+## Travaux et arrêtés
+
+Un arrêté autorisant des travaux de voirie a été publié [@arrete20240615villefictivetravaux]. Une relance a été envoyée face à l'absence de réponse [@email20240701moreaurelance], accompagnée d'un signalement formel d'irrégularité de procédure [@signalement20240703lefebvreirregularite].
+
+### Communication publique
+
+Le Comité de Test Intercommunal a publié un communiqué relatif au projet d'aménagement [@web20240705comitetestcommunique]. En réaction, un recours gracieux a été déposé [@recours20240710gracieux], suivi d'une réponse de la mairie [@email20240712associationreponsemairie].
+
+#### Statuts de l'association
+
+Les statuts et le règlement intérieur de l'association précisent le cadre de ces démarches [@web20240715fictifassoconstitution].
+
+## Témoignages complémentaires
+
+Un témoignage supplémentaire a été recueilli à l'occasion d'une réunion publique [@temoignage20240718garciaparticipation]. Une réponse tardive, dont la date d'émission n'a pas pu être établie avec certitude, a également été versée au dossier [@email20240722sansdatereponseinstitution] — ce cas sert spécifiquement à vérifier qu'une référence sans date ne casse pas le rendu de la bibliographie.
+
+# Synthèse
+
+## Bilan
+
+La mairie a publié un bilan annuel des projets d'aménagement [@web20240801villefictivebilan], qui reprend une partie des échanges cités plus haut [@web20240112villefictivereglement; @arrete20240501villefictivecirculation; @web20240705comitetestcommunique].
+
+## Références croisées
+
+Pour rappel, les pièces les plus anciennes du dossier restent [@recepisse20240410depotdossier] et [@email20240412bernardconfirmation], tandis que les plus récentes sont [@web20240801villefictivebilan] et [@email20240722sansdatereponseinstitution].
+
+### Table des pièces
+
+| Pièce | Nature |
+|:----|:-----|
+| Réponse initiale | Courriel |
+| Accusé de réception | Récépissé |
+| Compte-rendu d'assemblée | Page web |
+| Bilan annuel | Page web |
+
+## Bibliographie
+
+::: {#refs}
+:::
+
+:::
