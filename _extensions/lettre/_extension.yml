@@ -22,10 +22,12 @@ contributes:
       template: html/layout.html
       theme: none
       minipal: true
+      csl: ../base/resources/biblio.csl
       css:
         - html/css/styles.css
         - html/css/boilerplate.css
       filters:
+        - ../base/_filters/shorthand.lua
         - ../base/_filters/page.lua
         - _filters/validate.lua
         - html/_filters/biblio.lua

@@ -18,10 +18,12 @@ contributes:
       page-layout: custom
       template: html/layout.html
       theme: none
+      csl: ../base/resources/biblio.csl
       css:
         - html/css/styles.css
         - html/css/boilerplate.css
       filters:
+        - ../base/_filters/shorthand.lua
         - ../base/_filters/page.lua
         - _filters/validate.lua
         - path: ../base/_filters/toc.lua
