@@ -522,6 +522,35 @@ local function expand_brand_shortcodes(text)
   end))
 end
 
+-- A part file's own relative image paths (e.g. `_parts/logo/foo.png`) are
+-- authored relative to the project root, the only stable reference point
+-- for content shared across documents that render from different depths in
+-- the project. `quarto.doc.input_file` is the real source path of the
+-- document currently being rendered (unlike PANDOC_STATE.input_files, which
+-- points at a preprocessed temp file quarto hands to pandoc); use it to
+-- compute how far that document sits from the project root and rebase each
+-- relative image src by that offset, so it resolves and copies correctly
+-- regardless of how deep the document lives.
+local function rebase_part_image_paths(blocks)
+  if not (quarto and quarto.project and quarto.project.directory and quarto.project.directory ~= '') then
+    return blocks
+  end
+  if not (quarto.doc and quarto.doc.input_file and quarto.doc.input_file ~= '') then
+    return blocks
+  end
+  local doc_dir = pandoc.path.directory(quarto.doc.input_file)
+  local prefix = pandoc.path.make_relative(quarto.project.directory, doc_dir, true)
+  if prefix == '' or prefix == '.' then return blocks end
+  return pandoc.Div(blocks):walk({
+    Image = function(img)
+      if pandoc.path.is_relative(img.src) then
+        img.src = pandoc.path.join({ prefix, img.src })
+      end
+      return img
+    end
+  }).content
+end
+
 -- Read a part .qmd, strip any YAML front matter, expand `{{< meta ... >}}`
 -- and `{{< brand logo ... >}}` shortcodes, and parse it into blocks the same
 -- way a ::: header/footer ::: div's content would arrive.
@@ -533,7 +562,7 @@ local function read_part_file(path)
   text = text:gsub('^%-%-%-\n.-\n%-%-%-\n', '')
   text = expand_meta_shortcodes(text)
   text = expand_brand_shortcodes(text)
-  return pandoc.read(text, 'markdown').blocks
+  return rebase_part_image_paths(pandoc.read(text, 'markdown').blocks)
 end
 
 -- Load a class's part file, if any, already parsed into blocks.
