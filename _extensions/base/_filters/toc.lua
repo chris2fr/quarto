@@ -56,13 +56,29 @@ local function render_toc_items(items)
 end
 
 function Pandoc(doc)
-  local tree = nest_headers(collect_headers(doc))
+  local headers = collect_headers(doc)
   return doc:walk({
     Div = function(div)
       if not div.classes:includes('quarto-lettre-toc') then return nil end
+      local level = tonumber(div.attributes.level)
       if FORMAT:match('latex') then
+        if level then
+          -- tocdepth is only consulted when \tableofcontents reads back the
+          -- .toc file, so scoping it here doesn't disturb the document-wide
+          -- depth (5, set in each format's .cls/layout.tex) used elsewhere.
+          return pandoc.RawBlock('latex', '\\begingroup\\setcounter{tocdepth}{'
+            .. level .. '}\\tableofcontents\\endgroup')
+        end
         return pandoc.RawBlock('latex', '\\tableofcontents')
       elseif FORMAT:match('html') then
+        local capped = headers
+        if level then
+          capped = {}
+          for _, h in ipairs(headers) do
+            if h.level <= level then table.insert(capped, h) end
+          end
+        end
+        local tree = nest_headers(capped)
         if #tree == 0 then return {} end
         return pandoc.Div({ pandoc.BulletList(render_toc_items(tree)) }, pandoc.Attr('', { 'toc' }))
       end
