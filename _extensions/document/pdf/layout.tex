@@ -25,17 +25,20 @@ $endfor$
 % every \tableofcontents entry collapses onto the same "Doc-Start" target
 % instead of its own section (see quarto-lettre.cls's \renewcommand\numberline
 % for why this doesn't bring section numbers back). 4 levels deep (down to
-% \paragraph, #### in Markdown) — matches tocdepth below.
-\setcounter{secnumdepth}{4}
-\setcounter{tocdepth}{4}
+% \subparagraph, ##### in Markdown — the deepest heading LaTeX has a
+% sectioning command for) — matches tocdepth below.
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
 \titleformat{\section}{\large\bfseries\sffamily}{}{0em}{}[\vspace{-0.5em}\rule{\linewidth}{0.4pt}]
 \titleformat{\subsection}{\normalsize\bfseries\sffamily}{}{0em}{}
 \titleformat{\subsubsection}{\normalsize\itshape\sffamily}{}{0em}{}
 \titleformat{\paragraph}{\small\bfseries\sffamily}{}{0em}{}
+\titleformat{\subparagraph}{\small\itshape\sffamily}{}{0em}{}
 \titlespacing*{\section}{0pt}{1.2em}{0.5em}
 \titlespacing*{\subsection}{0pt}{0.8em}{0.3em}
 \titlespacing*{\subsubsection}{0pt}{0.6em}{0.2em}
 \titlespacing*{\paragraph}{0pt}{0.4em}{0.2em}
+\titlespacing*{\subparagraph}{0pt}{0.3em}{0.15em}
 
 % ── User customization override ──────────────────────────────────────────────
 % Optional, project-level: create _parts/custom.cls next to _quarto.yml to

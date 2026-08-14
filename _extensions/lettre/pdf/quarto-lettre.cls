@@ -112,10 +112,13 @@
   [\vspace{0.25em}]
 \titleformat{\paragraph}
   {\normalfont\QLheadingfont\normalsize\bfseries}{}{0pt}{}
+\titleformat{\subparagraph}
+  {\normalfont\QLheadingfont\normalsize\itshape\bfseries}{}{0pt}{}
 \titlespacing*{\section}{0pt}{1.5cm}{1ex plus 0.2ex}
 \titlespacing*{\subsection}{0pt}{1cm}{0.5ex plus 0.1ex}
 \titlespacing*{\subsubsection}{0pt}{0.6cm}{0.25ex plus 0.05ex}
 \titlespacing*{\paragraph}{0pt}{0.4cm}{0.2ex plus 0.05ex}
+\titlespacing*{\subparagraph}{0pt}{0.3cm}{0.15ex plus 0.05ex}
 
 % secnumdepth must stay > 0 (unlike a plain \thesection-suppressing 0) so
 % \@startsection still \refstepcounter's each heading: at 0 it falls back to
@@ -125,10 +128,11 @@
 % one-page letter, glaringly wrong once headings span several pages. Numbers
 % themselves stay hidden via the empty titleformat labels above; secnumdepth
 % would otherwise also make titlesec prefix TOC lines with \numberline{N},
-% which \renewcommand{\numberline} below strips back out. 4 levels deep
-% (down to \paragraph, #### in Markdown) — matches tocdepth below.
-\setcounter{secnumdepth}{4}
-\setcounter{tocdepth}{4}
+% which \renewcommand{\numberline} below strips back out. 5 levels deep
+% (down to \subparagraph, ##### in Markdown — the deepest heading LaTeX has
+% a sectioning command for) — matches tocdepth below.
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
 \renewcommand{\numberline}[1]{}
 % Same leak, for the running head (\leftmark/\rightmark, e.g. a project's
 % own \fancyhead[C]{...\rightmark} via tex-custom): the kernel's default
