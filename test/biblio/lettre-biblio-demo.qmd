@@ -40,6 +40,8 @@ tex-custom: |
 
 ::: body
 
+## Table des matières {.unnumbered .unlisted}
+
 {{< toc >}}
 
 Ce document est un **jeu de test entièrement fictif** pour l'extension `lettre` : aucun nom, lieu, organisation ou fait réel n'y figure. Il sert à vérifier le rendu PDF d'une bibliographie étendue avec des labels `shorthand` manuels, y compris leur tri numérique correct (mélange de nombres à un et deux chiffres) et le cas d'une entrée sans date.

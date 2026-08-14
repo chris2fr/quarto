@@ -40,6 +40,7 @@
 \RequirePackage{fancyhdr}
 \RequirePackage{afterpage}
 \RequirePackage{titlesec}
+\RequirePackage{titletoc}
 
 % ── Thin rule between table data rows ───────────────────────────────────────
 % Pandoc's longtable output only rules the table edges and the header
@@ -134,6 +135,15 @@
 % would otherwise make titlesec prefix TOC lines with \numberline{N} even
 % though the empty titleformat labels above already hide it in the body.
 \renewcommand{\numberline}[1]{}
+% {{< toc >}} (../../base/_filters/toc.lua) can appear more than once —
+% plain \tableofcontents can't: it re-opens \jobname.toc for writing right
+% after reading it, so a second call in the same run reads back a file
+% nothing has been written into yet at that point, and prints empty.
+% titletoc's named lists sidestep this: \startcontents opens the "toc" list
+% once for the whole document, and \QLtoc can then print it back any number
+% of times, each independently scoped to its own depth.
+\AtBeginDocument{\startcontents[toc]}
+\newcommand{\QLtoc}[1][5]{\printcontents[toc]{}{1}{\setcounter{tocdepth}{#1}}}
 % Same leak, for the running head (\leftmark/\rightmark, e.g. a project's
 % own \fancyhead[C]{...\rightmark} via tex-custom): the kernel's default
 % \sectionmark/\subsectionmark also prepend \thesection/\thesubsection once

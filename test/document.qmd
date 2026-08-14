@@ -14,6 +14,8 @@ format:
   document-plain: default
 ---
 
+## Table des matières {.unnumbered .unlisted}
+
 {{< toc >}}
 
 # Niveau 1 — Introduction
