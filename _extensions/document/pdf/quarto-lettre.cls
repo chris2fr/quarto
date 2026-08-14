@@ -112,7 +112,7 @@
 \titleformat{\paragraph}
   {\normalfont\QLheadingfont\large\bfseries}{}{0pt}{}
 \titleformat{\subparagraph}
-  {\normalfont\QLheadingfont\large\itshape\bfseries}{}{0pt}{}
+  {\normalfont\QLheadingfont\large\itshape}{}{0pt}{}
 \titlespacing*{\section}{0pt}{1.5cm}{1ex plus 0.2ex}
 \titlespacing*{\subsection}{0pt}{1cm}{0.5ex plus 0.1ex}
 \titlespacing*{\subsubsection}{0pt}{0.6cm}{0.25ex plus 0.05ex}
