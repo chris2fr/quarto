@@ -102,9 +102,12 @@
 % \newcommand{\QLheadingfont}{\sfdefault}
 \newcommand{\QLheadingfont}{\plexsans}
 
+% \titleformat{\section}
+%   {\normalfont\QLheadingfont\LARGE\bfseries}{}{0pt}{}
+%   [\vspace{0.5em}\titlerule]
 \titleformat{\section}
   {\normalfont\QLheadingfont\LARGE\bfseries}{}{0pt}{}
-  [\vspace{0.5em}\titlerule]
+  [\vspace{0.5em}]
 \titleformat{\subsection}
   {\normalfont\QLheadingfont\Large\bfseries}{}{0pt}{}
   [\vspace{0.5em}]
