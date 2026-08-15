@@ -192,7 +192,7 @@
 \fancypagestyle{firstpage}{%
   \fancyhf{}
   \renewcommand{\headrulewidth}{0pt}
-  \fancyhead[C]{\@QLfirstpageheader}
+  \fancyhead[C]{\textit\@QLfirstpageheader}
   \fancyfoot[C]{\small\@QLfooter}
 }
 
