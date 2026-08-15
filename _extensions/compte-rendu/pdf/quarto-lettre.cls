@@ -103,23 +103,23 @@
 \newcommand{\QLheadingfont}{\plexsans}
 
 \titleformat{\section}
-  {\normalfont\QLheadingfont\LARGE\bfseries}{}{0pt}{}
+  {\normalfont\QLheadingfont\LARGE}{}{0pt}{}
   [\vspace{0.5em}\titlerule]
 \titleformat{\subsection}
   {\normalfont\QLheadingfont\LARGE\bfseries}{}{0pt}{}
   [\vspace{0.5em}]
 \titleformat{\subsubsection}
-  {\normalfont\QLheadingfont\Large\bfseries}{}{0pt}{}
+  {\normalfont\QLheadingfont\Large\itshape}{}{0pt}{}
   [\vspace{0.25em}]
 \titleformat{\paragraph}
-  {\normalfont\QLheadingfont\large\bfseries}{}{0pt}{}
-\titleformat{\subparagraph}
   {\normalfont\QLheadingfont\large\itshape}{}{0pt}{}
-\titlespacing*{\section}{0pt}{1.5cm}{1ex plus 0.2ex}
-\titlespacing*{\subsection}{0pt}{1cm}{0.75ex plus 0.1ex}
-\titlespacing*{\subsubsection}{0pt}{0.6cm}{0.5ex plus 0.1ex}
-\titlespacing*{\paragraph}{0pt}{0.4cm}{0.35ex plus 0.1ex}
-\titlespacing*{\subparagraph}{0pt}{0.3cm}{0.25ex plus 0.05ex}
+\titleformat{\subparagraph}
+  {\normalfont\QLheadingfont\normalsize\bfseries}{}{0pt}{}
+\titlespacing*{\section}{0pt}{1.5cm}{0.75cm}
+\titlespacing*{\subsection}{0pt}{1cm}{0.5cm}
+\titlespacing*{\subsubsection}{0pt}{0.75cm}{0.3cm}
+\titlespacing*{\paragraph}{0pt}{0.6cm}{0.25cm}
+\titlespacing*{\subparagraph}{0pt}{0.5cm}{0.2cm}
 
 % \titleformat{\section}
 %   {\normalfont\QLheadingfont\normalsize\bfseries}{\thesection}{0pt}{}
@@ -191,13 +191,13 @@
 \renewcommand{\headrulewidth}{0pt}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[C]{\QLpageheading}
+\fancyhead[C]{\textit\QLpageheading}
 \fancyfoot[C]{\small\thepage\\\@QLfooter}
 
 \fancypagestyle{firstpage}{%
   \fancyhf{}
   \renewcommand{\headrulewidth}{0pt}
-  \fancyhead[C]{\textit\@QLfirstpageheader}
+  \fancyhead[C]{\@QLfirstpageheader}
   \fancyfoot[C]{\small\@QLfooter}
 }
 
