@@ -116,10 +116,10 @@
 \titleformat{\subparagraph}
   {\normalfont\QLheadingfont\normalsize\bfseries}{}{0pt}{}
 \titlespacing*{\section}{0pt}{1.5cm}{1ex plus 0.2ex}
-\titlespacing*{\subsection}{0pt}{1cm}{0.5ex plus 0.1ex}
-\titlespacing*{\subsubsection}{0pt}{0.6cm}{0.25ex plus 0.05ex}
-\titlespacing*{\paragraph}{0pt}{0.4cm}{0.2ex plus 0.05ex}
-\titlespacing*{\subparagraph}{0pt}{0.3cm}{0.15ex plus 0.05ex}
+\titlespacing*{\subsection}{0pt}{1cm}{0.75ex plus 0.1ex}
+\titlespacing*{\subsubsection}{0pt}{0.6cm}{0.5ex plus 0.1ex}
+\titlespacing*{\paragraph}{0pt}{0.4cm}{0.35ex plus 0.1ex}
+\titlespacing*{\subparagraph}{0pt}{0.3cm}{0.25ex plus 0.05ex}
 
 % secnumdepth must stay > 0 (unlike a plain \thesection-suppressing 0) so
 % \@startsection still \refstepcounter's each heading: at 0 it falls back to
