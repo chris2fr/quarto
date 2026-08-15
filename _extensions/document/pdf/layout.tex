@@ -29,16 +29,9 @@ $endfor$
 % sectioning command for) — matches tocdepth below.
 \setcounter{secnumdepth}{5}
 \setcounter{tocdepth}{5}
-\titleformat{\section}{\large\bfseries\sffamily}{}{0em}{}[\vspace{-0.5em}\rule{\linewidth}{0.4pt}]
-\titleformat{\subsection}{\normalsize\bfseries\sffamily}{}{0em}{}
-\titleformat{\subsubsection}{\normalsize\itshape\sffamily}{}{0em}{}
-\titleformat{\paragraph}{\small\bfseries\sffamily}{}{0em}{}
-\titleformat{\subparagraph}{\small\itshape\sffamily}{}{0em}{}
-\titlespacing*{\section}{0pt}{1.2em}{0.5em}
-\titlespacing*{\subsection}{0pt}{0.8em}{0.3em}
-\titlespacing*{\subsubsection}{0pt}{0.6em}{0.2em}
-\titlespacing*{\paragraph}{0pt}{0.4em}{0.2em}
-\titlespacing*{\subparagraph}{0pt}{0.3em}{0.15em}
+% \titleformat/\titlespacing for every heading level (through \subparagraph)
+% already come from quarto-lettre.cls — no override here, so this file can't
+% drift out of sync with it the way it used to.
 
 % ── User customization override ──────────────────────────────────────────────
 % Optional, project-level: create _parts/custom.cls next to _quarto.yml to

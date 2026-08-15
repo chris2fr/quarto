@@ -101,25 +101,33 @@
 % \newcommand{\QLheadingfont}{}
 % \newcommand{\QLheadingfont}{\sfdefault}
 \newcommand{\QLheadingfont}{\plexsans}
+% plex-sans's \defaultfontfeatures{Extension=.otf} is cleared again at the end
+% of that package, so it must be repeated here for this direct fontspec call.
+\newfontfamily\QLheadingfontmd[Extension=.otf, ItalicFont=IBMPlexSans-MediumItalic]{IBMPlexSans-Medium}
+\newfontfamily\QLheadingfontsb[Extension=.otf, ItalicFont=IBMPlexSans-SemiBoldItalic]{IBMPlexSans-SemiBold}
 
-\titleformat{\section}
-  {\normalfont\QLheadingfont\LARGE}{}{0pt}{}
-  [\vspace{0.5em}\titlerule]
+\titleformat{\section} % command
+  [block] % shape
+  {\normalfont\QLheadingfontmd\LARGE} % format
+  {} % label
+  {0pt} % sep
+  {\titlerule\vspace{0.5em}\\} % before-code
+  % [] % after-code
 \titleformat{\subsection}
-  {\normalfont\QLheadingfont\LARGE\bfseries}{}{0pt}{}
+  {\normalfont\QLheadingfontsb\Large}{}{0pt}{}
   [\vspace{0.5em}]
 \titleformat{\subsubsection}
-  {\normalfont\QLheadingfont\Large}{}{0pt}{}
+  {\normalfont\QLheadingfontmd\large}{}{0pt}{}
   [\vspace{0.25em}]
 \titleformat{\paragraph}
-  {\normalfont\QLheadingfont\large\itshape}{}{0pt}{}
+  {\normalfont\QLheadingfontmd\large\itshape}{}{0pt}{} % flushright
 \titleformat{\subparagraph}
   {\normalfont\QLheadingfont\normalsize\bfseries}{}{0pt}{}
-\titlespacing*{\section}{0pt}{1.5cm}{0.75cm}
-\titlespacing*{\subsection}{0pt}{1cm}{0.5cm}
-\titlespacing*{\subsubsection}{0pt}{0.75cm}{0.3cm}
-\titlespacing*{\paragraph}{0pt}{0.6cm}{0.25cm}
-\titlespacing*{\subparagraph}{0pt}{0.5cm}{0.2cm}
+\titlespacing*{\section}{0pt}{1cm}{0.75cm}
+\titlespacing*{\subsection}{0pt}{0.75cm}{0.5cm}
+\titlespacing*{\subsubsection}{0pt}{0.6cm}{0.4cm}
+\titlespacing*{\paragraph}{0pt}{0.5cm}{0.25cm}
+\titlespacing*{\subparagraph}{0pt}{0.4cm}{0.2cm}
 
 % secnumdepth must stay > 0 (unlike a plain \thesection-suppressing 0) so
 % \@startsection still \refstepcounter's each heading: at 0 it falls back to
