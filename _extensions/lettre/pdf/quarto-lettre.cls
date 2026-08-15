@@ -103,13 +103,13 @@
 \newcommand{\QLheadingfont}{\plexsans}
 
 \titleformat{\section}
-  {\normalfont\QLheadingfont\Large\bfseries}{}{0pt}{}
+  {\normalfont\QLheadingfont\LARGE\bfseries}{}{0pt}{}
   [\vspace{0.5em}\titlerule]
 \titleformat{\subsection}
-  {\normalfont\QLheadingfont\LARGE\bfseries}{}{0pt}{}
+  {\normalfont\QLheadingfont\Large\bfseries}{}{0pt}{}
   [\vspace{0.5em}]
 \titleformat{\subsubsection}
-  {\normalfont\QLheadingfont\Large\bfseries}{}{0pt}{}
+  {\normalfont\QLheadingfont\Large\itshape}{}{0pt}{}
   [\vspace{0.25em}]
 \titleformat{\paragraph}
   {\normalfont\QLheadingfont\large\bfseries}{}{0pt}{}
