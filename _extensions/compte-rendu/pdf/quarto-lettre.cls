@@ -109,7 +109,7 @@
   {\normalfont\QLheadingfont\LARGE\bfseries}{}{0pt}{}
   [\vspace{0.5em}]
 \titleformat{\subsubsection}
-  {\normalfont\QLheadingfont\Large\itshape}{}{0pt}{}
+  {\normalfont\QLheadingfont\Large}{}{0pt}{}
   [\vspace{0.25em}]
 \titleformat{\paragraph}
   {\normalfont\QLheadingfont\large\itshape}{}{0pt}{}
