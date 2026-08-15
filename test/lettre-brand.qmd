@@ -34,6 +34,33 @@ L'extension "**Lettre**" permet de rédiger des lettres formelles en *Markdown* 
 
 > Une citation mise en valeur dans un bloc. Elle peut s'étendre sur plusieurs lignes et illustre la mise en forme d'un extrait ou d'une référence.
 
+# Niveau 1 — Présentation générale
+
+L'extension "**Lettre**" permet de rédiger des lettres formelles en *Markdown* et de les exporter vers sept formats de sortie simultanément. Voici un exemple de logo intégré dans le corps :
+
+![Logo Les Grands Voisins](logo-lesgrandsvoisins-900-150-white.png)
+
+> Une citation mise en valeur dans un bloc. Elle peut s'étendre sur plusieurs lignes et illustre la mise en forme d'un extrait ou d'une référence.
+
+
+# Niveau 1 — Présentation générale
+
+L'extension "**Lettre**" permet de rédiger des lettres formelles en *Markdown* et de les exporter vers sept formats de sortie simultanément. Voici un exemple de logo intégré dans le corps :
+
+![Logo Les Grands Voisins](logo-lesgrandsvoisins-900-150-white.png)
+
+> Une citation mise en valeur dans un bloc. Elle peut s'étendre sur plusieurs lignes et illustre la mise en forme d'un extrait ou d'une référence.
+
+
+# Niveau 1 — Présentation générale
+
+L'extension "**Lettre**" permet de rédiger des lettres formelles en *Markdown* et de les exporter vers sept formats de sortie simultanément. Voici un exemple de logo intégré dans le corps :
+
+![Logo Les Grands Voisins](logo-lesgrandsvoisins-900-150-white.png)
+
+> Une citation mise en valeur dans un bloc. Elle peut s'étendre sur plusieurs lignes et illustre la mise en forme d'un extrait ou d'une référence.
+
+
 ## Niveau 2 — Mise en forme du texte
 
 Du texte en **gras**, en *italique*, en ***gras italique***, et du `code inline`. Un lien vers [Quarto](https://quarto.org) et une note de bas de page^[Ceci est une deuxième note de bas de page.].

@@ -164,9 +164,26 @@
 \newcommand{\QLsetfirstpageheader}[1]{\renewcommand{\@QLfirstpageheader}{#1}}
 
 % ── Page styles ───────────────────────────────────────────────────────────────
+% \rightmark comes back empty on pages before the first \subsection of a
+% \section (\sectionmark's \markboth{#1}{} clears it), so \QLpageheading
+% shows just the section title there; once a \subsection has fired,
+% \subsectionmark's \markright overwrites \rightmark and the header grows to
+% "section — subsection". \edef+\ifx\@empty (rather than testing \rightmark
+% directly) is needed because \rightmark is itself a macro that must be
+% expanded before comparison.
+\newcommand{\QLpageheading}{%
+  \edef\QLrightmark{\rightmark}%
+  \ifx\QLrightmark\@empty
+    \leftmark
+  \else
+    % \leftmark\ --- \rightmark
+    \rightmark
+  \fi
+}
 \renewcommand{\headrulewidth}{0pt}
 \pagestyle{fancy}
 \fancyhf{}
+\fancyhead[C]{\QLpageheading}
 \fancyfoot[C]{\small\thepage\\\@QLfooter}
 
 \fancypagestyle{firstpage}{%
