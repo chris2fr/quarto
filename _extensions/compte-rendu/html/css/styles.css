@@ -108,7 +108,7 @@ body {
   text-align: right;
 }
 
-/* ── Table of contents ({{< toc >}}) ─────────────────────── */
+/* ── Table of contents ({{< toc >}}) / list of tables ({{< lot >}}) ─────── */
 
 .toc ul {
   list-style: none;
@@ -118,12 +118,22 @@ body {
 
 .toc > ul { padding-left: 0; }
 
-.toc a {
+.lot ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0.2rem 0;
+}
+
+.lot li { margin: 0.3rem 0; }
+
+.toc a,
+.lot a {
   color: inherit;
   text-decoration: none;
 }
 
-.toc a:hover { text-decoration: underline; }
+.toc a:hover,
+.lot a:hover { text-decoration: underline; }
 
 /* ── Page header / footer ────────────────────────────────── */
 

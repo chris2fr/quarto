@@ -78,7 +78,7 @@ contributes:
         - ../base/_filters/page.lua
         - _filters/validate.lua
         - pdf/_filters/divs.lua
-        - path: ../base/_filters/tablerule.lua
-          at: post-quarto
         - path: ../base/_filters/toc.lua
+          at: post-quarto
+        - path: ../base/_filters/tablerule.lua
           at: post-quarto

@@ -115,20 +115,20 @@
   {} % {\titlerule\vspace{0.5em}\\} % before-code
   % [] % after-code
 \titleformat{\subsection}
-  {\normalfont\QLheadingfontsb\Large}{}{0pt}{}
-  [\vspace{0.5em}]
+  {\normalfont\QLheadingfont\LARGE}{}{0pt}{}
+  % [\vspace{0.5em}]
 \titleformat{\subsubsection}
-  {\normalfont\QLheadingfontmd\large}{}{0pt}{}
-  [\vspace{0.25em}]
+  {\normalfont\QLheadingfont\Large}{}{0pt}{}
+  % [\vspace{0.25em}]
 \titleformat{\paragraph}
   {\normalfont\QLheadingfontmd\large\itshape}{}{0pt}{} % flushright
 \titleformat{\subparagraph}
   {\normalfont\QLheadingfont\normalsize\bfseries}{}{0pt}{}
-\titlespacing*{\section}{0pt}{2cm plus 1cm }{0.75cm}
-\titlespacing*{\subsection}{0pt}{1.25cm plus 0.75cm}{0.25cm}
-\titlespacing*{\subsubsection}{0pt}{0.6cm}{0.4cm}
-\titlespacing*{\paragraph}{0pt}{0.5cm}{0.25cm}
-\titlespacing*{\subparagraph}{0pt}{0.4cm}{0.2cm}
+\titlespacing*{\section}      {0pt}{2cm plus 2cm }    {1cm}
+\titlespacing*{\subsection}   {0pt}{1cm plus 1cm}     {0.5cm}
+\titlespacing*{\subsubsection}{0pt}{0.8cm plus 0.8cm} {0.4cm}
+\titlespacing*{\paragraph}    {0pt}{0.6cm plus 0.6cm} {0.3cm}
+\titlespacing*{\subparagraph} {0pt}{0.4cm plus 0.4cm} {0.2cm}
 
 % secnumdepth must stay > 0 (unlike a plain \thesection-suppressing 0) so
 % \@startsection still \refstepcounter's each heading: at 0 it falls back to

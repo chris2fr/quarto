@@ -114,20 +114,20 @@
   {} % {\titlerule\vspace{0.5em}\\} % before-code
   % [] % after-code
 \titleformat{\subsection}
-  {\normalfont\QLheadingfontmd\Large}{}{0pt}{}
-  [\vspace{0.5em}]
+  {\normalfont\QLheadingfont\LARGE}{}{0pt}{}
+  % [\vspace{0.5em}]
 \titleformat{\subsubsection}
-  {\normalfont\QLheadingfontmd\Large\itshape}{}{0pt}{}
-  [\vspace{0.25em}]
+  {\normalfont\QLheadingfont\Large}{}{0pt}{}
+  % [\vspace{0.25em}]
 \titleformat{\paragraph}
-  {\normalfont\QLheadingfont\large}{}{0pt}{}
+  {\normalfont\QLheadingfontmd\large\itshape}{}{0pt}{} % flushright
 \titleformat{\subparagraph}
-  {\normalfont\QLheadingfontmd\large\itshape}{}{0pt}{}
-\titlespacing*{\section}{0pt}{2cm plus 1cm }{0.75cm}
-\titlespacing*{\subsection}{0pt}{1.25cm plus 0.75cm}{0.25cm}
-\titlespacing*{\subsubsection}{0pt}{0.6cm}{0.2cm}
-\titlespacing*{\paragraph}{0pt}{0.4cm}{0.15cm}
-\titlespacing*{\subparagraph}{0pt}{0.3cm}{0.1cm}
+  {\normalfont\QLheadingfont\normalsize\bfseries}{}{0pt}{}
+\titlespacing*{\section}      {0pt}{2cm plus 2cm }    {1cm}
+\titlespacing*{\subsection}   {0pt}{1cm plus 1cm}     {0.5cm}
+\titlespacing*{\subsubsection}{0pt}{0.8cm plus 0.8cm} {0.4cm}
+\titlespacing*{\paragraph}    {0pt}{0.6cm plus 0.6cm} {0.3cm}
+\titlespacing*{\subparagraph} {0pt}{0.4cm plus 0.4cm} {0.2cm}
 
 % \titleformat{\section}
 %   {\normalfont\QLheadingfont\normalsize\bfseries}{\thesection}{0pt}{}
