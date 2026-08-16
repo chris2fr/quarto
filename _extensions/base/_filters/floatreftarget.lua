@@ -11,6 +11,15 @@
 -- confirmed by rendering a `.list-table` with an id to lettre-md/lettre-plain
 -- and diffing against one without.
 --
+-- A multi-image layout panel (`::: {#fig-xxx layout="[[1,1]]"} ... :::`) is
+-- itself a FloatRefTarget too, and its own scaffold contains one *nested*
+-- FloatRefTarget per sub-image rather than a bare Table/Figure — confirmed
+-- by tracing a real document's AST (a panel of 2 sub-figures produced two
+-- FloatRefTargets that were only reachable through another FloatRefTarget's
+-- own scaffold Divs, invisible to a single flat pass over doc.blocks).
+-- flatten()'s own output is fed back through process_blocks so a nested one
+-- gets caught too, to whatever depth panels are nested.
+--
 -- Registered at `post-quarto` (only FloatRefTarget exists that late) for
 -- just the `md`/`plain` format blocks in each extension's _extension.yml —
 -- html/pdf/typst/docx/odt already render this correctly and don't need it.
@@ -26,35 +35,48 @@ local function is_float_target(el)
   return el.t == 'Div' and el.attributes and el.attributes.__quarto_custom_type == 'FloatRefTarget'
 end
 
--- Flattens the wrapper back into ordinary blocks: caption paragraph, then
--- the table/figure.
+-- Flattens the wrapper back into ordinary blocks. The scaffolding's own
+-- order is [content, caption] — right for a figure (caption conventionally
+-- below the image), backwards for a table (caption conventionally above);
+-- swapped only for an actual Table. A sub-image's own FloatRefTarget
+-- scaffold doesn't hold a Table/Figure at all, just a bare Plain(Image), so
+-- this can't discriminate every content type by inner.t — only Table is
+-- special-cased, everything else (Figure, bare image, nested
+-- FloatRefTarget) keeps the scaffold's own order.
 local function flatten(div)
-  local table_blocks, caption_blocks = {}, {}
+  local content, caption, has_table = {}, {}, false
   for _, scaffold in ipairs(div.content) do
     for _, inner in ipairs(scaffold.content or {}) do
-      if inner.t == 'Table' or inner.t == 'Figure' then
-        table.insert(table_blocks, inner)
+      if inner.t == 'Table' then
+        has_table = true
+        table.insert(content, inner)
+      elseif inner.t == 'Plain' or inner.t == 'Para' then
+        table.insert(caption, inner)
       else
-        table.insert(caption_blocks, inner)
+        table.insert(content, inner)
       end
     end
   end
   local out = {}
-  for _, b in ipairs(caption_blocks) do table.insert(out, b) end
-  for _, b in ipairs(table_blocks) do table.insert(out, b) end
+  local first, second = content, caption
+  if has_table then first, second = caption, content end
+  for _, b in ipairs(first) do table.insert(out, b) end
+  for _, b in ipairs(second) do table.insert(out, b) end
   return out
 end
+
+local process_blocks
 
 -- Only recurses into genuine Div containers (this extension's own
 -- from/date/.../body wrapper divs, and a FloatRefTarget's own scaffolding)
 -- rather than blindly reassigning `.content` on any block type, since that
 -- field means something else (Inlines, not Blocks) for a Para/Plain and
 -- isn't necessarily safe to overwrite on every element type.
-local function process_blocks(blocks)
+process_blocks = function(blocks)
   local out = {}
   for _, b in ipairs(blocks) do
     if is_float_target(b) then
-      for _, x in ipairs(flatten(b)) do table.insert(out, x) end
+      for _, x in ipairs(process_blocks(flatten(b))) do table.insert(out, x) end
     else
       if b.t == 'Div' then b.content = process_blocks(b.content) end
       table.insert(out, b)
