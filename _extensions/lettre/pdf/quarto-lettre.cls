@@ -109,10 +109,10 @@
 
 \titleformat{\section} % command
   [block] % shape
-  {\normalfont\QLheadingfontmd\LARGE} % format
+  {\centering\normalfont\QLheadingfont\huge} % format
   {} % label
   {0pt} % sep
-  {\titlerule\vspace{0.5em}\\} % before-code
+  {} % {\titlerule\vspace{0.5em}\\} % before-code
   % [] % after-code
 \titleformat{\subsection}
   {\normalfont\QLheadingfontsb\Large}{}{0pt}{}
@@ -124,8 +124,8 @@
   {\normalfont\QLheadingfontmd\large\itshape}{}{0pt}{} % flushright
 \titleformat{\subparagraph}
   {\normalfont\QLheadingfont\normalsize\bfseries}{}{0pt}{}
-\titlespacing*{\section}{0pt}{1cm}{0.75cm}
-\titlespacing*{\subsection}{0pt}{0.75cm}{0.5cm}
+\titlespacing*{\section}{0pt}{2cm plus 1cm }{0.75cm}
+\titlespacing*{\subsection}{0pt}{1.25cm plus 0.75cm}{0.25cm}
 \titlespacing*{\subsubsection}{0pt}{0.6cm}{0.4cm}
 \titlespacing*{\paragraph}{0pt}{0.5cm}{0.25cm}
 \titlespacing*{\subparagraph}{0pt}{0.4cm}{0.2cm}
