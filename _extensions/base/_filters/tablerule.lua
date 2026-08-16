@@ -15,13 +15,33 @@
 -- table) repeating header/footer setup and the start of the actual body
 -- rows; a table without one (no header row — not producible by a Markdown
 -- pipe table, but conceivably by a raw LaTeX table) is left untouched.
+--
+-- A row-ending `\\` isn't the only `\\` in the body: a cell with hard line
+-- breaks (from trailing `\` in the Markdown) and a constrained column width
+-- (tbl-colwidths) gets wrapped by pandoc in `\begin{minipage}...\end{minipage}`,
+-- and *those* internal line breaks are also literal `\\`. Splicing
+-- \QLrowrule after one lands it inside the minipage, where \noalign (which
+-- \QLrowrule expands to) is illegal outside a tabular alignment and LaTeX
+-- dies with "Misplaced \noalign". So only splice at minipage depth 0.
 function Table(el)
   if not FORMAT:match('latex') then return nil end
   local latex = pandoc.write(pandoc.Pandoc({ el }), 'latex')
   local head, body = latex:match('^(.-\\endlastfoot\n)(.*)$')
   if not head then return nil end
-  body = body:gsub('\\\\\n', '\\\\\n\\QLrowrule\n')
-  -- The gsub above also lands after the *last* body row, right where
+
+  local out = {}
+  local depth = 0
+  for line in (body .. '\n'):gmatch('([^\n]*)\n') do
+    local _, begins = line:gsub('\\begin{minipage}', '')
+    local _, ends = line:gsub('\\end{minipage}', '')
+    depth = depth + begins - ends
+    table.insert(out, line)
+    if depth == 0 and line:match('\\\\%s*$') then
+      table.insert(out, '\\QLrowrule')
+    end
+  end
+  body = table.concat(out, '\n')
+  -- The loop above also lands a rule after the *last* body row, right where
   -- \bottomrule (declared up in \endlastfoot, but placed by longtable at the
   -- table's true end) is about to print — doubling up into a heavy-looking
   -- close. Drop that one trailing rule; every other row still gets one.
