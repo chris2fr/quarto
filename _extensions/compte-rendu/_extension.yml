@@ -48,6 +48,8 @@ contributes:
       filters:
         - ../base/_filters/page.lua
         - _filters/validate.lua
+        - path: ../base/_filters/floatreftarget.lua
+          at: post-quarto
     md:
       base-format: markdown
       toc: false
@@ -60,6 +62,8 @@ contributes:
         - _filters/validate.lua
         - ../base/md/_filters/tables.lua
         - md/_filters/divs.lua
+        - path: ../base/_filters/floatreftarget.lua
+          at: post-quarto
     pdf:
       base-format: pdf
       template: pdf/layout.tex
