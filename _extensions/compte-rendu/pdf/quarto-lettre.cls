@@ -41,6 +41,7 @@
 \RequirePackage{afterpage}
 \RequirePackage{titlesec}
 \RequirePackage{titletoc}
+\RequirePackage{lastpage}
 
 % ── Thin rule between table data rows ───────────────────────────────────────
 % Pandoc's longtable output only rules the table edges and the header
@@ -199,7 +200,7 @@
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[C]{\textit\QLpageheading}
-\fancyfoot[C]{\small\thepage\\\@QLfooter}
+\fancyfoot[C]{\small\thepage\ / \pageref{LastPage}\\\@QLfooter}
 
 \fancypagestyle{firstpage}{%
   \fancyhf{}
