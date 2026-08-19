@@ -25,6 +25,7 @@ local upstream_meta = {
   'margin-inner', 'margin-outer', 'margin-top', 'margin-bottom',
   'margin-all', 'marginx', 'marginy',
   'header-includes', 'bibliography', 'csl', 'tex-custom', 'labels',
+  'nocite', 'tab-stop',
   -- Quarto/Pandoc reserved or auto-injected
   'authors', 'by-author', 'language', 'toc-title', 'quarto-version',
   'include-before', 'include-after', 'fig-responsive', 'revealjs-plugins',

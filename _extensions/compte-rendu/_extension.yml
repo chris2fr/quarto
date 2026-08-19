@@ -57,15 +57,19 @@ contributes:
       toc: false
       template: ../base/md/layout.md
       wrap: none
-      tabstop: 2
+      tab-stop: 2
       preserve-tabs: false
+      variant: +definition_lists
       csl: ../base/resources/biblio.csl
+      citeproc: false
       filters:
         - ../base/_filters/shorthand.lua
         - ../base/_filters/page.lua
         - _filters/validate.lua
         - ../base/md/_filters/tables.lua
         - md/_filters/divs.lua
+        - path: ../base/md/_filters/biblio.lua
+          at: post-quarto
         - path: ../base/_filters/floatreftarget.lua
           at: post-quarto
     pdf:
