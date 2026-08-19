@@ -57,7 +57,9 @@ contributes:
       wrap: none
       tabstop: 2
       preserve-tabs: false
+      csl: ../base/resources/biblio.csl
       filters:
+        - ../base/_filters/shorthand.lua
         - ../base/_filters/page.lua
         - _filters/validate.lua
         - ../base/md/_filters/tables.lua
