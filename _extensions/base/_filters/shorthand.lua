@@ -1,9 +1,9 @@
 -- A manually-assigned `shorthand = {...}` field on a bibliography entry
 -- drives its CSL citation-label (base/resources/biblio.csl's citation and
--- bibliography label, applied to PDF, HTML and md — the formats that load
--- that CSL, via each extension's own `csl:` key) instead of citeproc's
--- auto-generated author+year one. Entries with no shorthand field are
--- untouched — still auto-generated as before.
+-- bibliography label, applied to PDF, HTML, md and plain — the formats
+-- that load that CSL, via each extension's own `csl:` key) instead of
+-- citeproc's auto-generated author+year one. Entries with no shorthand
+-- field are untouched — still auto-generated as before.
 --
 -- BibTeX has no field named "shorthand", or any passthrough for arbitrary
 -- custom fields: pandoc's own bibtex reader silently drops anything it
@@ -129,7 +129,7 @@ local function augment(path)
 end
 
 function Meta(m)
-  if not (FORMAT:match('latex') or FORMAT:match('html') or FORMAT:match('markdown')) then return nil end
+  if not (FORMAT:match('latex') or FORMAT:match('html') or FORMAT:match('markdown') or FORMAT:match('plain')) then return nil end
   if not m.bibliography then return nil end
 
   local paths = {}

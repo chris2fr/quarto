@@ -45,7 +45,9 @@ contributes:
     plain:
       base-format: plain
       template: ../base/plain/layout.txt
+      csl: ../base/resources/biblio.csl
       filters:
+        - ../base/_filters/shorthand.lua
         - ../base/_filters/page.lua
         - _filters/validate.lua
         - path: ../base/_filters/floatreftarget.lua
