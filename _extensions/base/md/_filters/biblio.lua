@@ -71,6 +71,21 @@ local function resolve_meta_paths(meta, base_dir)
   end
 end
 
+-- citeproc's own left-margin label text is "(1). " (trailing dot + space) —
+-- fine as a hanging-indent margin marker, redundant as a definition-list
+-- term where the `:   ` already separates label from entry. Drops the
+-- trailing space/softbreak inline(s) and the dot itself, leaving just
+-- "(1)".
+local function trim_label(term)
+  while #term > 0 and (term[#term].t == 'Space' or term[#term].t == 'SoftBreak') do
+    table.remove(term)
+  end
+  if #term > 0 and term[#term].t == 'Str' then
+    term[#term] = pandoc.Str(term[#term].text:gsub('%.$', ''))
+  end
+  return term
+end
+
 local function entry_term_and_def(div)
   local blocks = div.content
   local first = blocks[1]
@@ -88,7 +103,7 @@ local function entry_term_and_def(div)
   end
   local def_blocks = { pandoc.Plain(def_inlines) }
   for i = 2, #blocks do table.insert(def_blocks, blocks[i]) end
-  return term, def_blocks
+  return trim_label(term), def_blocks
 end
 
 local function refs_to_definition_list(el)
