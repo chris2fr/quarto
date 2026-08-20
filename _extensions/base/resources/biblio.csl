@@ -292,7 +292,6 @@
             <text macro="genre" suffix=". "/>
             <text macro="publisher-group" suffix=". "/>
             <text macro="edition" suffix=". "/>
-            <text macro="email" suffix=". "/>
             <text macro="translator" suffix=". "/>
             <text macro="medium" suffix=". "/>
             <text macro="issue" suffix=". "/>
@@ -302,7 +301,6 @@
             <text macro="isbn" suffix=". "/>
             <text macro="archive" suffix=". "/>
             <text macro="keyword" suffix=". "/>
-            <text macro="file" suffix=". "/>
             <text macro="annote" suffix=". "/>
             <text macro="abstract" suffix=". "/>
             <text macro="note" suffix=". "/>
