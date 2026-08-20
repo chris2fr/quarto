@@ -247,6 +247,12 @@
       </else>
     </choose>
   </macro>
+  <macro name="email">
+    <text variable="email"  prefix="[" suffix="]"/>
+  </macro>
+  <macro name="file">
+    <text variable="file"  prefix="[" suffix="]"/>
+  </macro>
   <macro name="abstract">
     <text variable="abstract"  prefix=" [" suffix="] "/>
   </macro> 
