@@ -266,7 +266,7 @@
 \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
 \makeatother
 \newlength{\cslhangindent}
-\setlength{\cslhangindent}{1.5em}
+\setlength{\cslhangindent}{0.75em}
 \newlength{\csllabelwidth}
 \setlength{\csllabelwidth}{10em}
 \newlength{\cslentryspacingunit}
@@ -284,5 +284,5 @@
  {\end{list}}
 \newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\hspace{\cslhangindent}\parbox[t]{\linewidth - \csllabelwidth - \cslhangindent}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
