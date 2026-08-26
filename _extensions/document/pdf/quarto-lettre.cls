@@ -47,9 +47,10 @@
 % Pandoc's longtable output only rules the table edges and the header
 % separator (\toprule/\midrule/\bottomrule); there's nothing between body
 % rows. Inserted as literal text between rows by base/_filters/tablerule.lua
-% — not via redefining \\, which fights longtable/booktabs' internal
-% alignment bookkeeping badly enough to corrupt the table (tried, reverted:
-% broke \bottomrule with "Misplaced \noalign").
+% (general Markdown tables) and lettre/compte-rendu's own divs.lua
+% (definition-list-as-table divs) — not via redefining \\, which fights
+% longtable/booktabs' internal alignment bookkeeping badly enough to corrupt
+% the table (tried, reverted: broke \bottomrule with "Misplaced \noalign").
 % Built on booktabs' \specialrule rather than a raw \hrule: \hrule has no
 % notion of the table's column measure and draws at the full \hsize, which is
 % wider than an @{}-trimmed table — visibly overshooting both margins.
@@ -104,6 +105,7 @@
 % plex-sans's \defaultfontfeatures{Extension=.otf} is cleared again at the end
 % of that package, so it must be repeated here for this direct fontspec call.
 \newfontfamily\QLheadingfontmd[Extension=.otf, ItalicFont=IBMPlexSans-MediumItalic]{IBMPlexSans-Medium}
+\newfontfamily\QLheadingfontsb[Extension=.otf, ItalicFont=IBMPlexSans-SemiBoldItalic]{IBMPlexSans-SemiBold}
 
 \titleformat{\section} % command
   [block] % shape
@@ -128,21 +130,19 @@
 \titlespacing*{\paragraph}    {0pt}{0.6cm plus 0.6cm} {0.3cm}
 \titlespacing*{\subparagraph} {0pt}{0.4cm plus 0.4cm} {0.2cm}
 
-
-% \titleformat{\section}
-%   {\normalfont\QLheadingfont\normalsize\bfseries}{\thesection}{0pt}{}
-%   [\vspace{2pt}\titlerule]
-% \titleformat{\subsection}
-%   {\normalfont\QLheadingfont\small\bfseries\itshape}{\thesubsection}{0pt}{}
-% \titlespacing*{\section}{0pt}{1.5ex plus 0.5ex minus 0.2ex}{1ex plus 0.2ex}
-% \titlespacing*{\subsection}{0pt}{1.2ex plus 0.3ex minus 0.2ex}{0.5ex plus 0.1ex}
-
-% secnumdepth is set in layout.tex (must stay > 0 for \@startsection to
-% \refstepcounter each heading, so \tableofcontents hyperlinks resolve to
-% their own section instead of all collapsing onto the same "Doc-Start"
-% target); \numberline is neutralized here regardless, since secnumdepth > 0
-% would otherwise make titlesec prefix TOC lines with \numberline{N} even
-% though the empty titleformat labels above already hide it in the body.
+% secnumdepth must stay > 0 (unlike a plain \thesection-suppressing 0) so
+% \@startsection still \refstepcounter's each heading: at 0 it falls back to
+% a bare \stepcounter, which never registers the heading as a hyperref
+% anchor, so every \tableofcontents entry (and TOC hyperlink) collapses onto
+% the same "Doc-Start" target instead of its own section — invisible on a
+% one-page letter, glaringly wrong once headings span several pages. Numbers
+% themselves stay hidden via the empty titleformat labels above; secnumdepth
+% would otherwise also make titlesec prefix TOC lines with \numberline{N},
+% which \renewcommand{\numberline} below strips back out. 5 levels deep
+% (down to \subparagraph, ##### in Markdown — the deepest heading LaTeX has
+% a sectioning command for) — matches tocdepth below.
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
 \renewcommand{\numberline}[1]{}
 % {{< toc >}} (../../base/_filters/toc.lua) can appear more than once —
 % plain \tableofcontents can't: it re-opens \jobname.toc for writing right
@@ -159,8 +159,11 @@
 % secnumdepth > 0, so without this a page header would show "0.1 Heading"
 % (0 since a subsection with no preceding \section leaves \thesection at its
 % initial value) instead of just "Heading".
+% \renewcommand{\sectionmark}[1]{\markright{#1}}
+% \renewcommand{\subsectionmark}[1]{\markboth{#1}{}}
 \renewcommand{\sectionmark}[1]{\markboth{#1}{}}
 \renewcommand{\subsectionmark}[1]{\markright{#1}}
+% \renewcommand{\subsectionmark}[1]{\markright{\thesubsection.\ #1}}
 \newcounter{none}
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
