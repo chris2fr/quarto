@@ -271,7 +271,7 @@
 \newlength{\cslhangindent}
 \setlength{\cslhangindent}{0.75em}
 \newlength{\csllabelwidth}
-\setlength{\csllabelwidth}{10em}
+\setlength{\csllabelwidth}{9em}
 \newlength{\cslentryspacingunit}
 \setlength{\cslentryspacingunit}{\parskip}
 \newenvironment{CSLReferences}[2]

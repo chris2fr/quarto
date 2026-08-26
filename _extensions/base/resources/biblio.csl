@@ -150,7 +150,7 @@
       <if variable="issued">
         <date variable="issued">
           <date-part name="day" suffix=" "/>
-          <date-part name="month" suffix=" "/>
+          <date-part name="month" form="short" suffix=" "/>
           <date-part name="year"/>
         </date>
       </if>
@@ -190,7 +190,7 @@
           <text term="accessed" text-case="capitalize-first"/>
           <date variable="accessed">
             <date-part name="day" prefix="&#160;"/>
-            <date-part name="month" prefix="&#160;"/>
+            <date-part name="month" form="short" prefix="&#160;"/>
             <date-part name="year" prefix="&#160;"/>
           </date>
         </group>
@@ -262,6 +262,15 @@
   <macro name="number">
     <text variable="number"/>
   </macro>
+  <macro name="groupannote">
+    <choose>
+      <if variable="annote">
+        <group display="block">
+          <text macro="annote" font-weight="light" suffix="&#160;&#160;"/>
+        </group>
+      </if>
+    </choose>
+  </macro>
   <citation disambiguate-add-year-suffix="true">
     <sort>
       <key macro="author"/>
@@ -285,21 +294,24 @@
       <!-- <key variable="number" sort="descending"/> -->
     </sort>
     <layout>
+      <group display="block">
+        <text variable="citation-label" text-decoration="underline" prefix="[" suffix="]&#160;&#160; "/>
+        <text macro="responsability" font-weight="bold" prefix=" " suffix=".&#160; "/>
+      </group>
       <group display="left-margin">
-        <text variable="citation-label" text-decoration="underline" suffix="&#160;&#160;"/>
-        <group display="block">
-          <text macro="annote" font-weight="light" suffix="&#160;&#160;"/>
+          <text macro="date" form="short" font-style="none" font-weight="bold"/>
           <group display="block">
-            <text macro="date" font-style="none" font-weight="bold"/>
+            <text variable="number" font-weight="light" prefix="(" suffix=")&#160;&#160;"/>
+            <text macro="genre" prefix=" " suffix="&#160; "/>
             <group display="block">
               <text macro="keyword" font-weight="light" font-style="italic" suffix="&#160;&#160;"/>
             </group>
+            <!-- <text macro="groupannote"/> -->
           </group>
-        </group>
       </group>
         <group display="right-inline">
-            <text macro="title" font-style="italic" font-weight="bold" prefix="" suffix=".&#160; "/>
-            <text macro="responsability" prefix=" " suffix=".&#160; "/>
+            <text macro="title" font-style="italic" font-weight="normal" prefix="" suffix=".&#160; "/>
+            
             <group display="block">
               <text macro="edition" font-weight="light" text-decoration="underline" prefix="./annexes/"/>
               <group display="block">
@@ -322,7 +334,7 @@
                 <text macro="email" prefix="(Email: " suffix=").&#160; "/>
                 <!-- <text variable="file" prefix=" " suffix=".&#160; "/> -->
                 <text macro="url" prefix=" (URL: " suffix=").&#160; "/> 
-                <!-- <text macro="annote" font-weight="light" prefix=" " suffix=".&#160; "/> -->
+                <text macro="annote" font-weight="light" font-style="italic" prefix="[Annotation: " suffix="].&#160; "/>
                 <text macro="note" font-style="italic" font-weight="light" prefix="[Note: " suffix="].&#160; "/>
                 <text macro="abstract" font-style="italic" font-weight="light" prefix="[Résumé: " suffix="].&#160;"/>
               </group>
