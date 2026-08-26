@@ -314,7 +314,7 @@
         </group>
         <group display="left-margin">
           <text macro="genre" prefix="" suffix="&#160; "/>
-          <text macro="groupannumber" font-weight="light" prefix="(" suffix=")&#160;&#160;"/>
+          <text macro="groupnumber" font-weight="light" prefix="(" suffix=")&#160;&#160;"/>
           <group display="block">
             <text macro="keyword" font-weight="light" font-style="italic" suffix="&#160;&#160;"/>
           </group>
