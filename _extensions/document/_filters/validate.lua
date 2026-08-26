@@ -29,7 +29,7 @@ local upstream_meta = {
   -- Quarto/Pandoc reserved or auto-injected
   'authors', 'by-author', 'language', 'toc-title', 'quarto-version',
   'include-before', 'include-after', 'fig-responsive', 'revealjs-plugins',
-  'colorlinks', 'linkcolor', 'block-headings', 'biblio-config', 'document-css',
+  'colorlinks', 'linkcolor', 'block-headings', 'biblio-config', 'document-css', 'format', 'metadata-files'
 }
 
 function Pandoc(doc)
