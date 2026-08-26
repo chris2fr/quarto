@@ -265,8 +265,8 @@
 \def\@biblabel#1{}
 \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
 \makeatother
-\newlength{\cslhangindent}
-\setlength{\cslhangindent}{0.75em}
+\newlength{\cslpadding}
+\setlength{\cslpadding}{0.75em}
 \newlength{\csllabelwidth}
 \setlength{\csllabelwidth}{8em}
 \newlength{\cslentryspacingunit}
@@ -277,8 +277,8 @@
   \setlength{\leftmargin}{0pt}
   \setlength{\parsep}{0pt}
   \ifodd #1
-  \setlength{\leftmargin}{\cslhangindent}
-  \setlength{\itemindent}{-1\cslhangindent}
+  \setlength{\leftmargin}{\cslpadding}
+  \setlength{\itemindent}{-1\cslpadding}
   \fi
   \setlength{\itemsep}{#2\cslentryspacingunit}}}
  {\end{list}}
