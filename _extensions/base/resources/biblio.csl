@@ -295,7 +295,8 @@
     </sort>
     <layout>
       <group display="block">
-        <text variable="citation-label" text-decoration="underline" prefix="[" suffix="]&#160;&#160; "/>
+        <text variable="citation-label" text-decoration="underline" />
+        <!-- <text variable="citation-label" text-decoration="underline" prefix="[" suffix="]&#160;&#160; "/> -->
       </group>
       <group display="left-margin">
           <text macro="date" form="short" font-style="none" font-weight="bold"/>
