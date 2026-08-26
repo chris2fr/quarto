@@ -271,13 +271,22 @@
       </if>
     </choose>
   </macro>
+  <macro name="groupnumber">
+    <choose>
+      <if variable="number">
+        <group display="block">
+          <text macro="number" font-weight="light" suffix="&#160;&#160;"/>
+        </group>
+      </if>
+    </choose>
+  </macro>
   <citation disambiguate-add-year-suffix="true">
     <sort>
       <key macro="author"/>
       <key variable="issued"/>
     </sort>
     <layout prefix=" [" suffix="]" text-decoration="underline" delimiter=", ">
-    <!-- <layout prefix=" (" suffix=")" delimiter=", "> -->
+      <!-- <layout prefix=" (" suffix=")" delimiter=", "> -->
       <group delimiter=", ">
         <text variable="citation-label"/>
         <group>
@@ -295,53 +304,54 @@
     </sort>
     <layout>
       <group display="block">
-        <text variable="citation-label" text-decoration="underline" />
-        <!-- <text variable="citation-label" text-decoration="underline" prefix="[" suffix="]&#160;&#160; "/> -->
-      </group>
-      <group display="left-margin">
-          <text macro="date" form="short" font-style="none" font-weight="bold"/>
+        <group display="right-inline">
+          <text variable="citation-label" text-decoration="underline" />
+          <!-- <text variable="citation-label" text-decoration="underline" prefix="["
+            suffix="]&#160;&#160; "/> -->  
+        </group>
+        <group display="left-margin">
+          <text macro="date" form="short" font-style="none" font-weight="normal"/>
+        </group>
+        <group display="left-margin">
+          <text macro="genre" prefix="" suffix="&#160; "/>
+          <text macro="groupannumber" font-weight="light" prefix="(" suffix=")&#160;&#160;"/>
           <group display="block">
-            <text variable="number" font-weight="light" prefix="(" suffix=")&#160;&#160;"/>
-            <text macro="genre" prefix=" " suffix="&#160; "/>
-            <group display="block">
-              <text macro="keyword" font-weight="light" font-style="italic" suffix="&#160;&#160;"/>
-            </group>
-            <!-- <text macro="groupannote"/> -->
+            <text macro="keyword" font-weight="light" font-style="italic" suffix="&#160;&#160;"/>
           </group>
-      </group>
+          <!-- <text macro="groupannote"/> -->
+        </group>
         <group display="right-inline">
           <text macro="responsability" font-weight="normal" prefix=" " suffix=".&#160; "/>
+          <text macro="title" font-style="italic" font-weight="normal" prefix="" suffix=".&#160; "/>
           <group display="block">
-            <text macro="title" font-style="italic" font-weight="normal" prefix="" suffix=".&#160; "/>
+            <text macro="edition" font-weight="light" text-decoration="underline" prefix="./annexes/"/>
             <group display="block">
-              <text macro="edition" font-weight="light" text-decoration="underline" prefix="./annexes/"/>
-              <group display="block">
-                <!-- <text macro="genre" prefix=" " suffix="&#160; "/> -->
-                <!-- <text macro="number" prefix=" " suffix="&#160; "/> -->
-                <!-- <text macro="medium" prefix=" " suffix=".&#160; "/> -->
-                <!-- <text macro="language" prefix=" (lang: " suffix=")&#160; "/> -->
-                <!-- <text macro="page" prefix=" (page(s): " suffix=")&#160; "/>  -->
-                <text variable="publisher" prefix="(Publication: " suffix=")&#160; "/>
-                <!-- <text macro="publisher-group" prefix="(" suffix=")&#160; "/>  -->
-                <!-- <text macro="translator" prefix=" " suffix=".&#160; "/>  -->
-                <!-- <text macro="issue" prefix=" " suffix=".&#160; "/> -->
-                <!-- <text macro="accessed" prefix=" " suffix=".&#160; "/> -->
-                <!-- <text macro="doi" prefix=" " suffix=".&#160; "/> -->
-                <!-- <text macro="collection" prefix=" (collection: " suffix=")&#160; "/> -->
-                <!-- <text macro="isbn" prefix=" " suffix=".&#160; "/> -->
-                <!-- <text macro="archive" prefix=" " suffix=".&#160; "/> -->
-                <!-- <text macro="keyword" font-weight="light" prefix=". (" suffix=").&#160; "/> -->
-                <!-- <text macro="abstract" prefix=" (Synthèse: " suffix=").&#160; "/> -->
-                <text macro="email" prefix="(Email: " suffix=").&#160; "/>
-                <!-- <text variable="file" prefix=" " suffix=".&#160; "/> -->
-                <text macro="url" prefix=" (URL: " suffix=").&#160; "/> 
-                <text macro="annote" font-weight="light" font-style="italic" prefix="[Annotation: " suffix="].&#160; "/>
-                <text macro="note" font-style="italic" font-weight="light" prefix="[Note: " suffix="].&#160; "/>
-                <text macro="abstract" font-style="italic" font-weight="light" prefix="[Résumé: " suffix="].&#160;"/>
-              </group>
+              <!-- <text macro="genre" prefix=" " suffix="&#160; "/> -->
+              <!-- <text macro="number" prefix=" " suffix="&#160; "/> -->
+              <!-- <text macro="medium" prefix=" " suffix=".&#160; "/> -->
+              <!-- <text macro="language" prefix=" (lang: " suffix=")&#160; "/> -->
+              <!-- <text macro="page" prefix=" (page(s): " suffix=")&#160; "/>  -->
+              <text variable="publisher" prefix="(Publication: " suffix=").&#160; "/>
+              <!-- <text macro="publisher-group" prefix="(" suffix=")&#160; "/>  -->
+              <!-- <text macro="translator" prefix=" " suffix=".&#160; "/>  -->
+              <!-- <text macro="issue" prefix=" " suffix=".&#160; "/> -->
+              <!-- <text macro="accessed" prefix=" " suffix=".&#160; "/> -->
+              <!-- <text macro="doi" prefix=" " suffix=".&#160; "/> -->
+              <!-- <text macro="collection" prefix=" (collection: " suffix=")&#160; "/> -->
+              <!-- <text macro="isbn" prefix=" " suffix=".&#160; "/> -->
+              <!-- <text macro="archive" prefix=" " suffix=".&#160; "/> -->
+              <!-- <text macro="keyword" font-weight="light" prefix=". (" suffix=").&#160; "/> -->
+              <!-- <text macro="abstract" prefix=" (Synthèse: " suffix=").&#160; "/> -->
+              <text macro="email" prefix="(Email: " suffix=").&#160; "/>
+              <!-- <text variable="file" prefix=" " suffix=".&#160; "/> -->
+              <text macro="url" prefix=" (URL: " suffix=").&#160; "/> 
+              <text macro="annote" font-weight="light" font-style="italic" prefix="[Annotation: " suffix="].&#160; "/>
+              <text macro="note" font-style="italic" font-weight="light" prefix="[Note: " suffix="].&#160; "/>
+              <text macro="abstract" font-style="italic" font-weight="light" prefix="[Résumé: " suffix="].&#160;"/>
             </group>
           </group>
         </group>
+      </group>
     </layout>
   </bibliography>
 </style>

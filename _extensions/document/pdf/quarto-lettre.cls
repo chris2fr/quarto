@@ -283,6 +283,13 @@
   \setlength{\itemsep}{#2\cslentryspacingunit}}}
  {\end{list}}
 \newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
-\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
-\newcommand{\CSLRightInline}[1]{\hspace{\cslhangindent}\parbox[t]{\linewidth - \csllabelwidth - \cslhangindent}{\strut#1\strut}}
-\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}\hspace{\cslpadding}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth - \cslpadding}{\strut#1\strut}}
+% \newcommand{\CSLIndent}[1]{\hspace{\cslpadding}#1}
+% \newcommand{\CSLIndent}[1]{\hspace{\cslpadding}{\begin{flushright}\parbox[t]{\csllabelwidth}{\strut#1\strut}}\end{flushright}}
+% \newcommand{\CSLIndent}[1]{\hspace{\cslpadding}{\raggedleft\parbox[t]{\csllabelwidth}{\strut#1\strut}}}
+% \newcommand{\CSLIndent}[1]{\hspace{\cslpadding}{\begin{flushright}\parbox[t]{\csllabelwidth}{\strut#1\strut}\end{flushright}}}
+% \newcommand{\CSLIndent}[1]{\hspace{\cslpadding}{\begin{flushright}\parbox[t]{\csllabelwidth}{#1}\end{flushright}}}
+\newcommand{\CSLIndent}[1]{{\raggedleft\hspace{\cslpadding}\hspace{\cslpadding}#1}}
+% \newcommand{\CSLIndent}[1]{{\raggedleft #1}}
+
