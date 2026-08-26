@@ -296,7 +296,6 @@
     <layout>
       <group display="block">
         <text variable="citation-label" text-decoration="underline" prefix="[" suffix="]&#160;&#160; "/>
-        <text macro="responsability" font-weight="bold" prefix=" " suffix=".&#160; "/>
       </group>
       <group display="left-margin">
           <text macro="date" form="short" font-style="none" font-weight="bold"/>
@@ -310,8 +309,9 @@
           </group>
       </group>
         <group display="right-inline">
+          <text macro="responsability" font-weight="normal" prefix=" " suffix=".&#160; "/>
+          <group display="block">
             <text macro="title" font-style="italic" font-weight="normal" prefix="" suffix=".&#160; "/>
-            
             <group display="block">
               <text macro="edition" font-weight="light" text-decoration="underline" prefix="./annexes/"/>
               <group display="block">
@@ -340,6 +340,7 @@
               </group>
             </group>
           </group>
+        </group>
     </layout>
   </bibliography>
 </style>
