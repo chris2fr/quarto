@@ -315,7 +315,7 @@
 
 \newcommand{\CSLBlock}[1]{\parbox[t]{\linewidth}{#1}\\}
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}\hspace*{\cslhangingdent/2}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth - \cslhangingdent/2}{\raggedleft#1}\\}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth - \cslhangingdent/2}{\raggedleft#1}\\[1mm]}
 \newcommand{\CSLIndent}[1]{\hspace*{\cslhangingdent}\parbox[t]{\linewidth - \cslhangingdent}{\raggedright #1}\\}
 
  
