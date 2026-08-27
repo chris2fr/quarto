@@ -322,10 +322,10 @@
       </group>
       <group display="right-inline">
         <text macro="responsability" font-weight="normal" prefix="" suffix=". "/>
-          <text macro="genre" prefix="(" suffix="). "/>
         <text macro="date" form="short" font-style="none" font-weight="normal" suffix=". "/>
       </group>
         <group display="indent">
+          <text macro="genre" prefix="(" suffix="). "/>
           <text macro="title" font-style="italic" font-weight="normal" prefix="" suffix=". "/>
           <!-- <text macro="number" prefix=" " suffix=" "/> -->
           <!-- <text macro="medium" prefix=" " suffix=". "/> -->
