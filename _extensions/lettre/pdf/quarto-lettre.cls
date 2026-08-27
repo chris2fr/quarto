@@ -292,10 +292,10 @@
 \def\@biblabel#1{}
 \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
 \makeatother
-\newlength{\cslpadding}
-\setlength{\cslpadding}{0.75em}
+\newlength{\cslhangingdent}
+\setlength{\cslhangingdent}{1.5em}
 \newlength{\csllabelwidth}
-\setlength{\csllabelwidth}{8em}
+\setlength{\csllabelwidth}{18em}
 \newlength{\cslentryspacingunit}
 \setlength{\cslentryspacingunit}{\parskip}
 \newenvironment{CSLReferences}[2]
@@ -304,29 +304,31 @@
   \setlength{\leftmargin}{0pt}
   \setlength{\parsep}{0pt}
   \ifodd #1
-  \setlength{\leftmargin}{\cslpadding}
-  \setlength{\itemindent}{-1\cslpadding}
+  \setlength{\leftmargin}{\cslhangingdent}
+  \setlength{\itemindent}{-1\cslhangingdent}
   \fi
   \setlength{\itemsep}{#2\cslentryspacingunit}}}
  {\end{list}}
 
 \newcommand{\CSLBlock}[1]{\parbox[t]{\linewidth}{#1}\\}
-\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}\hspace*{\cslhangindent/2}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth - \cslhangindent/2}{\raggedleft#1}\\}
-\newcommand{\CSLIndent}[1]{\hspace*{\cslhangindent}\parbox[t]{\linewidth - \cslhangindent}{\raggedright #1}\\}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}\hspace*{\cslhangingdent/2}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth - \cslhangingdent/2}{\raggedleft#1}\\}
+\newcommand{\CSLIndent}[1]{\hspace*{\cslhangingdent}\parbox[t]{\linewidth - \cslhangingdent}{\raggedright #1}\\}
 
+ 
 % \newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
 % \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\linewidth}{\looseness=-1 #1}\\}
-% \newcommand{\CSLRightInline}[1]{\hspace*{\cslhangindent}\parbox[t]{\linewidth -  \cslhangindent}{\raggedright #1}}
-% \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+% \newcommand{\CSLRightInline}[1]{\hspace*{\cslhangingdent}\parbox[t]{\linewidth -  \cslhangingdent}{\raggedright #1}}
+% \newcommand{\CSLIndent}[1]{\hspace{\cslhangingdent}#1}
 
 % \newcommand{\CSLLeftMargin}[1]{{\strut#1\strut}\\}
-% \newcommand{\CSLRightInline}[1]{\hspace*{\cslhangindent}\parbox[t]{\linewidth -  \cslhangindent}{\strut#1\strut}}
-% \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}\hspace{\cslhangindent}}
-% \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
-% \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}{\begin{flushright}\parbox[t]{\csllabelwidth}{\strut#1\strut}}\end{flushright}}
-% \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}{\raggedleft\parbox[t]{\csllabelwidth}{\strut#1\strut}}}
-% \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}{\begin{flushright}\parbox[t]{\csllabelwidth}{\strut#1\strut}\end{flushright}}}
-% \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}{\begin{flushright}\parbox[t]{\csllabelwidth}{#1}\end{flushright}}}
-% \newcommand{\CSLIndent}[1]{{\raggedleft\hspace{\cslhangindent}\hspace{\cslhangindent}#1}}
+% \newcommand{\CSLRightInline}[1]{\hspace*{\cslhangingdent}\parbox[t]{\linewidth -  \cslhangingdent}{\strut#1\strut}}
+% \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}\hspace{\cslhangingdent}}
+% \newcommand{\CSLIndent}[1]{\hspace{\cslhangingdent}#1}
+% \newcommand{\CSLIndent}[1]{\hspace{\cslhangingdent}{\begin{flushright}\parbox[t]{\csllabelwidth}{\strut#1\strut}}\end{flushright}}
+% \newcommand{\CSLIndent}[1]{\hspace{\cslhangingdent}{\raggedleft\parbox[t]{\csllabelwidth}{\strut#1\strut}}}
+% \newcommand{\CSLIndent}[1]{\hspace{\cslhangingdent}{\begin{flushright}\parbox[t]{\csllabelwidth}{\strut#1\strut}\end{flushright}}}
+% \newcommand{\CSLIndent}[1]{\hspace{\cslhangingdent}{\begin{flushright}\parbox[t]{\csllabelwidth}{#1}\end{flushright}}}
+% \newcommand{\CSLIndent}[1]{{\raggedleft\hspace{\cslhangingdent}\hspace{\cslhangingdent}#1}}
 % \newcommand{\CSLIndent}[1]{{\raggedleft #1}}
+
