@@ -317,13 +317,13 @@
     </sort>
     <layout>
       <group display="block">
-      <group display="left-margin">
-        <text variable="citation-label" text-decoration="none" prefix="[" suffix="] "/>
-      </group>
-      <group display="right-inline">
-        <text macro="responsability" font-weight="normal" prefix="" suffix=". "/>
-        <text macro="date" form="short" font-style="none" font-weight="normal" suffix=". "/>
-      </group>
+        <group display="left-margin">
+          <text variable="citation-label" text-decoration="none" prefix="[" suffix="] "/>
+        </group>
+        <group display="right-inline">
+          <text macro="responsability" font-weight="normal" prefix="" suffix=". "/>
+          <text macro="date" form="short" font-style="none" font-weight="normal" suffix=". "/>
+        </group>
         <group display="indent">
           <text macro="genre" prefix="(" suffix="). "/>
           <text macro="title" font-style="italic" font-weight="normal" prefix="" suffix=". "/>
@@ -352,14 +352,14 @@
           <!-- <text macro="keyword" font-weight="light" font-style="italic" prefix="(mots clefs: " suffix="). "/> -->
         </group>
         <choose>
-        <if variable="abstract note annote keyword" match="any">
-          <group display="indent">
-            <text macro="keyword" prefix="(mots&#160;clefs:&#160;" suffix="). "/>
-            <text macro="annote" font-weight="light" font-style="none" prefix="[Annotation:&#160;" suffix="]. "/>
-            <text macro="note" font-style="none" font-weight="light" prefix="[Note:&#160;" suffix="]. "/>
-            <text macro="abstract" font-style="none" font-weight="light" prefix="[Résumé:&#160;" suffix="]. "/>
-          </group>
-        </if>
+          <if variable="abstract note annote keyword" match="any">
+            <group display="indent">
+              <text macro="keyword" prefix="(mots&#160;clefs:&#160;" suffix="). "/>
+              <text macro="annote" font-weight="light" font-style="none" prefix="[Annotation:&#160;" suffix="]. "/>
+              <text macro="note" font-style="none" font-weight="light" prefix="[Note:&#160;" suffix="]. "/>
+              <text macro="abstract" font-style="none" font-weight="light" prefix="[Résumé:&#160;" suffix="]. "/>
+            </group>
+          </if>
         </choose>
       </group>
     </layout>
