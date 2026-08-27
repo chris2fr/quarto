@@ -1,0 +1,7 @@
+language: 
+  crossref-tbl-title: "Tableau"
+  crossref-nte-prefix: "Note"
+  crossref-tip-prefix: "Astuce"
+  crossref-wrn-prefix: "Avertissement"
+  crossref-imp-prefix: "Important"
+  crossref-cau-prefix: "Mise en garde"

@@ -1,0 +1,22 @@
+---
+title: Test figures
+lang: fr
+author: Chris Mann
+date: 2026-08-26
+metadata-files:
+  - _langage.yml
+format:
+  document-pdf: default
+  document-html: default
+  document-plain: default
+  document-md: default
+---
+
+::: {#fig-mvac14-mouille-2021-2025 layout-ncol=2 layout-valign="bottom" fig-align="center" fig-pos="ht"}
+
+![Home de la MVAC14 depuis au moins 2021](./images/web-20250121-mvac14.png)
+
+![Home de la MVAC14 le 21 janvier 2025](./images/web-20250127-archiveorg-20210507-mvac14.png)
+
+Home de la MVAC14 2021 (au moins) à 2025
+:::

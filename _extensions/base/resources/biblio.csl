@@ -275,7 +275,7 @@
     <choose>
       <if variable="number">
         <group display="block">
-          <text macro="number" font-weight="light" suffix="&#160;&#160;"/>
+          <text macro="number" font-weight="light" prefix="(" suffix=")"/>
         </group>
       </if>
     </choose>
@@ -314,7 +314,7 @@
         </group>
         <group display="left-margin">
           <text macro="genre" prefix="" suffix="&#160; "/>
-          <text macro="groupnumber" font-weight="light" prefix="(" suffix=")&#160;&#160;"/>
+          <text macro="groupnumber" font-weight="light"/>
           <group display="block">
             <text macro="keyword" font-weight="light" font-style="italic" suffix="&#160;&#160;"/>
           </group>
