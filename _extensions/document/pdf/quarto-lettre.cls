@@ -38,6 +38,7 @@
 \RequirePackage[export]{adjustbox}
 \RequirePackage{fancyhdr}
 \RequirePackage{afterpage}
+\RequirePackage{etoolbox}
 \RequirePackage{titlesec}
 \RequirePackage{titletoc}
 \RequirePackage{lastpage}
@@ -218,6 +219,33 @@
   \fi%
 }
 \makeatother
+
+% ── Gutter between side-by-side panel-layout figures (layout-ncol) ────────────
+% Quarto's LaTeX writer packs `layout-ncol` panel images into equal-width
+% \minipage's whose widths sum to exactly \linewidth, glued together with a
+% bare '%' so there's zero gap between them — LaTeX has no equivalent to
+% Typst's `gutter:` for this kind of panel. Scoped to \figure only (via
+% QLinfigure) so it doesn't touch the unrelated minipages used elsewhere
+% (letter address/signature blocks in layout.tex, callout icons): \linewidth
+% is shaved by one gutter once per figure, then that same gutter is inserted
+% between consecutive minipages. Exact for the common two-column case; with
+% three or more columns \linewidth is only reduced once, so the row runs
+% slightly into the outer margin.
+\newlength{\QLfigcolsep}
+\setlength{\QLfigcolsep}{5mm}
+\newbool{QLinfigure}
+\newbool{QLfigcolfirst}
+\AtBeginEnvironment{figure}{%
+  \addtolength{\linewidth}{-\QLfigcolsep}%
+  \booltrue{QLinfigure}%
+  \booltrue{QLfigcolfirst}%
+}
+\AtEndEnvironment{figure}{\boolfalse{QLinfigure}}
+\BeforeBeginEnvironment{minipage}{%
+  \ifbool{QLinfigure}{%
+    \ifbool{QLfigcolfirst}{\boolfalse{QLfigcolfirst}}{\hspace{\QLfigcolsep}}%
+  }{}%
+}
 
 % ── Syntax highlighting ───────────────────────────────────────────────────────
 \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
