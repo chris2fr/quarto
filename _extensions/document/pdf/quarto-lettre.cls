@@ -17,7 +17,6 @@
                 showframe=false, includehead]{geometry}
 
 % ── Common packages ───────────────────────────────────────────────────────────
-\RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{parskip}
 \RequirePackage{graphicx}
