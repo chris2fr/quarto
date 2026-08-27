@@ -298,7 +298,7 @@
       <key macro="author"/>
       <key variable="issued"/>
     </sort>
-    <layout prefix=" [" suffix="]" text-decoration="underline" delimiter=", ">
+    <layout prefix=" [" suffix="]" text-decoration="none" delimiter="; ">
       <!-- <layout prefix=" (" suffix=")" delimiter=", "> -->
       <group delimiter=", ">
         <text variable="citation-label"/>
@@ -318,7 +318,7 @@
     <layout>
       <group display="block">
       <group display="left-margin">
-        <text variable="citation-label" text-decoration="underline" prefix="[" suffix="] "/>
+        <text variable="citation-label" text-decoration="none" prefix="[" suffix="] "/>
       </group>
       <group display="right-inline">
         <text macro="responsability" font-weight="normal" prefix="" suffix=". "/>
