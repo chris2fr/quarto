@@ -1,33 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0"
+<style xmlns="https://github.com/chris2fr/quarto" class="in-text" version="1.0"
   demote-non-dropping-particle="never" default-locale="fr-FR">
   <info>
-    <title>ISO-690 (numeric, Français) - modifié par Chris Mann</title>
+    <title>Bibliographie customisé (numeric, Français)  par Chris Mann</title>
     <id>http://www.zotero.org/styles/iso690-numeric-fr</id>
-    <link href="http://www.zotero.org/styles/iso690-numeric-fr" rel="self"/>
-    <link href="https://forums.zotero.org/discussion/23511" rel="documentation"/>
+    <link href="https://github.com/chris2fr/quarto/blob/main/_extensions/base/resources/biblio.csl" rel="self"/>
+    <link href="https://github.com/chris2fr/quarto/" rel="implementation"/>
+    <link href="https://docs.citationstyles.org/en/stable/specification.html" rel="specification"/>
+    <link href="https://forums.zotero.org/discussion/23511" rel="upstream"/>
     <author>
-      <name>Laure Mellifluo</name>
-      <email>laure.melli@gmail.com</email>
-    </author>
-    <author>
-      <name>Raphael Grolimund</name>
-      <email>grolimur@protonmail.ch</email>
-    </author>
-    <author>
-      <name>Michel Hardegger</name>
-      <email>hardegger@gmail.com</email>
+      <name>Chris Mann</name>
+      <email>chris@lesgrandsvoisins.com</email>
     </author>
     <category citation-format="label"/>
     <category field="generic-base"/>
-    <summary>Style based on ISO 690:2010(F), V1.1</summary>
-    <updated>2022-03-24T00:29:32+00:00</updated>
+    <summary>Style </summary>
+    <updated>2026-08-27</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
-  <locale>
+  <locale xml:lang="fr">
     <terms>
       <term name="no date">[sans date]</term>
-      <term name="in">in</term>
+      <term name="in">en</term>
       <term name="online">en&#160;ligne</term>
       <term name="accessed">consulté&#160;le</term>
       <term name="retrieved">disponible</term>
@@ -128,20 +122,9 @@
   <macro name="title">
     <text variable="title"/>
   </macro>
-  <!-- <macro name="title">
-    <text variable="title" font-style="italic" suffix="."/>
-    <choose>
-      <if variable="URL">
-        <text term="online" prefix=" [" suffix="]"/>
-      </if>
-    </choose> 
-  </macro> -->
   <macro name="medium">
     <text variable="medium"/>
   </macro>
-  <!-- <macro name="type">
-    <text variable="type"/>
-  </macro> -->
   <macro name="genre">
     <text variable="genre"/>
   </macro>
@@ -159,14 +142,6 @@
   <macro name="edition">
     <text variable="edition" form="long"/>
   </macro>
-  <!--
-  <macro name="publisher-group">
-    <group delimiter="&#160;: ">
-      <text variable="publisher-place"/>d
-      <text variable="publisher"/>
-    </group>
-  </macro>
-  -->
   <macro name="issue">
     <group delimiter=", ">
       <text variable="volume" prefix="Vol.&#160;"/>
@@ -225,9 +200,9 @@
       <if variable="DOI" match="none">
         <choose>
           <if variable="URL">
-            <group>
+            <!-- <group> -->
               <text variable="URL"/>
-            </group>
+            <!-- </group> -->
           </if>
         </choose>
       </if>
@@ -252,9 +227,6 @@
   <macro name="email">
     <text variable="email"/>
   </macro>
-  <macro name="file">
-    <text variable="file" />
-  </macro>
   <macro name="abstract">
     <text variable="abstract"/>
   </macro> 
@@ -264,41 +236,12 @@
   <macro name="number">
     <text variable="number"/>
   </macro>
-  <macro name="groupannote">
-    <choose>
-      <if variable="annote">
-        <group display="block">
-          <text macro="annote" font-weight="light" suffix="&#160;&#160;"/>
-        </group>
-      </if>
-    </choose>
-  </macro>
-  <macro name="groupnumber">
-    <choose>
-      <if variable="number">
-        <group display="block">
-          <text macro="number" font-weight="light" prefix="(" suffix=")"/>
-        </group>
-      </if>
-    </choose>
-  </macro>
-  <macro name="groupabstractnoteannote">
-    <choose>
-      <if variable="abstract note annote" match="any">
-        <group display="block">
-          <text macro="annote" font-weight="light" font-style="italic" prefix="[Annotation: " suffix="]. "/>
-          <text macro="note" font-style="italic" font-weight="light" prefix="[Note: " suffix="]. "/>
-          <text macro="abstract" font-style="italic" font-weight="light" prefix="[Résumé: " suffix="]. "/>
-        </group>
-      </if>
-    </choose>
-  </macro>
   <citation disambiguate-add-year-suffix="true">
     <sort>
       <key macro="author"/>
       <key variable="issued"/>
     </sort>
-    <layout prefix=" [" suffix="]" text-decoration="none" delimiter="; ">
+    <layout prefix=" [" suffix="]" text-decoration="none" delimiter=", ">
       <!-- <layout prefix=" (" suffix=")" delimiter=", "> -->
       <group delimiter=", ">
         <text variable="citation-label"/>
@@ -311,7 +254,8 @@
   </citation>
   <bibliography>
     <sort>
-      <key macro="date" sort="descending"/>
+      <key macro="citation-label" sort="descending"/>
+      <!--  <key macro="date" sort="descending"/> -->
       <!-- <key macro="author"/> -->
       <!-- <key variable="number" sort="descending"/> -->
     </sort>
