@@ -345,18 +345,22 @@
           <!-- <text macro="keyword" font-weight="light" prefix=". (" suffix="). "/> -->
           <!-- <text macro="abstract" prefix=" (Synthèse: " suffix="). "/> -->
           <text macro="number" prefix="(num.:&#160;" suffix="). "/>
-          <text macro="keyword" prefix="(mots&#160;clefs:&#160;" suffix="). "/>
           <text macro="edition" font-weight="light" text-decoration="none" prefix="(fichier:&#160;./annexes/" suffix=") "/>
           <text macro="email" prefix="(email&#160;" suffix="). "/>
           <!-- <text variable="file" prefix=" " suffix=". "/> -->
           <text variable="url" prefix=" (URL:&#160;" suffix="). "/> 
           <!-- <text macro="keyword" font-weight="light" font-style="italic" prefix="(mots clefs: " suffix="). "/> -->
         </group>
+        <choose>
+        <if variable="abstract note annote keyword" match="any">
         <group display="indent">
+          <text macro="keyword" prefix="(mots&#160;clefs:&#160;" suffix="). "/>
           <text macro="annote" font-weight="light" font-style="none" prefix="[Annotation:&#160;" suffix="]. "/>
           <text macro="note" font-style="none" font-weight="light" prefix="[Note:&#160;" suffix="]. "/>
           <text macro="abstract" font-style="none" font-weight="light" prefix="[Résumé:&#160;" suffix="]. "/>
         </group>
+        </if>
+        </choose>
       </group>
     </layout>
   </bibliography>
