@@ -1,4 +1,4 @@
-#import "quarto-lettre.typ": ql-page-setup
+#import "quarto-doc.typ": ql-page-setup
 
 #let document(
   lang:        "fr",

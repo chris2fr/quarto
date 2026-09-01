@@ -1,5 +1,4 @@
-\documentclass[a4paper,11pt,french]{quarto-lettre}
-\usepackage{titlesec}
+\documentclass[a4paper,11pt,french]{quarto-doc}\usepackage{titlesec}
 
 $if(page-footer)$\QLsetfooter{$page-footer$}$endif$
 $if(page-header)$\QLsetfirstpageheader{$page-header$}$endif$
@@ -26,6 +25,7 @@ $endfor$
 % instead of the class's original default width.
 \setlength{\headwidth}{\textwidth}
 
+
 \providecommand{\square}{\ensuremath{\vcenter{\hbox{\fbox{\phantom{\rule{0.55em}{0.55em}}}}}}}
 
 % ── Section styling ───────────────────────────────────────────────────────────
@@ -42,6 +42,14 @@ $endfor$
 % already come from quarto-lettre.cls — no override here, so this file can't
 % drift out of sync with it the way it used to.
 
+\newenvironment{div-titlepage}{
+\begin{center}
+}{
+\end{center}
+}
+
+
+
 % ── User customization override ──────────────────────────────────────────────
 % Optional, project-level: create _parts/custom.cls next to _quarto.yml to
 % redefine anything above (fonts, titleformat, environments, ...). Loaded
@@ -50,38 +58,25 @@ $endfor$
 % *.cls sweep, so this file persists across renders unlike quarto-lettre.cls.
 \IfFileExists{_parts/custom.cls}{\input{_parts/custom.cls}}{}
 
+
+
 % Optional, metadata-level: a `tex-custom` YAML key (raw LaTeX) takes
 % priority over both the above and _parts/custom.cls — same "meta always
 % wins" rule as everywhere else in this extension. See README.
+
 $if(tex-custom)$
 $tex-custom$
 $endif$
 
+% \newenvironment{div-title}{
+% \begin{center}
+% }{
+% \end{center}
+% }
+
 \begin{document}
 
 \thispagestyle{firstpage}
-
-% Title block
-\begin{center}
-$if(organization)$
-  {\small\sffamily\textcolor{gray}{\MakeUppercase{$organization$}}}\\[0.5em]
-$endif$
-  {\LARGE\bfseries\sffamily $title$}\\[0.3em]
-$if(subtitle)$
-  {\large\sffamily $subtitle$}\\[0.3em]
-$endif$
-$if(author)$
-  {\normalsize $author$}\\[0.2em]
-$endif$
-  {\itshape $date$$if(place)$\enspace---\enspace{}$place$$endif$}\\[0.2em]
-$if(ref)$
-  {\small Réf.\,: $ref$}\\
-$endif$
-\end{center}
-
-\vspace{0.5em}
-\rule{\linewidth}{0.4pt}
-\vspace{1em}
 
 \thispagestyle{firstpage}
 \afterpage{\newgeometry{inner=$if(margin-inner)$$margin-inner$$else$20mm$endif$,outer=$if(margin-outer)$$margin-outer$$else$20mm$endif$,top=$if(margin-top)$$margin-top$$else$25mm$endif$,bottom=$if(margin-bottom)$$margin-bottom$$else$15mm$endif$}}

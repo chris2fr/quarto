@@ -1,18 +1,30 @@
 ---
-title: Test complet — Extension « Document »
+title: Test complet — Extension "Document" Test complet — Extension "Document" Test complet — Extension "Document" Test complet — Extension "Document" Test complet — Extension "Document"
 subtitle: Vérification de tous les éléments de mise en forme
 author: Chris Mann
 date: 2026-06-07
 lang: fr
 format:
   document-html: default
-  document-pdf: default
-  document-typst:
-    output-file: document-typst.pdf
+  document-pdf: 
+    keep-tex: true
   document-docx: default
   document-md: default
   document-plain: default
+doc-header: DOC HEADER
+doc-footer: DOC FOOTER
 ---
+
+::: titlepage
+
+# {{< meta title >}}
+
+*{{< meta author >}}*
+
+*{{< meta date >}}*
+
+:::
+
 
 ## Table des matières {.unnumbered .unlisted}
 

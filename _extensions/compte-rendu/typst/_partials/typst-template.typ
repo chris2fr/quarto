@@ -1,4 +1,4 @@
-#import "quarto-lettre.typ": ql-page-setup
+#import "quarto-meet.typ": ql-page-setup
 
 #let compte-rendu(
   lang:        "fr",

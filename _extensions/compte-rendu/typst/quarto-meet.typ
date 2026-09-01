@@ -1,4 +1,4 @@
-// quarto-lettre.typ
+// quarto-meet.typ
 // Shared page-setup function for the lettre and compte-rendu Quarto extensions.
 
 #let ql-page-setup(

@@ -34,7 +34,7 @@ contributes:
         - typst/_partials/typst-template.typ
         - typst/_partials/typst-show.typ
       format-resources:
-        - typst/quarto-lettre.typ
+        - typst/quarto-meet.typ
       papersize: a4
       keep-typ: true
       toc: false
@@ -76,7 +76,7 @@ contributes:
       base-format: pdf
       template: pdf/layout.tex
       format-resources:
-        - pdf/quarto-lettre.cls
+        - pdf/quarto-meet.cls
       papersize: a4
       toc: false
       lof: false

@@ -12,7 +12,9 @@ body {
 
 /* ── Title block ─────────────────────────────────────────── */
 
-.doc-title-block {
+.doc-title-block,
+.doc-titlepage,
+.titlepage {
   text-align: center;
   margin-bottom: 2rem;
   padding-bottom: 1rem;

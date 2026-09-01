@@ -232,7 +232,8 @@ for _, class in ipairs(BODY_ORDER) do ALL_BODY_CLASSES[class] = true end
 -- content is never a one-off metadata value.
 local META_PRIORITY_CLASSES = {
   header = true, footer = true,
-  from = true, to = true, subject = true, opening = true, closing = true, signature = true,
+  from = true, to = true, subject = true, title = true, 
+  opening = true, closing = true, signature = true,
   date = true, ref = true,
   ps = true, annexes = true,
   participants = true, agenda = true, decisions = true, actions = true,
@@ -245,6 +246,7 @@ local META_PRIORITY_CLASSES = {
 -- doesn't otherwise reorder body content, so this only matters for divs
 -- that don't exist in the document at all.
 local COMPTE_RENDU_ORDER = { 'participants', 'agenda', 'decisions', 'actions', 'next-meeting', 'approval' }
+-- local DOC_ORDER = { 'title' }
 
 -- let-*/doc-*/meet- values can reference these six top-level metadata keys
 -- as `$title$`, `$author$`, `$lang$`, `$date$`, `$place$`, `$ref$` — pandoc's
