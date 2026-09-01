@@ -22,7 +22,7 @@ local upstream_meta = {
   'base-format', 'date-format', 'french-quotes', 'page-layout', 'theme',
   'papersize', 'lof', 'lot',
   -- page.lua (base filter): margin resolution, brand fonts, bibliography wiring
-  'margin-inner', 'margin-outer', 'margin-top', 'margin-bottom',
+  'margin-inner', 'margin-outer', 'margin-top', 'margin-bottom', 'margin-top-first',
   'margin-all', 'marginx', 'marginy',
   'header-includes', 'bibliography', 'csl', 'tex-custom', 'labels',
   'nocite', 'tab-stop', 'page-header', 'page-footer',

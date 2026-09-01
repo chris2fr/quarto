@@ -12,7 +12,8 @@ format:
   document-md: default
   document-plain: default
 margin-top-first: 30mm
-margin-bottom: 30mm
+margin-top: 10mm
+margin-bottom: 40mm
 doc-header: |
   DOC HEADER\
   DOC HEADER\

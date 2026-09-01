@@ -1,0 +1,130 @@
+DOC HEADER
+DOC HEADER
+DOC HEADER
+DOC HEADER
+DOC HEADER
+
+Test complet — Extension “Document” Test complet — Extension “Document” Test complet — Extension “Document” Test complet — Extension “Document” Test complet — Extension “Document”
+
+Chris Mann
+
+7 juin 2026
+
+Table des matières
+
+Niveau 1 — Introduction
+
+L’extension Document fournit un gabarit de mise en page pour des
+documents formels. Elle partage les filtres et la feuille de style de
+l’extension Lettre, mais sans la structure épistolaire.
+
+Logo intégré en tête de document :
+
+[Logo Les Grands Voisins]
+
+Du texte en gras, en italique, en gras italique et du code inline. Un
+lien vers Quarto et une note de bas de page[1].
+
+  Un bloc de citation pour illustrer la mise en forme d’un extrait ou
+  d’une référence dans un document formel.
+
+Niveau 1 — Listes
+
+Liste non ordonnée avec sous-éléments :
+
+- Format HTML — rendu dans le navigateur
+  - Thème personnalisé via CSS
+  - Mise en page à colonnes
+- Format PDF — rendu via LaTeX
+  - Classe quarto-lettre.cls
+  - Support A4 et lettre US
+- Format Typst — rendu natif
+- Format DOCX — compatible Microsoft Word
+- Format Markdown — sortie texte enrichi
+
+Liste ordonnée :
+
+1.  Installer Quarto 1.9 ou supérieur
+2.  Copier le dossier _extensions/ dans le projet
+3.  Créer un fichier .qmd avec les métadonnées requises
+4.  Lancer quarto render fichier.qmd
+
+Niveau 2 — Tableaux
+
+Tableau des formats supportés :
+
+  Extension       HTML   PDF   Typst   DOCX   ODT   Markdown   Texte
+  -------------- ------ ----- ------- ------ ----- ---------- -------
+  lettre           ✓      ✓      ✓      ✓      ✓       ✓         ✓
+  compte-rendu     ✓      ✓      ✓      —      —       ✓         ✓
+  document         ✓      ✓      ✓      ✓      —       ✓         ✓
+
+Image à largeur réduite insérée dans le flux du document :
+
+[Logo 50 %]
+
+Niveau 2 — Blocs de code
+
+Configuration YAML minimale :
+
+    ---
+    title: "Mon document"
+    author: "Prénom Nom"
+    date: today
+    lang: fr
+    format:
+      document-pdf: default
+      document-html: default
+    ---
+
+Commande de rendu :
+
+    quarto render document.qmd
+
+Niveau 3 — Tableau de facturation
+
+Budget prévisionnel
+
++---------------+---------------+----------+---------+
+| Poste         | Coût unitaire | Quantité | Total   |
++:==============+==============:+=========:+========:+
+| Développement | 500 €         | 10       | 5 000 € |
++---------------+---------------+----------+---------+
+| Documentation | 200 €         | 5        | 1 000 € |
++---------------+---------------+----------+---------+
+| Tests         | 150 €         | 8        | 1 200 € |
++---------------+---------------+----------+---------+
+| Total                                    | 7 200 € |
++------------------------------------------+---------+
+
+Niveau 3 — Image avec légende
+
+[Logo Les Grands Voisins — format original]
+
+Niveau 4 — Filtres Lua
+
+Les filtres Lua permettent d’adapter le rendu selon le format de sortie
+cible. Exemple de filtre :
+
+    function Image(el)
+      if FORMAT == "latex" then
+        el.attributes["width"] = "\\linewidth"
+      end
+      return el
+    end
+
+Niveau 4 — Métadonnées YAML
+
+Les métadonnées title, subtitle, author et date sont injectées dans le
+gabarit par Pandoc. La variable lang contrôle la localisation des
+éléments automatiques (date, bibliographie, etc.).
+
+[1] L’extension requiert Quarto 1.9 ou supérieur.
+
+DOC FOOTER
+DOC FOOTER
+DOC FOOTER
+DOC FOOTER
+DOC FOOTER
+DOC FOOTER
+DOC FOOTER
