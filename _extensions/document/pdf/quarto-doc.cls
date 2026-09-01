@@ -93,7 +93,9 @@
 % \RequirePackage[sfdefault]{FiraSans}
 % \RequirePackage{FiraMono}
 
-% \RequirePackage{setspace} % for \setstretch
+\RequirePackage{setspace} % for \setstretch
+
+\renewcommand{\baselinestretch}{1.15}
 
 \setmainfont{IBM Plex Serif}
 \setsansfont{IBM Plex Sans}
