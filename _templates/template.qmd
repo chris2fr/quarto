@@ -1,132 +1,87 @@
-
 ---
-title: Objet de la lettre
-author: Prénom Nom
-ref: ref-YYYY-MM-DD
-date: today
+title: TITRE
+author: AUTEUR
+ref: REF
+date: DATE
 lang: fr
-place: Paris
+place: LIEU
+bibliography: biblio.bib
+# margin-inner: 20mm
+# margin-outer: 20mm
+# margin-top: 25mm
+# margin-bottom: 15mm
 format:
-  lettre-html: 
-    output-file: template-lettre.html
-  lettre-pdf: 
-    output-file: template-lettre.pdf
-  lettre-typst: 
-    output-file: template-lettre-typst.pdf
-  lettre-docx: 
-    output-file: template-lettre.docx
-  lettre-odt: 
-    output-file: template-lettre.odt
-  lettre-md: 
-    output-file: template-lettre.md
-  lettre-plain: 
-    output-file: template-lettre.txt
-  compte-rendu-html: 
-    output-file: template-compte-rendu.html
-  compte-rendu-pdf: 
-    output-file: template-compte-rendu.pdf
-  compte-rendu-typst: 
-    output-file: template-compte-rendu-typst.pdf
-  compte-rendu-docx: 
-    output-file: template-compte-rendu.docx
-  compte-rendu-odt: 
-    output-file: template-compte-rendu.odt
-  compte-rendu-md: 
-    output-file: template-compte-rendu.md
-  compte-rendu-plain: 
-    output-file: template-compte-rendu.txt
-  document-html: 
-    output-file: template-document.html
-  document-pdf: 
-    output-file: template-document.pdf
-  document-typst: 
-    output-file: template-document-typst.pdf
-  document-docx: 
-    output-file: template-document.docx
-  document-odt: 
-    output-file: template-document.odt
-  document-md: 
-    output-file: template-document.md
-  document-plain: 
-    output-file: template-document.txt
+  lettre-html: default
+  lettre-pdf: default
+  lettre-odt: default
+  lettre-md: default
+  lettre-plain: default
+  # lettre-docx: default
+let-header: |
+  [![Les Grands Voisins — Association d'intérêt général](logo-lesgrandsvoisins-900-150-white.png)](https://www.lesgrandsvoisins.com)
+  **PROJET EN COURS D'ELABORATION**
+let-footer: | 
+  **PROJET EN COURS D'ELABORATION**\
+  *$ref$* aux Parquets de Paris et de Nanterre
+let-from: |
+  Chris Mann\
+  Association Les Grands Voisins\
+  Chez Caroline Lhomme­\
+  146 bvd Montparnasse\
+  75014 PARIS\
+  \
+  chris@lesgrandsvoisins.com
+let-date: $place$, le $date$
+let-to: |
+  PRENOM ET NOM DE DESTINATAIRE\
+  ADDRESSE DE DESTINATEUR
+
+let-subject: |
+  # {{< meta title >}}
+let-opening: Madame, Monsieur,
+let-closing: Je vous prie d'agréer, Madame, Monsieur, l'expression de ma considération distinguée.
+let-signature: |
+  \
+  \
+  Chris Mann\
+  Préseident\
+  chris@lesgrandsvoisins.com - 07 81 81 18 11\
+  \
+let-ref: |
+  \ \
+  **réf.** : $ref$ en complément à letrar-2026-08-03-mannchri-01-procureurs-plainteunique [@2026-08-03-mannchri-0001]
+let-header: |
+  [![Les Grands Voisins — Association d'intérêt général](logo-lesgrandsvoisins-900-150-white.png)](https://www.lesgrandsvoisins.com)
+  **PROJET EN COURS D'ELABORATION**
+let-footer: | 
+  **PROJET EN COURS D'ELABORATION**\
+  *$ref$* aux Parquets de Paris et de Nanterre
+let-from: |
+  Chris Mann\
+  Association Les Grands Voisins\
+  Chez Caroline Lhomme­\
+  146 bvd Montparnasse\
+  75014 PARIS\
+  \
+  chris@lesgrandsvoisins.com
+let-date: $place$, le $date$
+let-to: |
+  PRENOM ET NOM DE DESTINATAIRE\
+  ADDRESSE DE DESTINATEUR
+
+let-subject: |
+  # {{< meta title >}}
+let-opening: Madame, Monsieur,
+let-closing: Je vous prie d'agréer, Madame, Monsieur, l'expression de ma considération distinguée.
+let-signature: |
+  \
+  \
+  Chris Mann\
+  Préseident\
+  chris@lesgrandsvoisins.com - 07 81 81 18 11\
+  \
+let-ref: |
+  \ \
+  **réf.** : $ref$ en complément à letrar-2026-08-03-mannchri-01-procureurs-plainteunique [@2026-08-03-mannchri-0001]
 ---
 
-::: header
-**Organisation**\
-Description courte
-:::
-
-::: from
-{{< meta author >}}\
-Rue et numéro\
-Code postal Ville
-:::
-
-::: date
-{{< meta place >}}, le {{< meta date >}}
-:::
-
-::: to
-Destinataire\
-Organisation\
-Rue et numéro\
-Code postal Ville
-:::
-
-::: subject
-**{{< meta title >}}**
-:::
-
-::: ref
-réf. {{< meta ref >}}
-:::
-
-::: opening
-Madame, Monsieur,
-:::
-
-::: participants
-- Participant 1
-- Participant 2
-:::
-
-::: agenda
-1. Point 1
-2. Point 2
-:::
-
-::: decisions
-- Décision 1
-- Décision 2
-:::
-
-::: actions
-- Action 1
-- Action 2
-:::
-
-::: next-meeting
-- Date de la prochaine réunion
-:::
-
-::: approval
-Compte-rende en attente d'approbation.
-:::
-
-
-Corps de la lettre ou du compte-rendu.
-
-
-::: closing
-Veuillez agréer, Madame, Monsieur, l'expression de mes salutations distinguées.
-:::
-
-::: signature
-{{< meta author >}}
-:::
-
-
-::: footer
-Téléphone --- courriel@example.com\
-Adresse --- Code postal Ville
-:::
