@@ -213,14 +213,14 @@
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[C]{\textit\QLpageheading}
-\fancyfoot[C]{\small\thepage\ / \pageref{LastPage}\\\@QLfooter}
+\fancyfoot[C]{\footnotesize\thepage\ / \pageref{LastPage}\\\@QLfooter}
 % \fancyfoot[C]{\small\thepage\\\@QLfooter}
 
 \fancypagestyle{firstpage}{%
   \fancyhf{}
   \renewcommand{\headrulewidth}{0pt}
   \fancyhead[C]{\@QLfirstpageheader}
-  \fancyfoot[C]{\small\@QLfooter}
+  \fancyfoot[C]{\footnotesize\@QLfooter}
 }
 
 % ── Pandoc image bounding ─────────────────────────────────────────────────────
