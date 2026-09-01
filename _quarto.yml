@@ -4,4 +4,5 @@ project:
   lib-dir: _lib
   brand: _brand/_brand.yml
   execute-dir: file
+  post-render: _extensions/chris2fr/base/scripts/clean-artifacts.sh; firefox .
 
