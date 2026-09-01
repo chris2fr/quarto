@@ -11,8 +11,22 @@ format:
   document-docx: default
   document-md: default
   document-plain: default
-doc-header: DOC HEADER
-doc-footer: DOC FOOTER
+margin-top-first: 30mm
+margin-bottom: 30mm
+doc-header: |
+  DOC HEADER\
+  DOC HEADER\
+  DOC HEADER\
+  DOC HEADER\
+  DOC HEADER
+doc-footer: |
+  DOC FOOTER\
+  DOC FOOTER\
+  DOC FOOTER\
+  DOC FOOTER\
+  DOC FOOTER\
+  DOC FOOTER\
+  DOC FOOTER
 ---
 
 ::: titlepage
