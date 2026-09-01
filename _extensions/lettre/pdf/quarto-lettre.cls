@@ -117,13 +117,10 @@
 \titleformat{\section}        {\normalfont\bfseries}           {}{0pt}{}
 \titleformat{\subsection}     {\normalfont\QLheadingfont\LARGE}{}{0pt}{}
   % [\vspace{0.5em}]
-\titleformat{\subsubsection}
-  {\normalfont\QLheadingfont\Large}{}{0pt}{}
+\titleformat{\subsubsection}  {\normalfont\QLheadingfont\Large}{}{0pt}{}
   % [\vspace{0.25em}]
-\titleformat{\paragraph}
-  {\normalfont\QLheadingfontmd\large\itshape}{}{0pt}{} % flushright
-\titleformat{\subparagraph}
-  {\normalfont\QLheadingfont\normalsize\bfseries}{}{0pt}{}
+\titleformat{\paragraph}      {\normalfont\QLheadingfontmd\large\itshape}{}{0pt}{} % flushright
+\titleformat{\subparagraph}   {\normalfont\QLheadingfont\normalsize\bfseries}{}{0pt}{}
 \titlespacing*{\section}      {0pt}{2cm plus 2cm }    {1cm}
 \titlespacing*{\subsection}   {0pt}{1cm plus 1cm}     {0.5cm}
 \titlespacing*{\subsubsection}{0pt}{0.8cm plus 0.8cm} {0.4cm}
