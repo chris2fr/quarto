@@ -1,6 +1,6 @@
 ---
-title: Test complet — Extension « Lettre »
-author: Chris Mann
+title: Test complet — Extension « Lettre » Fontenay-aux-Roses Fontenay-aux-Roses Fontenay-aux-Roses Fontenay-aux-Roses Fontenay-aux-Roses Fontenay-aux-Roses
+author: Chris Mann 
 ref: test-lettre-2026-06-07
 date: 2026-06-07
 lang: fr
@@ -13,7 +13,7 @@ bibliography: biblio.bib
 format:
   lettre-html: default
   lettre-pdf: 
-    keep-tex: true
+    keep-tex: false
   lettre-typst:
     output-file: lettre-typst.pdf
   lettre-docx: default
