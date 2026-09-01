@@ -108,23 +108,27 @@
 \newfontfamily\QLheadingfontsb[Extension=.otf, ItalicFont=IBMPlexSans-SemiBoldItalic]{IBMPlexSans-SemiBold}
 
 % \titleformat{\section} % command
-%   [block] % shape
-%   {\centering\normalfont\QLheadingfont\huge} % format
+%   [block] % shape from hang, block, display, runin, leftmargin, rightmargin, drop, wrap and frame.
+%   {\centering\normalfont\QLheadingfont\huge} % format 
 %   {} % label
 %   {0pt} % sep
 %   {} % {\titlerule\vspace{0.5em}\\} % before-code
 %   % [] % after-code
-\titleformat{\section}        {\normalfont\bfseries\normalsize}           {}{0pt}{}
-\titleformat{\subsection}     {\normalfont\QLheadingfont\LARGE}{}{0pt}{}
-  % [\vspace{0.5em}]
-\titleformat{\subsubsection}  {\normalfont\QLheadingfont\Large}{}{0pt}{}
-  % [\vspace{0.25em}]
-\titleformat{\paragraph}      {\normalfont\QLheadingfontmd\large\itshape}{}{0pt}{} % flushright
-\titleformat{\subparagraph}   {\normalfont\QLheadingfont\normalsize\bfseries}{}{0pt}{}
-\titlespacing*{\section}      {0pt}{2cm plus 2cm }    {1cm}
+
+\titleformat{\section}        {\normalfont\bfseries\normalsize}           {}{0pt}{}[]
+\titlespacing*{\section}      {0pt}{0cm plus 2cm }    {0cm}
+% \titlespacing*{\section}      {0pt}{2cm plus 2cm }    {1cm}
+
+\titleformat{\subsection}     {\normalfont\QLheadingfont\LARGE}{}{0pt}{} % [\vspace{0.5em}]
 \titlespacing*{\subsection}   {0pt}{1cm plus 1cm}     {0.5cm}
+
+\titleformat{\subsubsection}  {\normalfont\QLheadingfont\Large}{}{0pt}{} % [\vspace{0.25em}]
 \titlespacing*{\subsubsection}{0pt}{0.8cm plus 0.8cm} {0.4cm}
+
+\titleformat{\paragraph}      {\normalfont\QLheadingfontmd\large\itshape}{}{0pt}{} % flushright
 \titlespacing*{\paragraph}    {0pt}{0.6cm plus 0.6cm} {0.3cm}
+
+\titleformat{\subparagraph}   {\normalfont\QLheadingfont\normalsize\bfseries}{}{0pt}{}
 \titlespacing*{\subparagraph} {0pt}{0.4cm plus 0.4cm} {0.2cm}
 
 % secnumdepth must stay > 0 (unlike a plain \thesection-suppressing 0) so

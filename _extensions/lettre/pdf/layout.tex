@@ -35,30 +35,34 @@ $endfor$
 \date{$date$}
 
 \newenvironment{div-date}{
+\par\medskip
   \begin{flushright}\small
 }{
   \end{flushright}
-  \vspace{1em}
 }
 
+
 \newenvironment{div-from}{
+\par\medskip
 }{
-  \vspace{1em}
 }
+
 
 % Each address/signature block below is right-aligned via \flushright and
 % narrower than \textwidth (17cm here): the gap this leaves on the left is
 % the "margin", so e.g. this 9.5cm box reads as a 7.5cm left margin.
 \newenvironment{div-to}{
+\par\bigskip
 \begin{flushright}
   \begin{minipage}{9.5cm}
 }{
   \end{minipage}
 \end{flushright}
-\vspace{1em}
 }
 
+
 \newenvironment{div-subject}{
+\par\bigskip
 \begin{flushright}
   \begin{minipage}{13.5cm}
 }{
@@ -67,6 +71,7 @@ $endfor$
 }
 
 \newenvironment{div-ref}{
+\par\medskip
 \begin{flushright}
   \begin{minipage}{13.5cm}\small
 }{
@@ -74,31 +79,37 @@ $endfor$
 \end{flushright}
 }
 
+
+
 \newenvironment{div-opening}{
-  \vspace{1em}
+\par\bigskip
 \begin{flushright}
   \begin{minipage}{13.5cm}
 }{
   \end{minipage}
 \end{flushright}
-\vspace{1em}
 }
+
 
 \newenvironment{div-body}{
+\par\medskip
 }{
-  \vspace{1em}
 }
 
+\par\bigskip
+
 \newenvironment{div-closing}{
+\par\bigskip
 \begin{flushright}
   \begin{minipage}{13.5cm}
 }{
 \end{minipage}
 \end{flushright}
-  \vspace{1em}
 }
 
+
 \newenvironment{div-signature}{
+\par\bigskip
 \begin{flushright}
   \begin{minipage}{13.5cm}
 }{
@@ -106,17 +117,19 @@ $endfor$
 \end{flushright}
 }
 
+
 \newenvironment{div-ps}{
-  \vspace{1em}
+\par\bigskip
 }{
-  \vspace{1em}
 }
 
+
 \newenvironment{div-annexes}{
-  \vspace{1em}
+\par\bigskip
 }{
-  \vspace{1em}
 }
+
+
 
 % ── User customization override ──────────────────────────────────────────────
 % Optional, project-level: create _parts/custom.cls next to _quarto.yml to

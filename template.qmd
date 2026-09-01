@@ -62,7 +62,7 @@ let-signature: |
   \
 let-ref: |
   \ \
-  **réf.** : $ref$ en complément à letrar-2026-08-03-mannchri-01-procureurs-plainteunique [@2026-08-03-mannchri-0001]
+  **réf.** : $ref$
 meet-header: |
   ![**Les Grands Voisins** --- Association d'intérêt général](logo-lesgrandsvoisins-900-150-white.png]
 meet-participants: |
