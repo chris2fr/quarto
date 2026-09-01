@@ -115,7 +115,7 @@
 %   {} % {\titlerule\vspace{0.5em}\\} % before-code
 %   % [] % after-code
 
-\titleformat{\section}        {\normalfont\bfseries\normalsize\raggedright}           {}{0pt}{}[]
+\titleformat{\section}        {\normalfont\bfseries\normalsize}           {}{0pt}{}[]
 \titlespacing*{\section}      {0pt}{0cm plus 2cm }    {0cm}
 % \titlespacing*{\section}      {0pt}{2cm plus 2cm }    {1cm}
 
