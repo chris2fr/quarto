@@ -17,9 +17,16 @@ $endfor$
 \makeatother
 
 % ── Margins (YAML: margin-inner, margin-outer, margin-top, margin-bottom) ─────
-\geometry{inner=$if(margin-inner)$$margin-inner$$else$20mm$endif$,outer=$if(margin-outer)$$margin-outer$$else$20mm$endif$,top=$if(margin-top-first)$$margin-top-first$$elseif(margin-top)$$margin-top$$else$45mm$endif$,bottom=$if(margin-bottom)$$margin-bottom$$else$25mm$endif$,headheight=$if(margin-top-first)$$margin-top-first$$elseif(margin-top)$$margin-top$$else$45mm$endif$,headsep=5mm}
 
 
+% \newgeometry{inner=$if(margin-inner)$$margin-inner$$else$20mm$endif$,outer=$if(margin-outer)$$margin-outer$$else$20mm$endif$,top=$if(margin-top-first)$$margin-top-first$$elseif(margin-top)$$margin-top$$else$45mm$endif$,bottom=$if(margin-bottom)$$margin-bottom$$else$25mm$endif$,headheight=$if(margin-top-first)$$margin-top-first$$elseif(margin-top)$$margin-top$$else$45mm$endif$,headsep=5mm}
+% \savegeometry{firstpagegeo}
+
+% \geometry{$if(margin-inner)$inner=$margin-inner$,$endif$$if(margin-outer)$outer=$margin-outer$,$endif$$if(margin-top-first)$top=$margin-top-first$,$endif$$if(margin-bottom)$bottom=$margin-bottom$,$endif$$if(margin-topmargin-top-first)$headheight=$margin-top$,$endif$headsep=5mm}
+% \savegeometry{otherpagesgeo}
+
+\geometry{$if(margin-inner)$inner=$margin-inner$,$endif$$if(margin-outer)$outer=$margin-outer$,$endif$$if(margin-top)$top=$margin-top$,$endif$$if(margin-bottom)$bottom=$margin-bottom$,$endif$$if(margin-top)$headheight=$margin-top$,$endif$headsep=5mm}
+% \savegeometry{firstpagegeo}
 
 % fancyhdr's \headwidth (used to size/center both header and footer) is
 % captured when the class calls \pagestyle{fancy}, using the .cls's default
@@ -77,12 +84,18 @@ $endif$
 % \end{center}
 % }
 
+
 \begin{document}
 
 \thispagestyle{firstpage}
 
-\thispagestyle{firstpage}
-\afterpage{\newgeometry{inner=$if(margin-inner)$$margin-inner$$else$20mm$endif$,outer=$if(margin-outer)$$margin-outer$$else$20mm$endif$,top=$if(margin-top)$$margin-top$$else$20mm$endif$,bottom=$if(margin-bottom)$$margin-bottom$$else$15mm$endif$,headheight=$if(margin-top)$$margin-top$$else$20mm$endif$}}
+\vspace*{$if(margin-top-first)$$margin-top-first$$elseif(margin-top)$$margin-top$$else$45mm$endif$}
+
+% \begin{document}
+% \newgeometry{inner=$if(margin-inner)$$margin-inner$$else$20mm$endif$,outer=$if(margin-outer)$$margin-outer$$else$20mm$endif$,top=$if(margin-top-first)$$margin-top-first$$elseif(margin-top)$$margin-top$$else$45mm$endif$,bottom=$if(margin-bottom)$$margin-bottom$$else$25mm$endif$,headheight=$if(margin-top-first)$$margin-top-first$$elseif(margin-top)$$margin-top$$else$45mm$endif$,headsep=5mm}
+% \thispagestyle{firstpage}
+% \afterpage{\newgeometry{inner=$if(margin-inner)$$margin-inner$$else$20mm$endif$,outer=$if(margin-outer)$$margin-outer$$else$20mm$endif$,top=$if(margin-top)$$margin-top$$else$20mm$endif$,bottom=$if(margin-bottom)$$margin-bottom$$else$15mm$endif$,headheight=10mm}}
+% % \afterpage{\newgeometry{inner=$if(margin-inner)$$margin-inner$$else$20mm$endif$,outer=$if(margin-outer)$$margin-outer$$else$20mm$endif$,top=$if(margin-top)$$margin-top$$else$20mm$endif$,bottom=$if(margin-bottom)$$margin-bottom$$else$15mm$endif$,headheight=$if(margin-top)$$margin-top$$else$20mm$endif$}}
 
 $body$
 

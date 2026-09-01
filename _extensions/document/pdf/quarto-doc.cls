@@ -12,9 +12,10 @@
 \LoadClass{article}
 
 % ── Page geometry ─────────────────────────────────────────────────────────────
-\RequirePackage[inner=20mm, outer=20mm, top=5mm, bottom=35mm,
-                headheight=25mm, headsep=5mm,
+\RequirePackage[inner=20mm, outer=20mm, top=25mm, topmargin = -20mm, bottom=30mm,
+                headheight=20mm, headsep=15mm,
                 showframe=false]{geometry}
+
 
 % ── Common packages ───────────────────────────────────────────────────────────
 \RequirePackage[T1]{fontenc}
