@@ -47,6 +47,16 @@ doc-footer: |
 
 # Niveau 1 — Introduction
 
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer et lobortis nulla. Aenean ac mi lorem. Vestibulum egestas, arcu vel scelerisque scelerisque, sapien velit iaculis metus, quis finibus dolor nunc vitae ipsum. Ut sit amet mauris vulputate, faucibus purus eu, cursus massa. Nam pulvinar velit eget leo bibendum, nec sagittis lorem gravida. Donec maximus pretium libero eget hendrerit. Nulla interdum sed urna quis dapibus. Vivamus consectetur tortor eu dolor aliquam, at rhoncus metus blandit. Praesent nec mauris ligula. Nulla eget efficitur arcu, ac pulvinar sem. Aenean accumsan eu ex vel malesuada. Phasellus vel diam id leo vulputate commodo id ac nisi. In sagittis vestibulum quam, id porta neque luctus eu. Quisque id ante pharetra, maximus mauris at, cursus augue. In egestas justo a magna interdum cursus. Aenean luctus ultrices neque in suscipit.
+
+Phasellus maximus eget lacus ornare imperdiet. In accumsan, diam ac auctor congue, quam lacus ullamcorper justo, non bibendum diam mauris et magna. Sed sed enim vitae dolor lacinia suscipit. Fusce et luctus lectus, eget dapibus urna. Etiam blandit ultricies enim sed tristique. Morbi suscipit quam eu malesuada rhoncus. Nam congue libero in turpis egestas convallis.
+
+Nam at tempor est. Nulla facilisi. Aliquam eget est et ex pellentesque bibendum. Suspendisse porta leo quis suscipit laoreet. Aliquam ligula lacus, feugiat quis orci quis, efficitur lobortis erat. Suspendisse sit amet tristique justo. Fusce tincidunt, arcu eu pellentesque elementum, dui ex fringilla leo, vel lobortis libero ipsum non felis.
+
+Morbi et sagittis tortor, at ultricies lectus. Phasellus dignissim magna ac mi pharetra cursus. Praesent posuere ante et nulla faucibus finibus. Ut ornare augue id metus pharetra fringilla id a neque. Nunc libero tortor, dignissim id blandit eget, venenatis vitae erat. Vestibulum semper libero nec neque laoreet commodo. Nulla efficitur orci at erat facilisis aliquam.
+
+Maecenas ornare elit auctor sem iaculis ultrices. Proin ut luctus diam, sit amet tempor augue. Nunc molestie magna quis est euismod scelerisque. Quisque pharetra dui eu leo laoreet, vel placerat risus iaculis. Nulla facilisi. Fusce commodo sapien eu purus sollicitudin scelerisque. Integer eu augue ornare, mattis nulla non, finibus erat. Mauris nec sollicitudin tellus, finibus bibendum nisl. Morbi ut odio condimentum, fermentum velit commodo, blandit nisi. Nullam in urna eu orci varius pellentesque. Mauris sit amet est ac dui convallis ullamcorper. Quisque dictum feugiat ante a egestas. Curabitur sodales condimentum hendrerit. Pellentesque placerat mi at ante laoreet, quis porta risus eleifend. 
+
 L'extension **Document** fournit un gabarit de mise en page pour des documents formels. Elle partage les filtres et la feuille de style de l'extension *Lettre*, mais sans la structure épistolaire.
 
 Logo intégré en tête de document :
