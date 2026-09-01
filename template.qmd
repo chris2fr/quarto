@@ -50,7 +50,7 @@ let-to: |
   PRENOM ET NOM DE DESTINATAIRE\
   ADDRESSE DE DESTINATEUR\
 let-subject: |
-  # {{< meta title >}}
+  # $title$
 let-opening: Madame, Monsieur,
 let-closing: Je vous prie d'agréer, Madame, Monsieur, l'expression de ma considération distinguée.
 let-signature: |

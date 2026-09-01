@@ -12,7 +12,8 @@ bibliography: biblio.bib
 # margin-bottom: 15mm
 format:
   lettre-html: default
-  lettre-pdf: default
+  lettre-pdf: 
+    keep-tex: true
   lettre-typst:
     output-file: lettre-typst.pdf
   lettre-docx: default
@@ -41,7 +42,7 @@ Le développeur Quarto\
 :::
 
 ::: subject
-## {{< meta title >}}
+# {{< meta title >}}
 :::
 
 ::: ref
