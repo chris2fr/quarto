@@ -18,7 +18,7 @@
 
 % ── Common packages ───────────────────────────────────────────────────────────
 \RequirePackage[T1]{fontenc}
-\RequirePackage{parskip}
+\RequirePackage[skip=0.5em plus 0.1em minus 0.1em, indent=0pt]{parskip}
 \RequirePackage{graphicx}
 \RequirePackage[hidelinks]{hyperref}
 \RequirePackage[french]{babel}
