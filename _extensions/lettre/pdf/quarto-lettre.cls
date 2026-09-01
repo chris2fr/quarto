@@ -18,7 +18,8 @@
 
 % ── Common packages ───────────────────────────────────────────────────────────
 \RequirePackage[T1]{fontenc}
-\RequirePackage{parskip}
+\RequirePackage[skip=1.2em, indent=0pt]{parskip}
+% \RequirePackage[skip=1em plus 0.1em minus 0.1em, indent=0pt]{parskip}
 \RequirePackage{graphicx}
 \RequirePackage[hidelinks]{hyperref}
 \RequirePackage[french]{babel}
@@ -202,14 +203,14 @@
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[C]{\textit\QLpageheading}
-\fancyfoot[C]{\small\thepage\ / \pageref{LastPage}\\\@QLfooter}
+\fancyfoot[C]{\footnotesize\thepage\ / \pageref{LastPage}\\\@QLfooter}
 % \fancyfoot[C]{\small\thepage\\\@QLfooter}
 
 \fancypagestyle{firstpage}{%
   \fancyhf{}
   \renewcommand{\headrulewidth}{0pt}
   \fancyhead[C]{\@QLfirstpageheader}
-  \fancyfoot[C]{\small\@QLfooter}
+  \fancyfoot[C]{\footnotesize\@QLfooter}
 }
 
 % ── Pandoc image bounding ─────────────────────────────────────────────────────
