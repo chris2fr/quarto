@@ -3,6 +3,5 @@ project:
   output-dir: _output
   lib-dir: _lib
   brand: _brand/_brand.yml
-  post-render: _extensions/chris2fr/base/scripts/clean-artifacts.sh
   execute-dir: file
 
