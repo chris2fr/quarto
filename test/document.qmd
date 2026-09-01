@@ -11,7 +11,7 @@ format:
   document-docx: default
   document-md: default
   document-plain: default
-margin-top-first: 0mm
+margin-top-first: 5mm
 margin-top: 20mm
 margin-bottom: 20mm
 doc-header: |
