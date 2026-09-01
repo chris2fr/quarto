@@ -107,13 +107,14 @@
 \newfontfamily\QLheadingfontmd[Extension=.otf, ItalicFont=IBMPlexSans-MediumItalic]{IBMPlexSans-Medium}
 \newfontfamily\QLheadingfontsb[Extension=.otf, ItalicFont=IBMPlexSans-SemiBoldItalic]{IBMPlexSans-SemiBold}
 
-\titleformat{\section} % command
-  [block] % shape
-  {\centering\normalfont\QLheadingfont\huge} % format
-  {} % label
-  {0pt} % sep
-  {} % {\titlerule\vspace{0.5em}\\} % before-code
-  % [] % after-code
+% \titleformat{\section} % command
+%   [block] % shape
+%   {\centering\normalfont\QLheadingfont\huge} % format
+%   {} % label
+%   {0pt} % sep
+%   {} % {\titlerule\vspace{0.5em}\\} % before-code
+%   % [] % after-code
+\titleformat{\section}[]{}{}{\textbf}[]
 \titleformat{\subsection}
   {\normalfont\QLheadingfont\LARGE}{}{0pt}{}
   % [\vspace{0.5em}]

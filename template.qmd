@@ -63,37 +63,6 @@ let-signature: |
 let-ref: |
   \ \
   **réf.** : $ref$ en complément à letrar-2026-08-03-mannchri-01-procureurs-plainteunique [@2026-08-03-mannchri-0001]
-let-header: |
-  [![Les Grands Voisins — Association d'intérêt général](logo-lesgrandsvoisins-900-150-white.png)](https://www.lesgrandsvoisins.com)
-  **PROJET EN COURS D'ELABORATION**
-let-footer: | 
-  **PROJET EN COURS D'ELABORATION**\
-  *$ref$* aux Parquets de Paris et de Nanterre
-let-from: |
-  Chris Mann\
-  Association Les Grands Voisins\
-  Chez Caroline Lhomme­\
-  146 boulevard Montparnasse\
-  75014 PARIS\
-  \
-  chris@lesgrandsvoisins.com
-let-date: $place$, le $date$
-let-to: |
-  PRENOM ET NOM DE DESTINATAIRE\
-  ADRESSE DE DESTINATAIRE\
-  \
-let-subject: |
-  # {{< meta title >}}
-let-opening: Madame, Monsieur,
-let-closing: Je vous prie d'agréer, Madame, Monsieur, l'expression de ma considération distinguée.
-let-signature: |
-  \
-  \
-  SIGNATURE
-  \
-let-ref: |
-  \ \
-  **réf.** : $ref$
 meet-header: |
   ![**Les Grands Voisins** --- Association d'intérêt général](logo-lesgrandsvoisins-900-150-white.png]
 meet-participants: |
