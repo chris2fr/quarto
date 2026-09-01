@@ -33,11 +33,10 @@ meet-decisions: |
 meet-actions: |
   | Action | Responsable | Échéance |
   |:-------|:-----------:|:--------:|
-  | Corriger le filtre tableau | Chris Mann | 2026-06-15 |
-  | Mettre à jour le README | Alice Dupont | 2026-06-20 |
-  | Préparer les tests automatisés | Bob Martin | 2026-06-30 |
+  | ACTION 1 | RESPONSABLE 1 | DATE 1 |
+  | ACTION 2 | RESPONSABLE 2 | DATE 2 |
 meet-next-meeting: |
-  Lundi 6 juillet 2026 à 14 h 00 — visioconférence
+  DATE à TIME — LIEU
 meet-approval: |
   Compte-rendu soumis à approbation.
 meet-footer: |
