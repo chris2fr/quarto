@@ -114,7 +114,7 @@
 %   {0pt} % sep
 %   {} % {\titlerule\vspace{0.5em}\\} % before-code
 %   % [] % after-code
-\titleformat{\section}[]{}{}{\textbf}[]
+\titleformat{\section}       {\textbf}{0pt}{}
 \titleformat{\subsection}
   {\normalfont\QLheadingfont\LARGE}{}{0pt}{}
   % [\vspace{0.5em}]
