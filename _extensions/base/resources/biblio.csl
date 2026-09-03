@@ -254,8 +254,9 @@
   </citation>
   <bibliography>
     <sort>
-      <key macro="citation-label" sort="descending"/>
-      <!--  <key macro="date" sort="descending"/> -->
+      <!-- <key macro="citation-label" sort="descending"/> -->
+      <!-- <key macro="date" sort="descending"/> -->
+      <key macro="date"/>
       <!-- <key macro="author"/> -->
       <!-- <key variable="number" sort="descending"/> -->
     </sort>
