@@ -43,6 +43,19 @@
 \RequirePackage{titlesec}
 \RequirePackage{titletoc}
 \RequirePackage{lastpage}
+\RequirePackage{tocloft}
+
+% Remove indent for sections
+\setlength{\cftsecindent}{0pt}
+
+% Remove indent for subsections
+\setlength{\cftsubsecindent}{0pt}
+
+\renewcommand{\thesection}{}
+\renewcommand{\thesubsection}{\Roman{subsection}.}
+\renewcommand{\thesubsubsection}{\thesubsection\Alph{subsubsection}.}
+\renewcommand{\theparagraph}{\thesubsubsection\arabic{paragraph}.}
+\renewcommand{\thesubparagraph}{\theparagraph\alph{subparagraph}.}
 
 % ── Thin rule between table data rows ───────────────────────────────────────
 % Pandoc's longtable output only rules the table edges and the header

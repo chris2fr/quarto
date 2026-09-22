@@ -5,6 +5,7 @@ quarto-required: ">=1.9.0"
 contributes:
   shortcodes:
     - ../base/_shortcodes/toc.lua
+    - ../base/_shortcodes/num.lua
   project:
     create:
       scaffold: scaffold/create.lua
