@@ -53,6 +53,7 @@ contributes:
       base-format: plain
       template: ../base/plain/layout.txt
       csl: ../base/resources/biblio.csl
+      wrap: none
       filters:
         - ../base/_filters/shorthand.lua
         - ../base/_filters/page.lua
@@ -99,9 +100,15 @@ contributes:
       format-resources:
         - pdf/quarto-lettre.cls
       papersize: a4
-      toc: false
-      lof: false
-      lot: false
+      toc: true
+      toc-depth: 7
+      lof: true
+      lot: true
+      number-depth: 5
+      number-sections: true
+      colorlinks: true
+      link-bibliography: true
+      link-citations: true
       keep-tex: true
       csl: ../base/resources/biblio.csl
       include-before-body: pdf/_partials/body-before.tex
