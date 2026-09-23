@@ -1,0 +1,29 @@
+title: Lettre (site web)
+author: Chris Mann
+version: 0.1.0
+quarto-required: ">=1.9.0"
+contributes:
+  formats:
+    common:
+      date-format: long
+      date: today
+    # lettre-web-html: strict lesgrandsvoisins.com look (the site's own stylesheet
+    # and fonts, see ../base/html/web/). Quarto only accepts a known format
+    # after the extension name, hence this separate extension rather than a
+    # "lettre-webhtml" format inside "lettre".
+    html:
+      french-quotes: true
+      base-format: html
+      page-layout: custom
+      template: ../base/html/web/layout.html
+      theme: none
+      minimal: true
+      webhtml: lettre
+      csl: ../base/resources/biblio.csl
+      filters:
+        - ../base/_filters/shorthand.lua
+        - ../base/_filters/page.lua
+        - ../lettre/_filters/validate.lua
+        - ../base/html/web/_filters/webhtml.lua
+        - path: ../base/_filters/toc.lua
+          at: post-quarto

@@ -1,0 +1,16 @@
+/* Document-only additions to the site's stylesheet (site.css, untouched):
+   the title block reuses .page-head; letters and other documents need a
+   little structure the site never has. Site tokens (--line, --ink-soft, ...)
+   only, so both themes and any brand override keep working. */
+.webdoc .page > .markdown { max-width: 46rem; margin-inline: auto; padding: 2rem 0 3rem }
+.webdoc .page-head .byline { color: var(--ink-soft); margin: .6rem 0 0; font-size: .95rem }
+
+.lettre .from, .lettre .to, .lettre .date { margin: 0 0 1.5rem }
+.lettre .to, .lettre .date { text-align: end }
+.lettre .subject { font-weight: 600; margin: 0 0 1.5rem }
+.lettre .subject-label, .lettre .ref-label { color: var(--ink-soft); margin-inline-end: .5rem }
+.lettre .opening, .lettre .closing { margin: 1.5rem 0 }
+.lettre .ps, .lettre .annexes { border-top: 1px solid var(--line); margin-top: 2rem; padding-top: 1rem; font-size: .95rem; color: var(--ink-soft) }
+
+/* The page-head above already carries title, author and date. */
+.webdoc section.titlepage { display: none }

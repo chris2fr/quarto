@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="$lang$">
+
+<head>
+  <meta charset="utf-8">
+  <title>$title$</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  $if(meta.description)$
+  <meta name="description" content="$meta.description$">
+  $endif$
+  $for(css)$
+  <link rel="stylesheet" href="$css$">
+  $endfor$
+  $if(header-includes)$
+  $header-includes$
+  $endif$
+</head>
+
+<body class="webdoc $webhtml$">
+  $if(page1-header)$
+  <header class="top"><div class="wrap">$page1-header$</div></header>
+  $endif$
+
+  <main id="contenu">
+    $if(webhtml-head)$
+    <div class="page-head">
+      <div class="wrap">
+        <h1>$title$</h1>
+        $if(subtitle)$<p class="lead">$subtitle$</p>$endif$
+        $if(author)$<p class="byline">$for(author)$$author$$sep$, $endfor$$if(date)$ — $date$$endif$</p>$endif$
+      </div>
+    </div>
+    $endif$
+    <div class="wrap page">
+      <div class="markdown $webhtml$">
+        $body$
+      </div>
+    </div>
+  </main>
+
+  $if(page-footer)$
+  <footer class="foot-wrap"><div class="wrap">$page-footer$</div></footer>
+  $endif$
+</body>
+
+</html>
