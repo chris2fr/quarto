@@ -28,6 +28,11 @@ doc-footer: |
   DOC FOOTER\
   DOC FOOTER\
   DOC FOOTER
+# filters:
+#   - latex-environment
+# environments:
+#   - center
+#   - arbitrary
 ---
 
 ::: titlepage
