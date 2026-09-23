@@ -649,21 +649,55 @@ local function fill_missing_body_divs(doc)
   doc.blocks = new_blocks
 end
 
+-- Parses `margins:`'s CSS-style shorthand value — 1 to 4 space-separated
+-- lengths, read the same way CSS resolves margin/padding shorthand: 1 → all
+-- four sides; 2 → "y x" (top & bottom, left & right); 3 → "t x b"; 4 →
+-- "t r b l", clockwise from top. Returns nil if the value doesn't split
+-- into 1-4 tokens (left for the caller to just ignore).
+local function parse_margins_shorthand(value)
+  local parts = {}
+  for token in pandoc.utils.stringify(value):gmatch('%S+') do
+    table.insert(parts, token)
+  end
+  local n = #parts
+  if n == 1 then
+    return { top = parts[1], right = parts[1], bottom = parts[1], left = parts[1] }
+  elseif n == 2 then
+    return { top = parts[1], bottom = parts[1], right = parts[2], left = parts[2] }
+  elseif n == 3 then
+    return { top = parts[1], right = parts[2], left = parts[2], bottom = parts[3] }
+  elseif n == 4 then
+    return { top = parts[1], right = parts[2], bottom = parts[3], left = parts[4] }
+  end
+  return nil
+end
+
 -- Fill in the per-side margin-inner/margin-outer/margin-top/margin-bottom
 -- keys (consumed as-is by every extension's pdf/layout.tex \geometry calls)
--- from the coarser marginx/marginy/margin-all keys, when the more specific
--- one isn't already set by the document. Priority, most to least specific:
+-- from coarser keys, when the more specific one isn't already set by the
+-- document. Priority, most to least specific:
 --   margin-inner / margin-outer / margin-top / margin-bottom  (untouched if set)
+--   margin-left / margin-right (→ inner / outer — plain synonyms: this
+--     project never sets \twoside, so inner always equals left and outer
+--     always equals right, no duplex page-parity flipping to worry about)
 --   marginx (→ inner & outer) / marginy (→ top & bottom)
 --   margin-all (→ all four)
+--   margins (→ any/all of the four, CSS shorthand — see
+--     parse_margins_shorthand; the broadest fallback, so every key above
+--     still wins over it when set)
 -- Note: the bare key `margin` is reserved by Quarto itself (revealjs/typst
 -- slide margin, must be a number) — using it here would fail YAML
--- validation for a string like "20mm", hence `margin-all`.
+-- validation for a string like "20mm", hence `margin-all` (single value)
+-- and `margins` (CSS shorthand).
 -- PDF-only: these feed LaTeX \geometry values and have no meaning elsewhere.
 -- Applies to all three extensions alike (not gated by is_lettre), since the
 -- margin-inner/outer/top/bottom mechanism itself already is shared.
 local function resolve_margins(doc)
   if not FORMAT:match('latex') then return end
+
+  if not doc.meta['margin-inner'] and doc.meta['margin-left']  then doc.meta['margin-inner'] = doc.meta['margin-left']  end
+  if not doc.meta['margin-outer'] and doc.meta['margin-right'] then doc.meta['margin-outer'] = doc.meta['margin-right'] end
+
   local margin  = doc.meta['margin-all']
   local marginx = doc.meta['marginx'] or margin
   local marginy = doc.meta['marginy'] or margin
@@ -671,6 +705,16 @@ local function resolve_margins(doc)
   if not doc.meta['margin-outer']  and marginx then doc.meta['margin-outer']  = marginx end
   if not doc.meta['margin-top']    and marginy then doc.meta['margin-top']    = marginy end
   if not doc.meta['margin-bottom'] and marginy then doc.meta['margin-bottom'] = marginy end
+
+  if doc.meta['margins'] then
+    local sides = parse_margins_shorthand(doc.meta['margins'])
+    if sides then
+      if not doc.meta['margin-top']    then doc.meta['margin-top']    = sides.top end
+      if not doc.meta['margin-bottom'] then doc.meta['margin-bottom'] = sides.bottom end
+      if not doc.meta['margin-inner']  then doc.meta['margin-inner']  = sides.left end
+      if not doc.meta['margin-outer']  then doc.meta['margin-outer']  = sides.right end
+    end
+  end
 end
 
 -- Quarto's own brand→CSS pipeline (and, for LaTeX, its brand→fontspec

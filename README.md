@@ -361,17 +361,20 @@ All three extensions support a `{{< toc >}}` shortcode for HTML and PDF output �
 
 ## PDF margin overrides
 
-All three extensions support per-document margin overrides for PDF output via YAML metadata, at three levels of granularity — the most specific one set wins:
+All three extensions support per-document margin overrides for PDF output via YAML metadata, at several levels of granularity — the most specific one set wins:
 
 | Key | Sets | Default |
 |---|---|---|
-| `margin-inner` | inner / left margin, all pages | `20mm` |
-| `margin-outer` | outer / right margin, all pages | `20mm` |
+| `margin-inner` (or `margin-left`) | inner / left margin, all pages | `20mm` |
+| `margin-outer` (or `margin-right`) | outer / right margin, all pages | `20mm` |
 | `margin-top` | top margin, body pages only | `25mm` |
 | `margin-bottom` | bottom margin, body pages only | `15mm` |
 | `marginx` | `margin-inner` **and** `margin-outer`, if not set individually | — |
 | `marginy` | `margin-top` **and** `margin-bottom`, if not set individually | — |
 | `margin-all` | all four, if not set by any of the above | — |
+| `margins` | CSS-style shorthand for any/all of the four, if not set by any of the above — see below | — |
+
+`margin-left`/`margin-right` are plain synonyms for `margin-inner`/`margin-outer` — none of these extensions set LaTeX's `\twoside` option, so inner always means left and outer always means right; there's no duplex page-parity flip to worry about. Use whichever reads more naturally.
 
 ```yaml
 # every page gets 15mm on the sides; top/bottom keep their defaults
@@ -387,7 +390,33 @@ marginy: 15mm
 margin-top: 30mm
 ```
 
-> `margin` (without a suffix) is reserved by Quarto itself (revealjs/typst slide margin, must be a number) — use `margin-all` instead for a plain string like `"20mm"`.
+> `margin` (without a suffix) is reserved by Quarto itself (revealjs/typst slide margin, must be a number) — use `margin-all` (or `margins`, below) instead for a plain string like `"20mm"`.
+
+### CSS-style shorthand (`margins:`)
+
+`margins` accepts 1 to 4 space-separated lengths in one string, read the same way CSS resolves `margin`/`padding` shorthand — the broadest, lowest-priority way to set them, so every key in the table above still overrides it where set:
+
+| Form | Meaning |
+|---|---|
+| `margins: 20mm` | all four sides |
+| `margins: "15mm 25mm"` | top & bottom, left & right (`y x`) |
+| `margins: "10mm 25mm 15mm"` | top, left & right, bottom (`t x b`) |
+| `margins: "10mm 25mm 15mm 30mm"` | top, right, bottom, left, clockwise from top (`t r b l`) |
+
+```yaml
+# same page, three equivalent ways to write it
+margins: "10mm 25mm 15mm 30mm"
+# —
+margin-top: 10mm
+margin-right: 25mm
+margin-bottom: 15mm
+margin-left: 30mm
+# —
+margin-top: 10mm
+margin-outer: 25mm
+margin-bottom: 15mm
+margin-inner: 30mm
+```
 
 These can be set at the document level (affects all PDF formats) or under a specific format:
 

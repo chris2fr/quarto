@@ -23,8 +23,8 @@ local upstream_meta = {
   'base-format', 'date-format', 'french-quotes', 'page-layout', 'theme',
   'papersize', 'lof', 'lot',
   -- page.lua (base filter): margin resolution, brand fonts, bibliography wiring
-  'margin-inner', 'margin-outer', 'margin-top', 'margin-bottom', 
-  'margin-all', 'marginx', 'marginy',
+  'margin-inner', 'margin-outer', 'margin-top', 'margin-bottom',
+  'margin-left', 'margin-right', 'margin-all', 'marginx', 'marginy', 'margins',
   'header-includes', 'bibliography', 'csl', 'tex-custom', 'labels',
   'nocite', 'tab-stop', 'page1-header', 'page-footer',
   -- Quarto/Pandoc reserved or auto-injected
