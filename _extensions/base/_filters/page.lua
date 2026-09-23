@@ -761,14 +761,101 @@ local function meta_str(v)
   return s ~= '' and s or nil
 end
 
+-- ── Bundled fonts ───────────────────────────────────────────────────────────
+-- A family named by the brand/metadata is first looked for as font files
+-- shipped with the project, so it needn't be installed on the machine
+-- rendering the document: <root>/fonts/<slug>/, <root>/_parts/fonts/<slug>/
+-- or <root>/_parts/<anything>/fonts/<slug>/, where <root> is the document's
+-- directory or the project root and <slug> is the lowercased, dash-separated
+-- family name ("Fengardo Neue" -> fengardo-neue). Files are classified by
+-- name: "italic"/"oblique" -> italic, "bold"/"black"/"heavy" -> bold; any
+-- other weight (light, medium, ...) is ignored. Returns nil if none found.
+local FONT_EXTS = { otf = true, ttf = true, woff2 = true, woff = true }
+
+local function font_slug(family)
+  local slug = family:lower():gsub('[^%w]+', '-')
+  slug = slug:gsub('^%-+', ''):gsub('%-+$', '')
+  return slug
+end
+
+local function list_dir(dir)
+  local ok, entries = pcall(pandoc.system.list_directory, dir)
+  return ok and entries or nil
+end
+
+local function find_font_dirs(family)
+  local slug = font_slug(family)
+  local roots = {}
+  if quarto.doc and quarto.doc.input_file and quarto.doc.input_file ~= '' then
+    table.insert(roots, pandoc.path.directory(quarto.doc.input_file))
+  end
+  if quarto.project and quarto.project.directory then
+    table.insert(roots, quarto.project.directory)
+  end
+
+  local found, seen_dirs = {}, {}
+  local function try(dir)
+    local abs = dir:sub(1, 1) == '/' and dir
+             or pandoc.path.join({ pandoc.system.get_working_directory(), dir })
+    if not seen_dirs[abs] and list_dir(abs) then
+      seen_dirs[abs] = true
+      table.insert(found, abs)
+    end
+  end
+  for _, root in ipairs(roots) do
+    try(pandoc.path.join({ root, 'fonts', slug }))
+    try(pandoc.path.join({ root, '_parts', 'fonts', slug }))
+    for _, sub in ipairs(list_dir(pandoc.path.join({ root, '_parts' })) or {}) do
+      try(pandoc.path.join({ root, '_parts', sub, 'fonts', slug }))
+    end
+  end
+  return found
+end
+
+-- Returns { dir = <absolute dir>, faces = { ext -> { upright/italic/bold/
+-- bolditalic -> basename-without-extension } } } for the first directory
+-- holding usable files, or nil.
+local function find_local_font(family)
+  for _, dir in ipairs(find_font_dirs(family)) do
+    local faces = {}
+    for _, entry in ipairs(list_dir(dir) or {}) do
+      local base, ext = entry:match('^(.+)%.(%w+)$')
+      ext = ext and ext:lower()
+      if base and FONT_EXTS[ext] then
+        local low = base:lower()
+        if not (low:find('light') or low:find('thin') or low:find('medium')
+             or low:find('semi') or low:find('extra')) then
+          local italic = low:find('italic') or low:find('oblique')
+          local bold = low:find('bold') or low:find('black') or low:find('heavy')
+          local slot = (bold and italic and 'bolditalic') or (bold and 'bold')
+                    or (italic and 'italic') or 'upright'
+          faces[ext] = faces[ext] or {}
+          local cur = faces[ext][slot]
+          if not cur or #base < #cur or (#base == #cur and base < cur) then
+            faces[ext][slot] = base
+          end
+        end
+      end
+    end
+    for _, ext in ipairs({ 'otf', 'ttf' }) do
+      if faces[ext] and faces[ext].upright then
+        return { dir = dir, faces = faces, family = family }
+      end
+    end
+  end
+  return nil
+end
+
 -- Append a Google Fonts <link> plus matching font-family rules to
 -- header-includes (all three layout.html templates render
 -- $header-includes$ in <head>) from the brand's resolved fonts.
 local function brand_fonts_html(doc)
   if not FORMAT:match('html') then return end
-  local fonts = brand_font_families()
-  if not fonts then return end
-  local base, headings, monospace = fonts.base, fonts.headings, fonts.monospace
+  local fonts = brand_font_families() or {}
+  -- Same precedence as brand_fonts_latex: document metadata over the brand.
+  local base = meta_str(doc.meta.mainfont) or fonts.base
+  local headings = meta_str(doc.meta.headingfont) or meta_str(doc.meta.sansfont) or fonts.headings
+  local monospace = meta_str(doc.meta.monofont) or fonts.monospace
 
   local families, added = {}, {}
   for _, f in ipairs({ base, headings, monospace }) do
@@ -787,9 +874,44 @@ local function brand_fonts_html(doc)
     '<link rel="preconnect" href="https://fonts.googleapis.com">',
     '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
   }
+  local face_css, resources = {}, {}
   for _, f in ipairs(families) do
-    table.insert(html, '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family='
-      .. f:gsub(' ', '+') .. '&display=swap">')
+    local local_font = find_local_font(f)
+    if local_font then
+      -- Bundled files: copied next to the page as an HTML dependency with a
+      -- generated @font-face stylesheet, instead of a Google Fonts request.
+      local weights = { upright = { 400, 'normal' }, italic = { 400, 'italic' },
+                        bold = { 700, 'normal' }, bolditalic = { 700, 'italic' } }
+      local formats = { woff2 = 'woff2', woff = 'woff', otf = 'opentype', ttf = 'truetype' }
+      for _, slot in ipairs({ 'upright', 'italic', 'bold', 'bolditalic' }) do
+        for _, ext in ipairs({ 'woff2', 'woff', 'otf', 'ttf' }) do
+          local base = local_font.faces[ext] and local_font.faces[ext][slot]
+          if base then
+            local file = base .. '.' .. ext
+            table.insert(resources, { name = file, path = pandoc.path.join({ local_font.dir, file }) })
+            table.insert(face_css, string.format(
+              '@font-face { font-family: "%s"; font-weight: %d; font-style: %s; font-display: swap; src: url("%s") format("%s"); }',
+              f, weights[slot][1], weights[slot][2], file, formats[ext]))
+            break
+          end
+        end
+      end
+    else
+      table.insert(html, '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family='
+        .. f:gsub(' ', '+') .. '&display=swap">')
+    end
+  end
+  if #face_css > 0 then
+    local css_path = os.tmpname()
+    local fh = io.open(css_path, 'w')
+    fh:write(table.concat(face_css, '\n'), '\n')
+    fh:close()
+    table.insert(resources, { name = 'bundled-fonts.css', path = css_path })
+    quarto.doc.add_html_dependency({
+      name = 'lettre-bundled-fonts', version = '1.0.0',
+      resources = resources,
+      stylesheets = { { name = 'bundled-fonts.css', path = css_path } },
+    })
   end
   table.insert(html, '<style>')
   local body_rule = {}
@@ -824,8 +946,22 @@ end
 -- default (Libertinus) stays in effect — instead of a broken build.
 -- \QLheadingfont (defined empty in each quarto-lettre.cls, used inside its
 -- \titleformat calls) is how the headings font reaches \section etc.
-local function latex_font_guard(family, action)
-  return '\\IfFontExistsTF{' .. family .. '}{' .. action .. '}'
+-- `cmd` is a fontspec command taking the family (\setmainfont, or
+-- \renewfontfamily\QLheadingfont, ...). A bundled family (see
+-- find_local_font) is loaded from its files, without needing installation;
+-- anything else is guarded so a missing one keeps the default.
+local function latex_font(family, cmd)
+  local lf = find_local_font(family)
+  if lf then
+    local ext = (lf.faces.otf and lf.faces.otf.upright) and 'otf' or 'ttf'
+    local f = lf.faces[ext]
+    local opts = { 'Path=' .. lf.dir .. '/', 'Extension=.' .. ext, 'UprightFont=' .. f.upright }
+    if f.italic then table.insert(opts, 'ItalicFont=' .. f.italic) end
+    if f.bold then table.insert(opts, 'BoldFont=' .. f.bold) end
+    if f.bolditalic then table.insert(opts, 'BoldItalicFont=' .. f.bolditalic) end
+    return cmd .. '{' .. f.upright .. '}[' .. table.concat(opts, ',') .. ']'
+  end
+  return '\\IfFontExistsTF{' .. family .. '}{' .. cmd .. '{' .. family .. '}}'
     .. '{\\typeout{WARNING: font "' .. family .. '" not found, keeping default}}'
 end
 
@@ -867,14 +1003,14 @@ local function brand_fonts_latex(doc)
   end
 
   local latex = {}
-  if main then table.insert(latex, latex_font_guard(main, '\\setmainfont{' .. main .. '}')) end
-  if sans then table.insert(latex, latex_font_guard(sans, '\\setsansfont{' .. sans .. '}')) end
-  if mono then table.insert(latex, latex_font_guard(mono, '\\setmonofont{' .. mono .. '}')) end
+  if main then table.insert(latex, latex_font(main, '\\setmainfont')) end
+  if sans then table.insert(latex, latex_font(sans, '\\setsansfont')) end
+  if mono then table.insert(latex, latex_font(mono, '\\setmonofont')) end
   if heading then
     -- No per-weight files are assumed for an arbitrary family, so the
     -- Medium/SemiBold heading variants collapse to the family itself.
     for _, cmd in ipairs({ 'QLheadingfont', 'QLheadingfontmd', 'QLheadingfontsb' }) do
-      table.insert(latex, latex_font_guard(heading, '\\renewfontfamily\\' .. cmd .. '{' .. heading .. '}'))
+      table.insert(latex, latex_font(heading, '\\renewfontfamily\\' .. cmd))
     end
   end
   if stretch and tonumber(stretch) then table.insert(latex, '\\renewcommand{\\baselinestretch}{' .. stretch .. '}') end
