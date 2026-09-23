@@ -22,8 +22,8 @@ place: $place$
 $endif$
 ---
 
-$if(page-header)$
-$page-header$
+$if(page1-header)$
+$page1-header$
 
 ---
 

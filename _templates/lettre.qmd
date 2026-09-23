@@ -18,7 +18,7 @@ format:
   lettre-md: default
   lettre-plain: default
   # lettre-docx: default
-let-header: |
+let-header1: |
   [![Les Grands Voisins — Association d'intérêt général](logo-lesgrandsvoisins-900-150-white.png)](https://www.lesgrandsvoisins.com)
   **PROJET EN COURS D'ELABORATION**
 let-footer: | 

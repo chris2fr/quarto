@@ -17,7 +17,7 @@ margin-inner: 26mm
 margin-outer: 26mm
 margin-top: 22mm
 margin-bottom: 22mm
-let-header: "DOCUMENT DE TEST — CONTENU FICTIF"
+let-header1: "DOCUMENT DE TEST — CONTENU FICTIF"
 let-footer: "*Document de test — $ref$*"
 let-from: |
   Chris Mann\

@@ -58,7 +58,7 @@ Tableau standard :
 
 | Div | Rôle |
 |:----|:-----|
-| `::: header` | En-tête de page |
+| `::: header1` | En-tête de page |
 | `::: from` | Coordonnées expéditeur |
 | `::: to` | Adresse destinataire |
 | `::: body` | Corps de la lettre |

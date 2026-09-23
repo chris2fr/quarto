@@ -20,7 +20,7 @@ format:
   lettre-odt: default
   lettre-md: default
   lettre-plain: default
-let-header: |
+let-header1: |
   [![Les Grands Voisins — Association d'intérêt général](logo-lesgrandsvoisins-900-150-white.png){height=1cm}](https://www.lesgrandsvoisins.com)\
   **PROJET EN COURS D'ELABORATION**
 let-footer: | 
@@ -86,7 +86,7 @@ Tableau standard :
 
 | Div | Rôle |
 |:----|:-----|
-| `::: header` | En-tête de page |
+| `::: header1` | En-tête de page |
 | `::: from` | Coordonnées expéditeur |
 | `::: to` | Adresse destinataire |
 | `::: body` | Corps de la lettre |

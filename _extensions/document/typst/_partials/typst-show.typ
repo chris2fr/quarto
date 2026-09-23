@@ -9,8 +9,8 @@ $endif$
 $if(fontsize)$
   fontsize: $fontsize$,
 $endif$
-$if(page-header)$
-  page-header: [$page-header$],
+$if(page1-header)$
+  page1-header: [$page1-header$],
 $endif$
 $if(page-footer)$
   page-footer: [$page-footer$],

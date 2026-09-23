@@ -1,10 +1,10 @@
--- Stores rendered header/footer content to inject into metadata
+-- Stores rendered header1/footer content to inject into metadata
 local extracted = {}
 
 local french_quotes = false
 
 -- This filter is shared by the lettre, compte-rendu and document extensions.
--- ::: header ::: / ::: footer ::: and their _parts/ fallback (further down)
+-- ::: header1 ::: / ::: footer ::: and their _parts/ fallback (further down)
 -- are common to all three. The rest of the fallback vocabulary
 -- (from/date/to/subject/ref/opening/closing/signature/ps/annexes) is lettre's own —
 -- compte-rendu and document use different div classes (or none at all) and
@@ -28,8 +28,8 @@ local seen = {}
 local meta_snapshot = {}
 
 -- Metadata keys for META_PRIORITY_CLASSES (further down) are namespaced per
--- extension — `let-to`, `meet-agenda`, `doc-header`... — rather than bare
--- (`to`, `agenda`, `header`...). Pandoc itself reserves bare `to`/`from` as
+-- extension — `let-to`, `meet-agenda`, `doc-header1`... — rather than bare
+-- (`to`, `agenda`, `header1`...). Pandoc itself reserves bare `to`/`from` as
 -- metadata keys for the writer/reader format (`to: html` is a valid, real
 -- pandoc default): a bare `to:` in a lettre document's front matter is
 -- silently read as an output-format override and breaks rendering entirely
@@ -195,17 +195,17 @@ function Quoted(el)
 end
 
 -- Classes that can fall back to an extension-provided <class>.qmd
--- snippet when the document doesn't define them. header/footer place their
+-- snippet when the document doesn't define them. header1/footer place their
 -- content outside the normal body flow (see apply_section); the rest are
 -- plain in-body divs, positioned relative to their neighbours in BODY_ORDER
 -- (see fill_missing_body_divs).
 local FALLBACK_CLASSES = {
-  header = true, footer = true,
+  header1 = true, footer = true,
   from = true, date = true, to = true, subject = true, ref = true,
   opening = true, closing = true, signature = true,
   ps = true, annexes = true,
 }
-local HEADER_FOOTER = { header = true, footer = true }
+local HEADER_FOOTER = { header1 = true, footer = true }
 
 -- Canonical position of every body div in a lettre document. 'body' anchors
 -- the sequence but never gets a generic fallback (the letter's actual
@@ -231,7 +231,7 @@ for _, class in ipairs(BODY_ORDER) do ALL_BODY_CLASSES[class] = true end
 -- Pandoc(doc) for that. 'body' is never meta-driven — a letter's actual
 -- content is never a one-off metadata value.
 local META_PRIORITY_CLASSES = {
-  header = true, footer = true,
+  header1 = true, footer = true,
   from = true, to = true, subject = true, title = true, 
   opening = true, closing = true, signature = true,
   date = true, ref = true,
@@ -324,18 +324,25 @@ end
 -- Format-specific rendering shared by both a real div and a generic-layout
 -- fallback file. For docx/odt returns a content list to place in the body
 -- (wrapped in a Div so docx/_filters/divs.lua can still style it); for every
--- other format it stashes `page-<class>` metadata for the layout templates.
--- `doc` is nil when called while still walking the tree (a real div, before
--- Pandoc(doc) exists) — the metadata is queued in `extracted` and applied
--- once Pandoc(doc) runs. When called from Pandoc(doc) itself (generic-layout
--- fallback) `doc` is passed through so metadata can be set directly.
+-- other format it stashes `page1-header`/`page-<class>` metadata for the
+-- layout templates. `doc` is nil when called while still walking the tree
+-- (a real div, before Pandoc(doc) exists) — the metadata is queued in
+-- `extracted` and applied once Pandoc(doc) runs. When called from
+-- Pandoc(doc) itself (generic-layout fallback) `doc` is passed through so
+-- metadata can be set directly.
+-- header1 is only ever rendered on page 1 (see the firstpage-only pagestyle
+-- in the pdf preambles and the typst `counter(page)... == 1` guards), so its
+-- class name and metadata key both say so; footer applies to every page and
+-- keeps the plain `page-<class>` shape.
+local KEY_FOR_CLASS = { header1 = 'page1-header' }
+
 local function apply_section(class, content, doc)
   -- Normalise format variants: html* → 'html', markdown* → 'markdown'
   local fmt = FORMAT:match('html') and 'html'
            or FORMAT:match('markdown') and 'markdown'
            or FORMAT
 
-  -- Binary formats: docx/odt have no template to consume page-header /
+  -- Binary formats: docx/odt have no template to consume page1-header /
   -- page-footer metadata, so keep the content in the body (styled by
   -- docx/_filters/divs.lua) instead of stashing it where it would be
   -- silently dropped.
@@ -356,7 +363,7 @@ local function apply_section(class, content, doc)
   end
 
   if #rendered > 0 then
-    local key = 'page-' .. class
+    local key = KEY_FOR_CLASS[class] or ('page-' .. class)
     if doc then
       doc.meta[key] = pandoc.MetaBlocks(rendered)
     else
@@ -368,7 +375,7 @@ end
 
 -- Track which body-sequence divs are actually present (needed by
 -- fill_missing_body_divs to place fallbacks correctly, even for from/body
--- which never get synthesized themselves). header/footer are handed to
+-- which never get synthesized themselves). header1/footer are handed to
 -- apply_section (docx/odt Div spliced back in place; every other format is
 -- removed from the body, its content living in metadata instead). The rest
 -- are left alone here — they're plain in-body divs already styled by each
@@ -411,7 +418,7 @@ end
 --      — a project-wide override, e.g. shared by every letter in a project.
 --   3. the current extension's own bundled default, if it has one
 --      (_extensions/<extension-name>/parts/<class>.qmd) — e.g. `document`
---      can ship its own header/footer, distinct from lettre's or
+--      can ship its own header1/footer, distinct from lettre's or
 --      compte-rendu's.
 --   4. the base extension's shared default (_extensions/base/parts/<class>.qmd),
 --      used by any extension that doesn't have its own — resolved relative
@@ -457,7 +464,7 @@ end
 -- back on, so the user has real, editable files to start from. Never touches
 -- an existing _parts/ (even an empty one), so this only ever fires once.
 -- `classes` is HEADER_FOOTER for compte-rendu/document (they only support
--- header/footer parts) and FALLBACK_CLASSES for lettre (the full set).
+-- header1/footer parts) and FALLBACK_CLASSES for lettre (the full set).
 -- Reuses find_part(): since _parts/ doesn't exist yet at this point, it can
 -- only resolve to an extension default (the current extension's own, or
 -- base's shared one), which is exactly what should be copied here too.
@@ -555,7 +562,7 @@ end
 
 -- Read a part .qmd, strip any YAML front matter, expand `{{< meta ... >}}`
 -- and `{{< brand logo ... >}}` shortcodes, and parse it into blocks the same
--- way a ::: header/footer ::: div's content would arrive.
+-- way a ::: header1/footer ::: div's content would arrive.
 local function read_part_file(path)
   local f = io.open(path, 'r')
   if not f then return nil end
@@ -577,7 +584,7 @@ local function load_part(class)
 end
 
 -- Sort doc.blocks into: known-class divs (from/date/to/subject/ref/opening/
--- body/closing/signature/ps/annexes — one each — plus header/footer, kept aside so
+-- body/closing/signature/ps/annexes — one each — plus header1/footer, kept aside so
 -- they can be re-prepended/appended untouched), and everything else
 -- ("loose" content: bare paragraphs, headings, tables, custom divs with no
 -- recognized class...). A qmd doesn't have to wrap its letter content in
@@ -590,13 +597,13 @@ local function bucket_blocks(doc)
     local class = nil
     if block.t == 'Div' then
       for _, c in ipairs(block.classes) do
-        if c == 'header' or c == 'footer' or ALL_BODY_CLASSES[c] then
+        if c == 'header1' or c == 'footer' or ALL_BODY_CLASSES[c] then
           class = c
           break
         end
       end
     end
-    if class == 'header' then
+    if class == 'header1' then
       header_block = block
     elseif class == 'footer' then
       footer_block = block
@@ -811,9 +818,9 @@ local function apply_date_ref_overrides(doc)
 end
 
 -- Inject the extracted values into document metadata so layout templates can
--- reference $page-header$ and $page-footer$; resolve margin fallbacks (see
+-- reference $page1-header$ and $page-footer$; resolve margin fallbacks (see
 -- resolve_margins) and brand fonts for HTML/LaTeX (see brand_fonts_html /
--- brand_fonts_latex); scaffold/fall back to _parts/header.qmd and
+-- brand_fonts_latex); scaffold/fall back to _parts/header1.qmd and
 -- _parts/footer.qmd for every extension; then, lettre only, fill in any of
 -- from/date/to/subject/ref/opening/closing/signature/ps/annexes missing from the
 -- document, in their canonical position (see `is_lettre` above); then,
@@ -836,13 +843,13 @@ function Pandoc(doc)
     fill_missing_meta_only_divs(doc)
   end
 
-  for _, class in ipairs({ 'header', 'footer' }) do
+  for _, class in ipairs({ 'header1', 'footer' }) do
     if not seen[class] then
       local blocks = meta_value_to_blocks(meta_snapshot[meta_prefix .. class]) or load_part(class)
       if blocks then
         local div = apply_section(class, blocks, doc)
         if div then
-          if class == 'header' then
+          if class == 'header1' then
             table.insert(doc.blocks, 1, div)
           else
             table.insert(doc.blocks, div)

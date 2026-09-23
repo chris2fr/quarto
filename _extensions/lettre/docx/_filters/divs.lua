@@ -1,5 +1,5 @@
 local style_for_class = {
-  header    = 'Letter Header',
+  header1   = 'Letter Header',
   from      = 'Letter From',
   date      = 'Letter Date',
   to        = 'Letter To',

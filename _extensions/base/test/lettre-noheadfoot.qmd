@@ -17,7 +17,7 @@ format:
   lettre-plain: default
 ---
 
-::: header
+::: header1
 :::
 
 ::: from
@@ -48,7 +48,7 @@ Madame, Monsieur,
 :::
 
 ::: body
-La présente lettre teste le rendu sans en-tête ni pied de page^[Le div `::: header` et le div `::: footer` sont laissés vides.]. Tous les autres éléments de mise en forme restent identiques[@something].
+La présente lettre teste le rendu sans en-tête ni pied de page^[Le div `::: header1` et le div `::: footer` sont laissés vides.]. Tous les autres éléments de mise en forme restent identiques[@something].
 
 # Niveau 1 — Introduction
 
@@ -96,7 +96,7 @@ format:
 
 #### Niveau 4 — Détails d'implémentation
 
-Quand le div `::: header` est vide, l'espace réservé à l'en-tête n'est pas rendu. Il en va de même pour `::: footer`. Ce comportement est contrôlé par les filtres Lua de l'extension :
+Quand le div `::: header1` est vide, l'espace réservé à l'en-tête n'est pas rendu. Il en va de même pour `::: footer`. Ce comportement est contrôlé par les filtres Lua de l'extension :
 
 ```lua
 if #el.content == 0 then

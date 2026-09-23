@@ -6,15 +6,15 @@
   paper:       "a4",
   fontsize:    11pt,
   margin:      (top: 25mm, bottom: 25mm, left: 20mm, right: 20mm),
-  page-header: none,
+  page1-header: none,
   page-footer: none,
   doc,
 ) = {
   set page(
     paper:  paper,
     margin: margin,
-    header: context if counter(page).get().first() == 1 and page-header != none {
-      pad(top: 5mm, align(center, text(size: 9pt, page-header)))
+    header: context if counter(page).get().first() == 1 and page1-header != none {
+      pad(top: 5mm, align(center, text(size: 9pt, page1-header)))
     },
     footer: context {
       let pg = counter(page).get().first()

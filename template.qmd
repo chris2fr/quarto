@@ -31,7 +31,7 @@ format:
   compte-rendu-md: default
   compte-rendu-plain: default
   # compte-rendu-docx: default
-let-header: |
+let-header1: |
   [![Les Grands Voisins — Association d'intérêt général](logo-lesgrandsvoisins-900-150-white.png)](https://www.lesgrandsvoisins.com)
   **PROJET EN COURS D'ELABORATION**
 let-footer: | 
@@ -63,7 +63,7 @@ let-signature: |
 let-ref: |
   \ \
   **réf.** : $ref$
-meet-header: |
+meet-header1: |
   ![**Les Grands Voisins** --- Association d'intérêt général](logo-lesgrandsvoisins-900-150-white.png]
 meet-participants: |
   **Présents :** PRESENTS

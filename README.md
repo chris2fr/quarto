@@ -109,7 +109,7 @@ format:
 
 | Div | Role | If missing |
 |---|---|---|
-| `::: header` | Page header — printed on the first page only | falls back to a part (see below), or omitted |
+| `::: header1` | Page header — printed on the first page only | falls back to a part (see below), or omitted |
 | `::: from` | Sender's address | falls back to a part |
 | `::: date` | Place and date | falls back to a part |
 | `::: to` | Recipient's address | falls back to a part |
@@ -123,7 +123,7 @@ format:
 | `::: annexes` | List of enclosures, printed after the postscript | falls back to a part, or omitted |
 | `::: footer` | Page footer — printed on every page | falls back to a part, or omitted |
 
-Leave `::: header` or `::: footer` **empty** (`::: header\n:::`) to suppress the header/footer area outright — that's different from omitting the div entirely, which triggers the part fallback below.
+Leave `::: header1` or `::: footer` **empty** (`::: header1\n:::`) to suppress the header/footer area outright — that's different from omitting the div entirely, which triggers the part fallback below.
 
 YAML metadata values are reusable anywhere in the document via `{{< meta key >}}`.
 
@@ -144,14 +144,14 @@ format:
 Le corps de la lettre, sans aucun div.
 ```
 
-Everything else (`from`, `date`, `to`, `subject`, `opening`, `closing`, `signature`, `ps`, `annexes`, `header`, `footer`) is filled in from parts (see below). Mixing is fine: write the divs you care about, and let the rest fall back.
+Everything else (`from`, `date`, `to`, `subject`, `opening`, `closing`, `signature`, `ps`, `annexes`, `header1`, `footer`) is filled in from parts (see below). Mixing is fine: write the divs you care about, and let the rest fall back.
 
 #### Logo, link and description in the header
 
-`::: header` (and `::: footer`) accept a linked, described image — the description doubles as the image's alt text:
+`::: header1` (and `::: footer`) accept a linked, described image — the description doubles as the image's alt text:
 
 ```markdown
-::: header
+::: header1
 [![Organisation — courte description](logo.png)](https://example.org)
 :::
 ```
@@ -159,7 +159,7 @@ Everything else (`from`, `date`, `to`, `subject`, `opening`, `closing`, `signatu
 The image is capped to a sensible header height and centered in every format (HTML, Typst, PDF/LaTeX, docx, odt). If the project has a [brand.yml](https://quarto.org/docs/authoring/brand.html), the logo can come from there instead via the `{{< brand logo <size> >}}` shortcode (`small`, `medium`, or `large`), optionally wrapped in a link the same way:
 
 ```markdown
-::: header
+::: header1
 [{{< brand logo medium >}}](https://example.org)
 :::
 ```
@@ -174,9 +174,9 @@ Any div listed as "falls back to a part" above can be left out of the document e
 
 The first one found wins, so a project- or document-level `_parts/<div>.qmd` always takes precedence over the extension's default. Part files are plain Markdown and support `{{< meta key >}}` and `{{< brand logo <size> >}}` shortcodes.
 
-`::: header` / `::: footer` and their `_parts/header.qmd` / `_parts/footer.qmd` fallback work the same way in `compte-rendu` and `document` — a single `_parts/header.qmd` at the project root gives every letter, meeting minutes, and document in the project the same letterhead and footer. The rest of the fallback vocabulary (`from`, `date`, `to`, `subject`, `ref`, `opening`, `closing`, `signature`, `ps`, `annexes`) is specific to `lettre`.
+`::: header1` / `::: footer` and their `_parts/header1.qmd` / `_parts/footer.qmd` fallback work the same way in `compte-rendu` and `document` — a single `_parts/header1.qmd` at the project root gives every letter, meeting minutes, and document in the project the same letterhead and footer. The rest of the fallback vocabulary (`from`, `date`, `to`, `subject`, `ref`, `opening`, `closing`, `signature`, `ps`, `annexes`) is specific to `lettre`.
 
-Since `quarto add` has no post-install hook to scaffold `_parts/` automatically, the extension does the next best thing: the first time a document is rendered in a project (or standalone file) that has no `_parts/` yet, one is created — at the project root if there's a `_quarto.yml`, next to the document otherwise — populated with an editable copy of every fallback-eligible part for that extension (just `header.qmd`/`footer.qmd` for `compte-rendu`/`document`; the full set for `lettre`). An existing `_parts/` (even an empty one, or one missing some files) is never touched again, so this only ever runs once and never overwrites customizations.
+Since `quarto add` has no post-install hook to scaffold `_parts/` automatically, the extension does the next best thing: the first time a document is rendered in a project (or standalone file) that has no `_parts/` yet, one is created — at the project root if there's a `_quarto.yml`, next to the document otherwise — populated with an editable copy of every fallback-eligible part for that extension (just `header1.qmd`/`footer.qmd` for `compte-rendu`/`document`; the full set for `lettre`). An existing `_parts/` (even an empty one, or one missing some files) is never touched again, so this only ever runs once and never overwrites customizations.
 
 #### Filling a div straight from metadata
 
@@ -205,7 +205,7 @@ When set, the metadata value **always wins** — over an explicit `::: div ::: .
 
 1. `let-<div>` / `meet-<div>` / `doc-<div>` metadata key
 2. `::: <div> ::: ... :::` in the document body
-3. `_parts/<div>.qmd` fallback chain (document, then project, then extension default) — `lettre`'s own divs and `header`/`footer` only; `compte-rendu`'s divs have no `_parts/` fallback
+3. `_parts/<div>.qmd` fallback chain (document, then project, then extension default) — `lettre`'s own divs and `header1`/`footer` only; `compte-rendu`'s divs have no `_parts/` fallback
 
 The value can be a plain string, a multi-paragraph block scalar (`let-ps: |`), or a YAML list — rendered as a bullet list (`let-annexes: [...]`).
 
@@ -276,7 +276,7 @@ format:
 
 | Div | Role |
 |---|---|
-| `::: header` | Page header — printed on the first page only |
+| `::: header1` | Page header — printed on the first page only |
 | `::: participants` | Attendees and apologies |
 | `::: agenda` | Meeting agenda (ordered list) |
 | `::: body` | Meeting notes — supports headings H1–H4, images, tables |
@@ -286,7 +286,7 @@ format:
 | `::: approval` | Approval statement |
 | `::: footer` | Page footer — printed on every page |
 
-`::: header` and `::: footer` can be omitted — see "`_parts/` — overriding or omitting a section" under `lettre` above. The rest of this table has no `_parts/` fallback, but every div in it (`participants`, `agenda`, `decisions`, `actions`, `next-meeting`, `approval`, plus `header`/`footer`) can be filled from a `meet-<div>` metadata key instead — see "Filling a div straight from metadata" under `lettre` above; a missing `::: participants` or `::: body` with no `meet-participants` metadata either is still an error.
+`::: header1` and `::: footer` can be omitted — see "`_parts/` — overriding or omitting a section" under `lettre` above. The rest of this table has no `_parts/` fallback, but every div in it (`participants`, `agenda`, `decisions`, `actions`, `next-meeting`, `approval`, plus `header1`/`footer`) can be filled from a `meet-<div>` metadata key instead — see "Filling a div straight from metadata" under `lettre` above; a missing `::: participants` or `::: body` with no `meet-participants` metadata either is still an error.
 
 ---
 
@@ -310,7 +310,7 @@ format:
 ---
 ```
 
-No special divs — use standard Markdown headings (H1–H4), paragraphs, tables, lists, and images directly in the document body. It does, however, support `::: header` and `::: footer`, with the same `_parts/` fallback as `compte-rendu` above — omit them and the page header/footer come from `_parts/header.qmd` / `_parts/footer.qmd` if present, or from a `doc-header` / `doc-footer` metadata key (see "Filling a div straight from metadata" under `lettre` above), which takes priority over both.
+No special divs — use standard Markdown headings (H1–H4), paragraphs, tables, lists, and images directly in the document body. It does, however, support `::: header1` and `::: footer`, with the same `_parts/` fallback as `compte-rendu` above — omit them and the page header/footer come from `_parts/header1.qmd` / `_parts/footer.qmd` if present, or from a `doc-header1` / `doc-footer` metadata key (see "Filling a div straight from metadata" under `lettre` above), which takes priority over both.
 
 ---
 
@@ -458,13 +458,13 @@ quarto render my-letter.qmd
 ```
 _extensions/
 ├── base/                          # Shared resources (not a format)
-│   ├── _filters/page.lua          # ::: header/footer :::, part fallback (all 3), lettre-only body/margins, HTML+PDF brand fonts, quote style
+│   ├── _filters/page.lua          # ::: header1/footer :::, part fallback (all 3), lettre-only body/margins, HTML+PDF brand fonts, quote style
 │   ├── _filters/toc.lua           # {{< toc >}} rendering — wired at the post-quarto entry point, after shortcode resolution
 │   ├── _filters/tablerule.lua     # thin rule between PDF table rows (\QLrowrule, defined in quarto-lettre.cls)
 │   ├── _shortcodes/toc.lua        # {{< toc >}} shortcode — drops a placeholder for _filters/toc.lua to expand
 │   ├── brand.yml                  # default brand (contributed to every project via _extension.yml)
 │   ├── parts/                     # bundled default section content (see _parts/ above)
-│   │   └── <div>.qmd              # header.qmd, footer.qmd (all 3); from/date/... (lettre only)
+│   │   └── <div>.qmd              # header1.qmd, footer.qmd (all 3); from/date/... (lettre only)
 │   ├── md/
 │   │   ├── _filters/tables.lua    # Markdown table filter
 │   │   └── layout.md              # Markdown template

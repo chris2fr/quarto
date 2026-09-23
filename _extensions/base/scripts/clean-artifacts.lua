@@ -2,7 +2,7 @@
 -- directories that Quarto leaves next to the source .qmd files (format
 -- resources such as quarto-lettre.cls are never cleaned up by Quarto itself).
 -- Swept at any depth, so a .qmd rendered from a subfolder is cleaned there
--- too; _parts/ (user-owned header/footer/body overrides and an optional
+-- too; _parts/ (user-owned header1/footer/body overrides and an optional
 -- custom.cls) is excluded wherever it appears.
 -- Run by Quarto via `quarto run`, so the pandoc Lua API is available.
 

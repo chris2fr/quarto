@@ -17,10 +17,10 @@ format:
   lettre-md: default
   lettre-plain: default
   # lettre-docx: default
-let-header: |
+let-header1: |
   [![Les Grands Voisins — Association d'intérêt général](logo-lesgrandsvoisins-900-150-white.png)](https://www.lesgrandsvoisins.com)
   **PROJET EN COURS D'ELABORATION**
-let-footer: | 
+let-footer: |
   **PROJET EN COURS D'ELABORATION**\
   *$ref$* aux Parquets de Paris et de Nanterre
 let-from: |
@@ -50,10 +50,10 @@ let-signature: |
 let-ref: |
   \ \
   **réf.** : $ref$ en complément à letrar-2026-08-03-mannchri-01-procureurs-plainteunique [@2026-08-03-mannchri-0001]
-let-header: |
+let-header1: |
   [![Les Grands Voisins — Association d'intérêt général](logo-lesgrandsvoisins-900-150-white.png)](https://www.lesgrandsvoisins.com)
   **PROJET EN COURS D'ELABORATION**
-let-footer: | 
+let-footer: |
   **PROJET EN COURS D'ELABORATION**\
   *$ref$* aux Parquets de Paris et de Nanterre
 let-from: |

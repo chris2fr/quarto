@@ -22,9 +22,9 @@ $endfor$
 #set page(
   paper: "$if(papersize)$$papersize$$else$a4$endif$",
   margin: (top: 20mm, bottom: 30mm, left: 30mm, right: 30mm),
-$if(page-header)$
+$if(page1-header)$
   header: align(center, text(size: 9pt)[
-$page-header$
+$page1-header$
   ]),
 $endif$
   footer: context {

@@ -1,7 +1,8 @@
 local required_meta = { 'title', 'lang' }
 local optional_meta = {
   'author', 'date', 'subtitle', 'ref', 'organization', 'place',
-  'doc-date', 'doc-ref', 'doc-header', 'doc-footer', 'doc-titlepage', 'doc-subject',
+  'doc-date', 'doc-ref', 'doc-header1', 'doc-footer', 'doc-titlepage', 'doc-subject',
+  'margin-top-first', 'margin-top-first-header', 'margin-top-header', 'margin-bottom-footer',
 }
 
 -- Keys that show up in doc.meta by the time this filter runs (after
@@ -22,10 +23,10 @@ local upstream_meta = {
   'base-format', 'date-format', 'french-quotes', 'page-layout', 'theme',
   'papersize', 'lof', 'lot',
   -- page.lua (base filter): margin resolution, brand fonts, bibliography wiring
-  'margin-inner', 'margin-outer', 'margin-top', 'margin-bottom', 'margin-top-first',
+  'margin-inner', 'margin-outer', 'margin-top', 'margin-bottom', 
   'margin-all', 'marginx', 'marginy',
   'header-includes', 'bibliography', 'csl', 'tex-custom', 'labels',
-  'nocite', 'tab-stop', 'page-header', 'page-footer',
+  'nocite', 'tab-stop', 'page1-header', 'page-footer',
   -- Quarto/Pandoc reserved or auto-injected
   'authors', 'by-author', 'language', 'toc-title', 'quarto-version',
   'include-before', 'include-after', 'fig-responsive', 'revealjs-plugins',
