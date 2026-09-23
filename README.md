@@ -314,7 +314,7 @@ No special divs — use standard Markdown headings (H1–H4), paragraphs, tables
 
 ### Side-by-side columns (PDF only)
 
-`document` supports `{{< mp-begin >}}` / `{{< mp-next >}}` / `{{< mp-end >}}` shortcodes for laying out a row of columns side by side — built on the third-party `latex-environment` extension. `{{< mp-begin >}}` opens the first column, `{{< mp-next >}}` closes the current one, inserts a `\hfill` gap, and opens the next one, and `{{< mp-end >}}` closes the last one:
+`document` supports `{{< mp-begin >}}` / `{{< mp-next >}}` / `{{< mp-end >}}` shortcodes for laying out a row of columns side by side — built on the third-party `latex-environment` extension. `{{< mp-begin >}}` opens the first column, `{{< mp-next >}}` closes the current one, inserts a gap, and opens the next one, and `{{< mp-end >}}` closes the last one:
 
 ```markdown
 {{< mp-begin >}}
@@ -328,7 +328,9 @@ some other text
 
 Everything between `{{< mp-begin >}}` and `{{< mp-end >}}` must stay in one continuous paragraph — no blank lines. A blank line (or any other block-level content, like a fenced div) forces a paragraph break, which stacks the columns vertically instead of placing them side by side, since LaTeX only keeps boxes on the same line within a single paragraph.
 
-Each shortcode takes an optional `width` — a bare fraction of the text width (`width=0.3`) or an equivalent percentage (`width=30%`) — for that one column; with no `width`, columns default to splitting the row evenly-ish (`0.45` each for a plain two-column row). For three or more columns, set `{{< mp-begin columns=N >}}` once and every `{{< mp-next >}}` in that row picks up a shared default of `0.9/N` automatically, instead of repeating `width=` on each call.
+Each shortcode takes an optional `width` — a bare fraction of the text width (`width=0.3`) or an equivalent percentage (`width=30%`) — for that one column; with no `width`, columns default to splitting the row evenly-ish (`0.48` each for a plain two-column row). For three or more columns, set `{{< mp-begin columns=N >}}` once and every `{{< mp-next >}}` in that row picks up a shared default of `0.95/N` automatically, instead of repeating `width=` on each call.
+
+`{{< mp-begin border=true >}}` frames every column of the row in a thin box (plain `\fbox{}` — no extra package). `{{< mp-begin gutter=1em >}}` replaces the default flexible `\hfill` gap between columns with a fixed one (any LaTeX length: `1em`, `5mm`, ...) — useful alongside `border=true` so the boxes sit a consistent distance apart instead of being pushed to the row's outer edges. Like `columns`, both are read only from `{{< mp-begin >}}`, apply to the whole row, and reset on every `{{< mp-begin >}}` call.
 
 PDF only — for every other format these shortcodes emit nothing (silently), so the column content still renders, just stacked as plain paragraphs instead of side by side.
 
