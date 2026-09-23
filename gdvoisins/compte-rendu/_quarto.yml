@@ -4,8 +4,8 @@ project:
   lib-dir: _lib
   brand: _brand/_brand.yml
   post-render: 
-    - _extensions/chris2fr/base/scripts/clean-artifacts.sh
-    - _extensions/chris2fr/base/scripts/firefox-open.sh
+    - _extensions/chris2fr/base/scripts/clean-artifacts.lua
+    - _extensions/chris2fr/base/scripts/firefox-open.lua
   execute-dir: file
   render:
     - "*.qmd"
