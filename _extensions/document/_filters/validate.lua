@@ -4,6 +4,7 @@ local optional_meta = {
   'doc-date', 'doc-ref', 'doc-header1', 'doc-footer', 'doc-titlepage', 'doc-subject',
   'margin-top-first', 'margin-header', 'margin-footer', 'header-height', 'header-gap',
   'footer-height', 'footer-gap',
+  'sidenote-width', 'sidenote-gap', 'sidenote-margin',
 }
 
 -- Keys that show up in doc.meta by the time this filter runs (after

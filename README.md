@@ -459,6 +459,24 @@ footer-gap: 8mm        # less air between the body text and the footer
 
 `margin-header` and `margin-top` are fully independent — changing one never shifts the other. All three extensions give page 1 its own geometry, separate from the one body pages use (`lettre`/`compte-rendu` always have; `document` gets one too, specifically so `margin-header` has nothing to do with `margin-top`): page 1's `top` comes from `margin-header`, while body pages' `top` comes from `margin-top`.
 
+### Sidenotes
+
+All three extensions also support a margin-notes column, sized independently of `margin-outer`:
+
+| Key | Sets |
+|---|---|
+| `sidenote-width` | width of the margin-notes column |
+| `sidenote-gap` | space between the body text and the margin-notes column (default `5mm`, only applied once `sidenote-width` is set) |
+| `sidenote-margin` | space between the margin-notes column and the page's outer edge (default `20mm`, only applied once `sidenote-width` is set) |
+
+```yaml
+sidenote-width: 30mm
+sidenote-gap: 6mm
+sidenote-margin: 10mm
+```
+
+`sidenote-width` is the switch that turns the feature on — setting only `sidenote-gap` or only `sidenote-margin` does nothing. Once it's set, `margin-outer` is computed as `sidenote-gap + sidenote-width + sidenote-margin` (overriding `margin-outer` if that's also set) and LaTeX's own `\marginparwidth`/`\marginparsep` are set to match, so `\marginpar{...}` (e.g. via a raw `` `\marginpar{...}`{=latex} `` span, or `tex-custom`) places notes correctly. Nothing in any of the three extensions calls `\marginpar` on its own — there's no `::: sidenote :::` div (yet) — so this only sizes the column; placing content into it is on the author.
+
 ### `document`-only extras
 
 `document` also supports one additional margin key — PDF-only, and specific to this extension (`lettre`/`compte-rendu` don't read it):
