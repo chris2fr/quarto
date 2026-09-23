@@ -47,7 +47,7 @@ $if(mainfont)$
 $endif$
 )
 
-#set par(justify: true, leading: 0.65em, spacing: 1.2em)
+#set par(justify: true, leading: $if(QLleading)$$QLleading$$else$0.65em$endif$, spacing: $if(parskip)$$parskip$$else$1.2em$endif$)
 
 // ── body ─────────────────────────────────────────────────────────────────────
 

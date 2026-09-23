@@ -728,13 +728,37 @@ local function brand_font_families()
             or quarto.brand.has_mode('dark') and 'dark'
   if not mode then return nil end
 
-  local function family_of(name)
+  local function typo_of(name)
     local ok, typo = pcall(quarto.brand.get_typography, mode, name)
-    if ok and typo and typo.family then return typo.family end
+    if ok and typo and typo.family then return typo end
     return nil
   end
 
-  return { base = family_of('base'), headings = family_of('headings'), monospace = family_of('monospace') }
+  local base, headings, monospace = typo_of('base'), typo_of('headings'), typo_of('monospace')
+  return {
+    base = base and base.family, headings = headings and headings.family,
+    monospace = monospace and monospace.family,
+    base_size = base and base.size, base_line_height = base and base['line-height'],
+    headings_weight = headings and headings.weight,
+  }
+end
+
+-- A brand/metadata length ("11pt", "14.5px") as a number of points; nil for
+-- units (rem, em, %) that only mean something relative to a CSS/Typst context.
+local function to_pt(value)
+  if value == nil then return nil end
+  local n, unit = tostring(value):match('^%s*([%d%.]+)%s*(%a*)%s*$')
+  n = tonumber(n)
+  if not n then return nil end
+  if unit == 'pt' or unit == '' then return n end
+  if unit == 'px' then return n * 0.75 end
+  return nil
+end
+
+local function meta_str(v)
+  if v == nil then return nil end
+  local s = pandoc.utils.stringify(v)
+  return s ~= '' and s or nil
 end
 
 -- Append a Google Fonts <link> plus matching font-family rules to
@@ -755,19 +779,30 @@ local function brand_fonts_html(doc)
   end
   if #families == 0 then return end
 
-  local query = {}
-  for _, f in ipairs(families) do
-    table.insert(query, 'family=' .. f:gsub(' ', '+'))
-  end
-
+  -- One <link> per family: Google answers a css2 request naming any family
+  -- it doesn't host (Fengardo, Helvetica Neue, ...) with a 400 for the whole
+  -- URL, which would otherwise take the valid families down with it. Families
+  -- that aren't on Google Fonts then simply resolve as local fonts.
   local html = {
     '<link rel="preconnect" href="https://fonts.googleapis.com">',
     '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
-    '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?' .. table.concat(query, '&') .. '&display=swap">',
-    '<style>',
   }
-  if base then table.insert(html, '  body { font-family: "' .. base .. '", sans-serif; }') end
-  if headings then table.insert(html, '  h1, h2, h3, h4, h5, h6 { font-family: "' .. headings .. '", sans-serif; }') end
+  for _, f in ipairs(families) do
+    table.insert(html, '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family='
+      .. f:gsub(' ', '+') .. '&display=swap">')
+  end
+  table.insert(html, '<style>')
+  local body_rule = {}
+  if base then table.insert(body_rule, 'font-family: "' .. base .. '", sans-serif;') end
+  if fonts.base_size then table.insert(body_rule, 'font-size: ' .. tostring(fonts.base_size) .. ';') end
+  if fonts.base_line_height then table.insert(body_rule, 'line-height: ' .. tostring(fonts.base_line_height) .. ';') end
+  if #body_rule > 0 then table.insert(html, '  body { ' .. table.concat(body_rule, ' ') .. ' }') end
+  local parskip = meta_str(doc.meta.parskip)
+  if parskip then table.insert(html, '  p { margin: 0 0 ' .. parskip .. '; }') end
+  if headings then
+    local w = fonts.headings_weight and (' font-weight: ' .. tostring(fonts.headings_weight) .. ';') or ''
+    table.insert(html, '  h1, h2, h3, h4, h5, h6 { font-family: "' .. headings .. '", sans-serif;' .. w .. ' }')
+  end
   if monospace then table.insert(html, '  code, pre, kbd, samp { font-family: "' .. monospace .. '", monospace; }') end
   table.insert(html, '</style>')
 
@@ -789,34 +824,74 @@ end
 -- default (Libertinus) stays in effect — instead of a broken build.
 -- \QLheadingfont (defined empty in each quarto-lettre.cls, used inside its
 -- \titleformat calls) is how the headings font reaches \section etc.
+local function latex_font_guard(family, action)
+  return '\\IfFontExistsTF{' .. family .. '}{' .. action .. '}'
+    .. '{\\typeout{WARNING: font "' .. family .. '" not found, keeping default}}'
+end
+
+-- Font/spacing precedence, highest first: document metadata (mainfont,
+-- sansfont, monofont, fontsize, linestretch, parskip) > brand.yml
+-- typography (base, headings, monospace; size, line-height) > the classes'
+-- built-in IBM Plex defaults. The brand has no paragraph-spacing key (its
+-- schema rejects unknown typography properties), so `parskip` is metadata
+-- only. Also maps the brand onto the metadata Typst's layouts already read.
 local function brand_fonts_latex(doc)
-  -- if not FORMAT:match('latex') then return end
-  -- local fonts = brand_font_families()
-  -- if not fonts then return end
+  local is_latex = FORMAT:match('latex')
+  local is_typst = FORMAT:match('typst')
+  if not (is_latex or is_typst) then return end
+  local fonts = brand_font_families() or {}
 
-  -- local latex = {}
-  -- if fonts.base then
-  --   table.insert(latex, '\\IfFontExistsTF{' .. fonts.base .. '}{\\setmainfont{' .. fonts.base .. '}}{}')
-  -- end
-  -- if fonts.headings then
-  --   table.insert(latex, '\\IfFontExistsTF{' .. fonts.headings .. '}{\\renewcommand{\\QLheadingfont}{\\fontspec{' .. fonts.headings .. '}}}{}')
-  -- end
-  -- if fonts.monospace then
-  --   table.insert(latex, '\\IfFontExistsTF{' .. fonts.monospace .. '}{\\setmonofont{' .. fonts.monospace .. '}}{}')
-  -- end
-  -- if #latex == 0 then return end
+  local main = meta_str(doc.meta.mainfont) or fonts.base
+  local sans = meta_str(doc.meta.sansfont) or fonts.headings
+  local mono = meta_str(doc.meta.monofont) or fonts.monospace
+  local heading = meta_str(doc.meta.headingfont) or fonts.headings
+  local stretch = meta_str(doc.meta.linestretch) or (fonts.base_line_height and tostring(fonts.base_line_height))
+  local parskip = meta_str(doc.meta.parskip)
 
-  -- -- header-includes is a *list* of include-groups (each rendered as its own
-  -- -- pass of $header-includes$ inside layout.tex's $for(header-includes)$),
-  -- -- not a flat list of blocks — append our group rather than merging blocks.
-  -- local groups = {}
-  -- if doc.meta['header-includes'] then
-  --   for _, g in ipairs(doc.meta['header-includes']) do
-  --     table.insert(groups, g)
-  --   end
-  -- end
-  -- table.insert(groups, pandoc.MetaBlocks({ pandoc.RawBlock('latex', table.concat(latex, '\n')) }))
-  -- doc.meta['header-includes'] = pandoc.MetaList(groups)
+  if is_typst then
+    if main and not doc.meta.mainfont then doc.meta.mainfont = main end
+    if not doc.meta.fontsize and fonts.base_size then doc.meta.fontsize = tostring(fonts.base_size) end
+    -- Typst's `leading` is the gap between lines, not a multiple of them;
+    -- lh 1.15 <-> the previous hardcoded 0.65em.
+    local lh = tonumber(stretch)
+    if lh then doc.meta.QLleading = string.format('%.2fem', lh - 0.5) end
+    return
+  end
+
+  -- LaTeX classes only accept 10/11/12pt, so the size is snapped to those
+  -- and set through \documentclass (see the layouts' $fontsize$).
+  local pt = to_pt(meta_str(doc.meta.fontsize) or fonts.base_size)
+  if pt then
+    local snapped = math.max(10, math.min(12, math.floor(pt + 0.5)))
+    doc.meta.fontsize = tostring(snapped) .. 'pt'
+  end
+
+  local latex = {}
+  if main then table.insert(latex, latex_font_guard(main, '\\setmainfont{' .. main .. '}')) end
+  if sans then table.insert(latex, latex_font_guard(sans, '\\setsansfont{' .. sans .. '}')) end
+  if mono then table.insert(latex, latex_font_guard(mono, '\\setmonofont{' .. mono .. '}')) end
+  if heading then
+    -- No per-weight files are assumed for an arbitrary family, so the
+    -- Medium/SemiBold heading variants collapse to the family itself.
+    for _, cmd in ipairs({ 'QLheadingfont', 'QLheadingfontmd', 'QLheadingfontsb' }) do
+      table.insert(latex, latex_font_guard(heading, '\\renewfontfamily\\' .. cmd .. '{' .. heading .. '}'))
+    end
+  end
+  if stretch and tonumber(stretch) then table.insert(latex, '\\renewcommand{\\baselinestretch}{' .. stretch .. '}') end
+  if parskip then table.insert(latex, '\\setlength{\\parskip}{' .. parskip .. '}') end
+  if #latex == 0 then return end
+
+  -- header-includes is a *list* of include-groups (each rendered as its own
+  -- pass of $header-includes$ inside layout.tex's $for(header-includes)$),
+  -- not a flat list of blocks — append our group rather than merging blocks.
+  local groups = {}
+  if doc.meta['header-includes'] then
+    for _, g in ipairs(doc.meta['header-includes']) do
+      table.insert(groups, g)
+    end
+  end
+  table.insert(groups, pandoc.MetaBlocks({ pandoc.RawBlock('latex', table.concat(latex, '\n')) }))
+  doc.meta['header-includes'] = pandoc.MetaList(groups)
 end
 
 -- compte-rendu's own divs (participants/agenda/decisions/actions/
