@@ -1,0 +1,88 @@
+/* Typographic model shared by the document, lettre and compte-rendu *-html
+   formats, borrowed from lesgrandsvoisins.com (see html/web/css/site.css for
+   the strict version): rhythm, scale and detail only. Colours and the choice
+   of fonts stay with each extension's styles.css and the brand/metadata font
+   settings (page.lua), so this file never names a colour or a family.
+   Loaded before styles.css: same-specificity rules there win. */
+
+body {
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Headings: tight leading, slight negative tracking, balanced wrapping, and a
+   scale that grows with the viewport but stays bounded (site: clamp()). */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.15;
+  letter-spacing: -.01em;
+  text-wrap: balance;
+  margin: 1.8em 0 .5rem;
+}
+
+h1 { font-size: clamp(1.8rem, 3.2vw, 2.3rem); }
+h2 { font-size: clamp(1.45rem, 2.6vw, 1.85rem); }
+h3 { font-size: 1.25rem; }
+h4 { font-size: 1.1rem; }
+h5, h6 { font-size: 1rem; }
+
+h1:first-child, h2:first-child, h3:first-child { margin-top: 0; }
+
+/* The title itself is the one place for a display-size heading. */
+.titlepage h1, .doc-title, .cr-title {
+  font-size: clamp(2.1rem, 4.5vw, 3rem);
+  line-height: 1.1;
+  margin-top: 0;
+}
+
+/* A hairline, not a bar, between a section and what came before. */
+h1 { padding-bottom: .2rem; }
+
+/* Secondary text is quieter, not a different colour. */
+.doc-meta, .doc-ref, .doc-organization, figcaption, .footnotes { opacity: .75; }
+
+/* Quotes: an indented soft rule; the size follows the text. */
+blockquote {
+  margin-inline: 0;
+  padding-inline-start: 1rem;
+  border-inline-start: 3px solid color-mix(in srgb, currentColor 25%, transparent);
+  opacity: .85;
+}
+
+blockquote p { margin: 0 0 .5em; }
+
+/* Tables: hairlines, a lightly tinted header. */
+table { border-collapse: collapse; }
+th, td {
+  border: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+  padding: .5rem .75rem;
+  text-align: start;
+}
+th { background: color-mix(in srgb, currentColor 6%, transparent); }
+
+/* Figures: fit the page, softly rounded, small centred captions. */
+img { max-width: 100%; height: auto; border-radius: 6px; }
+figcaption { text-align: center; font-size: .85rem; margin-top: .3rem; }
+
+/* Code: rounded, tinted block. */
+pre {
+  overflow-x: auto;
+  padding: .75rem 1rem;
+  border-radius: 8px;
+  background: color-mix(in srgb, currentColor 6%, transparent);
+}
+code { font-size: .9em; }
+
+/* Footnotes: small, behind a rule. */
+.footnotes {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+  font-size: .9em;
+}
+
+a:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; border-radius: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+}

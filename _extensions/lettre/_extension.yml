@@ -24,6 +24,7 @@ contributes:
       minipal: true
       csl: ../base/resources/biblio.csl
       css:
+        - ../base/html/css/typography.css
         - html/css/styles.css
         - html/css/boilerplate.css
       filters:
