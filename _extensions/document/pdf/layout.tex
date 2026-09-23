@@ -1,7 +1,7 @@
 \documentclass[a4paper,11pt,french]{quarto-doc}\usepackage{titlesec}
 
 $if(page-footer)$\QLsetfooter{$page-footer$}$endif$
-$if(page1-header)$\QLsetfirstpageheader{\vspace*{$if(margin-header)$$margin-header$$else$5mm$endif$}\par $page1-header$}$endif$
+$if(page1-header)$\QLsetfirstpageheader{$page1-header$}$endif$
 
 $for(header-includes)$
 $header-includes$
@@ -17,8 +17,16 @@ $endfor$
 \makeatother
 
 % ── Margins (YAML: margin-inner, margin-outer, margin-top, margin-bottom) ─────
-
-\geometry{$if(margin-inner)$inner=$margin-inner$,$endif$$if(margin-outer)$outer=$margin-outer$,$endif$$if(margin-top)$top=$margin-top$,$endif$$if(margin-bottom)$bottom=$margin-bottom$,$endif$$if(header-height)$headheight=$header-height$,$elseif(margin-top)$headheight=$margin-top$,$endif$headsep=5mm$if(margin-footer)$,footskip=\dimexpr $if(margin-bottom)$$margin-bottom$$else$30mm$endif$ - $margin-footer$\relax$endif$}
+% Page 1 gets its own geometry, independent of margin-top/margin-bottom (used
+% from page 2 onward — see the \afterpage{\newgeometry{...}} call below,
+% mirroring lettre/compte-rendu's own first-page/body-pages split): with
+% `includehead`, `top` here means "distance from the page's top edge to the
+% top of the header" directly, so margin-header controls it with no
+% contribution from margin-top — negative \vspace* can't reliably cancel a
+% large `top` (TeX silently discards negative glue at the very start of a
+% box's content), so decoupling via two geometries, not vspace math, is what
+% actually works.
+\geometry{$if(margin-inner)$inner=$margin-inner$,$endif$$if(margin-outer)$outer=$margin-outer$,$endif$top=$if(margin-header)$$margin-header$$else$5mm$endif$,bottom=$if(margin-bottom)$$margin-bottom$$else$25mm$endif$,headheight=$if(header-height)$$header-height$$else$15mm$endif$,headsep=5mm,includehead$if(margin-footer)$,footskip=\dimexpr $if(margin-bottom)$$margin-bottom$$else$25mm$endif$ - $margin-footer$\relax$endif$}
 % \savegeometry{firstpagegeo}
 
 % fancyhdr's \headwidth (used to size/center both header and footer) is
@@ -83,6 +91,12 @@ $endif$
 \thispagestyle{firstpage}
 
 \vspace*{$if(margin-top-first)$$margin-top-first$$elseif(margin-top)$$margin-top$$else$45mm$endif$}\par
+
+% From page 2 onward, switch to the body-margin geometry (see the comment
+% above the first \geometry{} call): top is margin-top here, not
+% margin-header — there's no header past page 1, so nothing for margin-top
+% to leak into anymore.
+\afterpage{\newgeometry{$if(margin-inner)$inner=$margin-inner$,$endif$$if(margin-outer)$outer=$margin-outer$,$endif$top=$if(margin-top)$$margin-top$$else$25mm$endif$,bottom=$if(margin-bottom)$$margin-bottom$$else$25mm$endif$$if(margin-footer)$,footskip=\dimexpr $if(margin-bottom)$$margin-bottom$$else$25mm$endif$ - $margin-footer$\relax$endif$}}
 
 % \begin{document}
 % \newgeometry{inner=$if(margin-inner)$$margin-inner$$else$20mm$endif$,outer=$if(margin-outer)$$margin-outer$$else$20mm$endif$,top=$if(margin-top-first)$$margin-top-first$$elseif(margin-top)$$margin-top$$else$45mm$endif$,bottom=$if(margin-bottom)$$margin-bottom$$else$25mm$endif$,headheight=$if(margin-top-first)$$margin-top-first$$elseif(margin-top)$$margin-top$$else$45mm$endif$,headsep=5mm}

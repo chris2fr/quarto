@@ -439,7 +439,7 @@ All three extensions also support keys that size the header/footer area itself �
 |---|---|---|
 | `margin-header` | space from the top of the header text to the top of the page | `5mm` |
 | `margin-footer` | space from the bottom of the footer to the bottom of the page | geometry's own built-in footer spacing, if left unset |
-| `header-height` | height reserved for the header area (bigger logo, multi-line header, ...) | `15mm` (`lettre`/`compte-rendu`) or `margin-top` (`document`) |
+| `header-height` | height reserved for the header area (bigger logo, multi-line header, ...) | `15mm` |
 
 ```yaml
 margin-header: 10mm    # more breathing room above the header text
@@ -448,6 +448,8 @@ header-height: 25mm    # taller header area, e.g. for a bigger logo
 ```
 
 `margin-footer` and the body's own bottom margin (`margin-bottom`, or `25mm`/`15mm` default depending on the extension and page) share the same budget — asking for more footer space than that budget allows still compiles, but pushes the footer past the page edge rather than shrinking the body area to make room. The same applies to `header-height`: a value much larger than the page can accommodate alongside its other content can push body content off the page or otherwise break layout (e.g. a `longtable` that doesn't have room to fit) — keep it proportional to the page and header content.
+
+`margin-header` and `margin-top` are fully independent — changing one never shifts the other. All three extensions give page 1 its own geometry, separate from the one body pages use (`lettre`/`compte-rendu` always have; `document` gets one too, specifically so `margin-header` has nothing to do with `margin-top`): page 1's `top` comes from `margin-header`, while body pages' `top` comes from `margin-top`.
 
 ### `document`-only extras
 
@@ -461,7 +463,7 @@ header-height: 25mm    # taller header area, e.g. for a bigger logo
 margin-top-first: 5mm  # pull the body text up close to the header, page 1 only
 ```
 
-`document` has a single `\geometry{}` call that applies to every page — unlike `lettre`/`compte-rendu`, there's no separate first-page geometry to hardcode page-1 values into. `margin-top-first` fills that gap for the one thing that does need to differ on page 1: how far down the body text starts, to leave room for the header above it.
+`document`'s first-page geometry (see above) is sized for the header, not the body — so, unlike `lettre`/`compte-rendu`, page 1's body text needs its own explicit push down via `margin-top-first`, rather than getting a sensible position for free from the page geometry itself.
 
 ---
 
