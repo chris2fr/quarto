@@ -433,19 +433,21 @@ format:
 
 ### Header/footer spacing
 
-All three extensions also support two keys that size the gap between the header/footer content itself and the physical page edge — independent of `margin-top`/`margin-bottom`, which size the body's margins:
+All three extensions also support keys that size the header/footer area itself — independent of `margin-top`/`margin-bottom`, which size the body's margins:
 
 | Key | Sets | Default |
 |---|---|---|
 | `margin-header` | space from the top of the header text to the top of the page | `5mm` |
 | `margin-footer` | space from the bottom of the footer to the bottom of the page | geometry's own built-in footer spacing, if left unset |
+| `header-height` | height reserved for the header area (bigger logo, multi-line header, ...) | `15mm` (`lettre`/`compte-rendu`) or `margin-top` (`document`) |
 
 ```yaml
-margin-header: 10mm  # more breathing room above the header text
-margin-footer: 20mm  # generous gap between the footer and the page edge
+margin-header: 10mm    # more breathing room above the header text
+margin-footer: 20mm    # generous gap between the footer and the page edge
+header-height: 25mm    # taller header area, e.g. for a bigger logo
 ```
 
-`margin-footer` and the body's own bottom margin (`margin-bottom`, or `25mm`/`15mm` default depending on the extension and page) share the same budget — asking for more footer space than that budget allows still compiles, but pushes the footer past the page edge rather than shrinking the body area to make room.
+`margin-footer` and the body's own bottom margin (`margin-bottom`, or `25mm`/`15mm` default depending on the extension and page) share the same budget — asking for more footer space than that budget allows still compiles, but pushes the footer past the page edge rather than shrinking the body area to make room. The same applies to `header-height`: a value much larger than the page can accommodate alongside its other content can push body content off the page or otherwise break layout (e.g. a `longtable` that doesn't have room to fit) — keep it proportional to the page and header content.
 
 ### `document`-only extras
 
