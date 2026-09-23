@@ -18,6 +18,7 @@ contributes:
       template: ../base/html/web/layout.html
       theme: none
       minimal: true
+      output-ext: web.html
       webhtml: lettre
       csl: ../base/resources/biblio.csl
       filters:
