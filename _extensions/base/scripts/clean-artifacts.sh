@@ -7,7 +7,7 @@
 # the *.tex/*.cls sweep below even though those extensions match.
 set -euo pipefail
 
-prune=(-path './_extensions' -o -path './_output' -o -path './.quarto' -o -path './.git' -o -path './_parts')
+prune=(-path './_extensions' -o -path './_output' -o -path './.quarto' -o -path './.git')
 
 find . \( "${prune[@]}" \) -prune -o \
   -type f \( -name '*.tex' -o -name '*.cls' -o -name '*.typ' -o -name '*.ptc' \) -not -name 'custom.cls' -not -regex '.*/_parts/.*' -not -regex '.*/.+/.*' -print0 | xargs -0 -r rm -f
