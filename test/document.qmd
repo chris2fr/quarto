@@ -47,24 +47,15 @@ environments:
 :::
 
 
-::: {.minipage options="t" arguments="0.45\textwidth"}
-
+`\begin{minipage}[t]{0.45\textwidth}`{=latex}
 **Le 27e Conseil des Voisins**\
 de l'association Les Grands Voisins,\
 **Heure**: *soit à 13h, soit à 18h*\
-(deux réunions, même contenu, venez à l'une des deux selon votre convenance)
-
-<!-- \end{minipage} -->
-:::
-\hfill
-::: {.minipage options="t" arguments="0.45\textwidth"}
-
+(deux réunions, même contenu, venez à l'une des deux selon votre convenance)`\end{minipage}`{=latex}`\hfill`{=latex}`\begin{minipage}[t]{0.45\textwidth}`{=latex}
 La remise de prix pour\
 **excellence en service public international**\
 de l'inspiration d'Alger Hiss à Edmond Jouve\
-**Heure**: *16h à 17h* 
-
-:::
+**Heure**: *16h à 17h*`\end{minipage}`{=latex}
 
 ## Table des matières {.unnumbered .unlisted}
 
