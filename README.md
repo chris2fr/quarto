@@ -312,6 +312,26 @@ format:
 
 No special divs — use standard Markdown headings (H1–H4), paragraphs, tables, lists, and images directly in the document body. It does, however, support `::: header1` and `::: footer`, with the same `_parts/` fallback as `compte-rendu` above — omit them and the page header/footer come from `_parts/header1.qmd` / `_parts/footer.qmd` if present, or from a `doc-header1` / `doc-footer` metadata key (see "Filling a div straight from metadata" under `lettre` above), which takes priority over both.
 
+### Side-by-side columns (PDF only)
+
+`document` supports `{{< mp-begin >}}` / `{{< mp-next >}}` / `{{< mp-end >}}` shortcodes for laying out a row of columns side by side — built on the third-party `latex-environment` extension. `{{< mp-begin >}}` opens the first column, `{{< mp-next >}}` closes the current one, inserts a `\hfill` gap, and opens the next one, and `{{< mp-end >}}` closes the last one:
+
+```markdown
+{{< mp-begin >}}
+**Left column**\
+some text here
+{{< mp-next >}}
+**Right column**\
+some other text
+{{< mp-end >}}
+```
+
+Everything between `{{< mp-begin >}}` and `{{< mp-end >}}` must stay in one continuous paragraph — no blank lines. A blank line (or any other block-level content, like a fenced div) forces a paragraph break, which stacks the columns vertically instead of placing them side by side, since LaTeX only keeps boxes on the same line within a single paragraph.
+
+Each shortcode takes an optional `width` — a bare fraction of the text width (`width=0.3`) or an equivalent percentage (`width=30%`) — for that one column; with no `width`, columns default to splitting the row evenly-ish (`0.45` each for a plain two-column row). For three or more columns, set `{{< mp-begin columns=N >}}` once and every `{{< mp-next >}}` in that row picks up a shared default of `0.9/N` automatically, instead of repeating `width=` on each call.
+
+PDF only — for every other format these shortcodes emit nothing (silently), so the column content still renders, just stacked as plain paragraphs instead of side by side.
+
 ---
 
 ## Table of contents
@@ -462,6 +482,7 @@ _extensions/
 │   ├── _filters/toc.lua           # {{< toc >}} rendering — wired at the post-quarto entry point, after shortcode resolution
 │   ├── _filters/tablerule.lua     # thin rule between PDF table rows (\QLrowrule, defined in quarto-lettre.cls)
 │   ├── _shortcodes/toc.lua        # {{< toc >}} shortcode — drops a placeholder for _filters/toc.lua to expand
+│   ├── _shortcodes/minipage.lua   # {{< mp-begin/next/end >}} — side-by-side PDF columns (document only)
 │   ├── brand.yml                  # default brand (contributed to every project via _extension.yml)
 │   ├── parts/                     # bundled default section content (see _parts/ above)
 │   │   └── <div>.qmd              # header1.qmd, footer.qmd (all 3); from/date/... (lettre only)
