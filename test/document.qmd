@@ -28,12 +28,11 @@ doc-footer: |
   DOC FOOTER\
   DOC FOOTER\
   DOC FOOTER
-filters:
-  - latex-environment
+# filters:
+#   - latex-environment
 environments:
   - center
-  - minipage
-#   - arbitrary
+  - uplist
 ---
 
 ::: titlepage
@@ -58,6 +57,15 @@ de l'inspiration d'Alger Hiss à Edmond Jouve\
 ## Table des matières {.unnumbered .unlisted}
 
 {{< toc >}}
+
+## Uplist
+
+::: {.uplist}
+This is an uplist:
+
+1. Item 1
+2. Item 2
+:::
 
 # Niveau 1 — Introduction
 

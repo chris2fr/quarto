@@ -79,6 +79,7 @@ contributes:
       template: pdf/layout.tex
       format-resources:
         - pdf/quarto-doc.cls
+        - ../base/pdf/preamble.tex
       papersize: a4
       toc: true
       toc-depth: 7
@@ -94,6 +95,7 @@ contributes:
       include-before-body: pdf/_partials/body-before.tex
       include-after-body: pdf/_partials/body-after.tex
       filters:
+        - ../latex-environment/latex-environment.lua
         - ../base/_filters/shorthand.lua
         - ../base/_filters/page.lua
         - _filters/validate.lua
@@ -102,3 +104,6 @@ contributes:
           at: post-quarto
         - path: ../base/_filters/tablerule.lua
           at: post-quarto
+  environments:
+    - uplist
+    - center
