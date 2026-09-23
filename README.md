@@ -398,9 +398,28 @@ format:
     margin-outer: 30mm
 ```
 
-> The first-page top margin is fixed — it is sized to accommodate the header area. Only body pages (from page 2 onward) are affected by `margin-top`.
+> In `lettre` and `compte-rendu`, the first page's top/bottom margins are fixed (sized to accommodate the header/footer area) regardless of `margin-top`/`margin-bottom` — only body pages, from page 2 onward, pick those up. `document` has no such split (see below) — `margin-top`/`margin-bottom` apply to every page, including the first.
 
 `margin-inner`/`margin-outer` also bound the header and footer, not just the body — both are horizontally centered within the same width as the body text, so a header logo or footer line stays aligned with the letter's left/right edges instead of centering on the full page.
+
+### `document`-only extras
+
+`document` supports a few additional margin keys — PDF-only, layered on top of the four above, and specific to this extension (`lettre`/`compte-rendu` don't read them):
+
+| Key | Sets | Priority / fallback |
+|---|---|---|
+| `margin-top-first` | top offset before the body text starts, page 1 only | falls back to `margin-top`, then `45mm` |
+| `margin-top-header` | space above the page-1 header text | falls back to `5mm` |
+| `margin-top-first-header` | same space, taking priority over `margin-top-header` when both are set | falls back to `margin-top-header`, then `5mm` |
+| `margin-bottom-footer` | gap between the bottom of the footer and the page's physical bottom edge | geometry's own built-in footer spacing, if left unset |
+
+```yaml
+margin-top-first: 5mm       # pull the body text up close to the header, page 1 only
+margin-top-header: 10mm     # more breathing room above the header text itself
+margin-bottom-footer: 20mm  # generous gap between the footer and the page edge
+```
+
+`document` has a single `\geometry{}` call that applies to every page — unlike `lettre`/`compte-rendu`, there's no separate first-page geometry to hardcode page-1 values into. `margin-top-first` fills that gap for the one thing that does need to differ on page 1: how far down the body text starts, to leave room for the header above it.
 
 ---
 
