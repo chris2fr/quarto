@@ -5,5 +5,5 @@
 %%   \QLsetfooter{...}          % optional: set running footer text
 %%   \QLsetfirstpageheader{...} % optional: set first-page header content
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{quarto-lettre}[2026/05/22 Quarto lettre/compte-rendu base class]
+\ProvidesClass{quarto-meet}[2026/05/22 Quarto compte-rendu class]
 \input{preamble.tex}

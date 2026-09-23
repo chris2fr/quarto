@@ -34,6 +34,9 @@
 \RequirePackage[export]{adjustbox}
 \RequirePackage{fancyhdr}
 \RequirePackage{afterpage}
+% longtable turns \newpage into \noalign{\break} while a table is open, which breaks
+% \newgeometry when \afterpage fires mid-table; layouts restore it via \QLnewpage.
+\let\QLnewpage\newpage
 \RequirePackage{etoolbox}
 \RequirePackage{titlesec}
 \RequirePackage{titletoc}
