@@ -700,4 +700,272 @@ Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 \OuterFrameSep=\skip67
 \fb@frw=\dimen269
 \fb@frh=\dimen270
-\FrameRule=\dimen27
+\FrameRule=\dimen271
+\FrameSep=\dimen272
+) (/home/mannchri/.TinyTeX/texmf-dist/tex/latex/adjustbox/adjustbox.sty
+Package: adjustbox 2025/02/26 v1.3c Adjusting TeX boxes (trim, clip, ...)
+(/home/mannchri/.TinyTeX/texmf-dist/tex/latex/adjustbox/adjcalc.sty
+Package: adjcalc 2012/05/16 v1.1 Provides advanced setlength with multiple back-ends (calc, etex, pgfmath)
+) (/home/mannchri/.TinyTeX/texmf-dist/tex/latex/adjustbox/trimclip.sty
+Package: trimclip 2025/02/21 v1.2a Trim and clip general TeX material
+(/home/mannchri/.TinyTeX/texmf-dist/tex/latex/collectbox/collectbox.sty
+Package: collectbox 2022/10/17 v0.4c Collect macro arguments as boxes
+\collectedbox=\box64
+)
+\tc@llx=\dimen273
+\tc@lly=\dimen274
+\tc@urx=\dimen275
+\tc@ury=\dimen276
+Package trimclip Info: Using driver 'tc-luatex.def'.
+(/home/mannchri/.TinyTeX/texmf-dist/tex/latex/adjustbox/tc-luatex.def
+File: tc-luatex.def 2025/02/26 v1.1 Clipping driver for luatex
+(/home/mannchri/.TinyTeX/texmf-dist/tex/latex/adjustbox/tc-pdftex.def
+File: tc-pdftex.def 2025/02/26 v2.3 Clipping driver for pdftex
+)))
+\adjbox@Width=\dimen277
+\adjbox@Height=\dimen278
+\adjbox@Depth=\dimen279
+\adjbox@Totalheight=\dimen280
+\adjbox@pwidth=\dimen281
+\adjbox@pheight=\dimen282
+\adjbox@pdepth=\dimen283
+\adjbox@ptotalheight=\dimen284
+(/home/mannchri/.TinyTeX/texmf-dist/tex/latex/varwidth/varwidth.sty
+Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
+\@vwid@box=\box65
+\sift@deathcycles=\count361
+\@vwid@loff=\dimen285
+\@vwid@roff=\dimen286
+)
+==> First Aid for varwidth.sty applied!
+) (/home/mannchri/.TinyTeX/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
+Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
+\f@nch@headwidth=\skip68
+\f@nch@offset@elh=\skip69
+\f@nch@offset@erh=\skip70
+\f@nch@offset@olh=\skip71
+\f@nch@offset@orh=\skip72
+\f@nch@offset@elf=\skip73
+\f@nch@offset@erf=\skip74
+\f@nch@offset@olf=\skip75
+\f@nch@offset@orf=\skip76
+\f@nch@height=\skip77
+\f@nch@footalignment=\skip78
+\f@nch@widthL=\skip79
+\f@nch@widthC=\skip80
+\f@nch@widthR=\skip81
+\@temptokenb=\toks39
+) (/home/mannchri/.TinyTeX/texmf-dist/tex/latex/tools/afterpage.sty
+Package: afterpage 2023/07/04 v1.08 After-Page Package (DPC)
+\AP@output=\toks40
+\AP@partial=\box66
+\AP@footins=\box67
+) (/home/mannchri/.TinyTeX/texmf-dist/tex/latex/titlesec/titlesec.sty
+Package: titlesec 2025/01/04 v2.17 Sectioning titles
+\ttl@box=\box68
+\beforetitleunit=\skip82
+\aftertitleunit=\skip83
+\ttl@plus=\dimen287
+\ttl@minus=\dimen288
+\ttl@toksa=\toks41
+\titlewidth=\dimen289
+\titlewidthlast=\dimen290
+\titlewidthfirst=\dimen291
+) (/home/mannchri/.TinyTeX/texmf-dist/tex/latex/titlesec/titletoc.sty
+Package: titletoc 2025/01/04 v2.17 TOC entries
+\ttl@leftsep=\dimen292
+) (/home/mannchri/.TinyTeX/texmf-dist/tex/latex/lastpage/lastpage.sty
+Package: lastpage 2025/08/14 v2.1h lastpage: 2.09 or 2e? (HMM)
+(/home/mannchri/.TinyTeX/texmf-dist/tex/latex/lastpage/lastpage2e.sty
+Package: lastpage2e 2025/08/14 v2.1h Decide which 2e lastpage version to use (HMM)
+(/home/mannchri/.TinyTeX/texmf-dist/tex/latex/lastpage/lastpagemodern.sty
+Package: lastpagemodern 2025-08-14 v2.1h Refers to last page's name (HMM; JPG)
+\c@lastpagecount=\count362
+) 
+)) (/home/mannchri/.TinyTeX/texmf-dist/tex/latex/plex/plex-sans.sty
+Package: plex-sans 2025/12/04 (Bob Tennent) Style file for IBMPlexSans fonts
+(/home/mannchri/.TinyTeX/texmf-dist/tex/generic/iftex/ifxetex.sty
+Package: ifxetex 2019/10/25 v0.7 ifxetex legacy package. Use iftex instead.
+) (/home/mannchri/.TinyTeX/texmf-dist/tex/generic/iftex/ifluatex.sty
+Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
+) (/home/mannchri/.TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
+Package: textcomp 2024/04/24 v2.1b Standard LaTeX package
+)) (/home/mannchri/.TinyTeX/texmf-dist/tex/latex/plex/plex-serif.sty
+Package: plex-serif 2025/12/04 (Bob Tennent) Style file for IBMPlexSerif fonts
+) (/home/mannchri/.TinyTeX/texmf-dist/tex/latex/plex/plex-mono.sty
+Package: plex-mono 2025/12/04 (Bob Tennent) Style file for IBMPlexMono fonts
+) (/home/mannchri/.TinyTeX/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2022/12/04 v6.7b set line spacing
+)
+luaotfload | cache : Lookup cache loaded from /home/mannchri/.TinyTeX/texmf-var/luatex-cache/generic/names/luaotfload-lookup-cache.luc.
+\c@none=\count363
+Package csquotes Info: Allocating character ".
+\pandoc@box=\box69
+\QLfigcolsep=\skip84
+\cslhangingdent=\skip85
+\csllabelwidth=\skip86
+\cslentryspacingunit=\skip87
+) (/home/mannchri/.TinyTeX/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2023/08/05 v3.6o Customizing captions (AR)
+(/home/mannchri/.TinyTeX/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
+\caption@tempdima=\dimen293
+\captionmargin=\dimen294
+\caption@leftmargin=\dimen295
+\caption@rightmargin=\dimen296
+\caption@width=\dimen297
+\caption@indent=\dimen298
+\caption@parindent=\dimen299
+\caption@hangindent=\dimen300
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count364
+\c@continuedfloat=\count365
+Package caption Info: hyperref package is loaded.
+Package caption Info: longtable package is loaded.
+(/home/mannchri/.TinyTeX/texmf-dist/tex/latex/caption/ltcaption.sty
+Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
+)) (/home/mannchri/.TinyTeX/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count366
+\float@exts=\toks42
+\float@box=\box70
+\@float@everytoks=\toks43
+\@floatcapt=\box71
+)
+\@float@every@codelisting=\toks44
+\c@codelisting=\count367
+(/home/mannchri/.TinyTeX/texmf-dist/tex/latex/caption/subcaption.sty
+Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
+Package caption Info: New subtype `subfigure' on input line 238.
+\c@subfigure=\count368
+Package caption Info: New subtype `subtable' on input line 238.
+\c@subtable=\count369
+)
+Package french.ldf Info: Setting StandardItemizeEnv=true for
+(french.ldf)             compatibility with enumitem package,
+(french.ldf)             reported on input line 124.
+Package french.ldf Info: Setting StandardEnumerateEnv=true for
+(french.ldf)             compatibility with enumitem package,
+(french.ldf)             reported on input line 124.
+Package csquotes Info: Checking for multilingual support...
+Package csquotes Info: ... found 'babel' package.
+No file compte-rendu.aux.
+
+\openout1 = compte-rendu.aux
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 124.
+LaTeX Font Info:    ... okay on input line 124.
+*geometry* driver: auto-detecting
+*geometry* detected driver: luatex
+*geometry* verbose mode - [ preamble ] result:
+* driver: luatex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: includehead 
+* h-part:(L,W,R)=(56.9055pt, 483.69687pt, 56.9055pt)
+* v-part:(T,H,B)=(14.22636pt, 759.6886pt, 71.13188pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=483.69687pt
+* \textheight=674.33035pt
+* \oddsidemargin=-15.36449pt
+* \evensidemargin=-15.36449pt
+* \topmargin=-58.04362pt
+* \headheight=71.13188pt
+* \headsep=14.22636pt
+* \topskip=11.0pt
+* \footskip=30.0pt
+* \marginparwidth=50.0pt
+* \marginparsep=10.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+(/home/mannchri/.TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
+(/home/mannchri/.TinyTeX/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
+))
+Package hyperref Info: Link coloring OFF on input line 124.
+
+Package french.ldf Warning: You are relying on the legacy list code.
+(french.ldf)                There is nothing wrong with this, just be aware
+(french.ldf)                that new lists templates are available and will
+(french.ldf)                become the default sooner or later.
+(french.ldf)                Adding \DocumentMetadata{ ... } before the
+(french.ldf)                \documentclass{} command, enables the new
+(french.ldf)                lists templates. Give them a try!
+(french.ldf)                Reported on input line 124.
+
+Package csquotes Info: Making character " active on input line 124.
+\c@ttl@toc@toc=\count370
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
+Package caption Info: End \AtBeginDocument code.
+Package babel Info: Main language set to 'french'.
+<logo-lesgrandsvoisins-900-150-white.png, id=4, 9291.85715pt x 1548.64285pt>
+File: logo-lesgrandsvoisins-900-150-white.png Graphic file (type png)
+<use logo-lesgrandsvoisins-900-150-white.png>
+Package luatex.def Info: logo-lesgrandsvoisins-900-150-white.png  used on input line 179.
+(luatex.def)             Requested size: 9291.83461pt x 1548.63908pt.
+
+LaTeX Font Warning: Font shape `TU/IBMPlexSerif(2)/m/sc' undefined
+(Font)              using `TU/IBMPlexSerif(2)/m/n' instead on input line 183.
+
+File: logo-lesgrandsvoisins-900-150-white.png Graphic file (type png)
+<use logo-lesgrandsvoisins-900-150-white.png>
+Package luatex.def Info: logo-lesgrandsvoisins-900-150-white.png  used on input line 212.
+(luatex.def)             Requested size: 9291.83461pt x 1548.63908pt.
+
+Package fancyhdr Warning: \headheight is too small (71.13188pt): 
+(fancyhdr)                Make it at least 90.43376pt, for example:
+(fancyhdr)                \setlength{\headheight}{90.43376pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-19.30188pt}.
+
+[1
+
+{/home/mannchri/.TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}<./logo-lesgrandsvoisins-900-150-white.png>]
+! Misplaced \noalign.
+\newpage ->\noalign 
+                    {\break }
+l.212 \end{longtable*}
+                    
+
+Here is how much of LuaTeX's memory you used:
+ 26070 strings out of 475607
+ 125056,1373583 words of node,token memory allocated
+ 5248 words of node memory still in use:
+   64 hlist, 6 vlist, 34 rule, 4 disc, 1 dir, 175 glue, 43 kern, 8 penalty, 124 glyph, 580 attribute, 87 glue_spec, 117 attribute_list, 2 if_stack, 8 pdf_colorstack nodes
+   avail lists: 1:5,2:1655,3:339,4:93,5:578,6:98,7:4013,8:26,9:509,10:10,11:255
+ 48478 multiletter control sequences out of 65536+600000
+ 148 fonts using 39297307 bytes
+ 135i,18n,156p,1200b,869s stack positions out of 10000i,1000n,20000p,200000b,200000s
+!  ==> Fatal error occurred, no output PDF file produced!
