@@ -438,14 +438,13 @@ format:
 | Key | Sets | Priority / fallback |
 |---|---|---|
 | `margin-top-first` | top offset before the body text starts, page 1 only | falls back to `margin-top`, then `45mm` |
-| `margin-top-header` | space above the page-1 header text | falls back to `5mm` |
-| `margin-top-first-header` | same space, taking priority over `margin-top-header` when both are set | falls back to `margin-top-header`, then `5mm` |
-| `margin-bottom-footer` | gap between the bottom of the footer and the page's physical bottom edge | geometry's own built-in footer spacing, if left unset |
+| `margin-header` | space from the top of the header text to the top of the page | falls back to `5mm` |
+| `margin-footer` | space from the bottom of the footer to the bottom of the page | geometry's own built-in footer spacing, if left unset |
 
 ```yaml
-margin-top-first: 5mm       # pull the body text up close to the header, page 1 only
-margin-top-header: 10mm     # more breathing room above the header text itself
-margin-bottom-footer: 20mm  # generous gap between the footer and the page edge
+margin-top-first: 5mm  # pull the body text up close to the header, page 1 only
+margin-header: 10mm    # more breathing room above the header text itself
+margin-footer: 20mm    # generous gap between the footer and the page edge
 ```
 
 `document` has a single `\geometry{}` call that applies to every page — unlike `lettre`/`compte-rendu`, there's no separate first-page geometry to hardcode page-1 values into. `margin-top-first` fills that gap for the one thing that does need to differ on page 1: how far down the body text starts, to leave room for the header above it.
