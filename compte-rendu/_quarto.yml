@@ -3,4 +3,11 @@ project:
   output-dir: _output
   brand: _brand/_brand.yml
   lib-dir: _lib
-  post-render: _extensions/chris2fr/base/scripts/clean-artifacts.sh
+  post-render: 
+    - _extensions/chris2fr/base/scripts/clean-artifacts.sh
+    - ./scripts/firefox-open-version.sh 
+  execute-dir: file
+  render:
+    - "*.qmd"
+    - "!./*/*.*"
+    - "!*.md"
