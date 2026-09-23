@@ -31,7 +31,9 @@ local upstream_meta = {
   'authors', 'by-author', 'language', 'toc-title', 'quarto-version',
   'include-before', 'include-after', 'fig-responsive', 'revealjs-plugins',
   'colorlinks', 'linkcolor', 'block-headings', 'biblio-config', 'document-css',
-  'format', 'metadata-files', "brand"
+  'format', 'metadata-files', 'brand',
+  -- latex-environment
+  'environments'
 }
 
 -- -- Required YAML front-matter keys
