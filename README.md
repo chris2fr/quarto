@@ -431,20 +431,32 @@ format:
 
 `margin-inner`/`margin-outer` also bound the header and footer, not just the body — both are horizontally centered within the same width as the body text, so a header logo or footer line stays aligned with the letter's left/right edges instead of centering on the full page.
 
+### Header/footer spacing
+
+All three extensions also support two keys that size the gap between the header/footer content itself and the physical page edge — independent of `margin-top`/`margin-bottom`, which size the body's margins:
+
+| Key | Sets | Default |
+|---|---|---|
+| `margin-header` | space from the top of the header text to the top of the page | `5mm` |
+| `margin-footer` | space from the bottom of the footer to the bottom of the page | geometry's own built-in footer spacing, if left unset |
+
+```yaml
+margin-header: 10mm  # more breathing room above the header text
+margin-footer: 20mm  # generous gap between the footer and the page edge
+```
+
+`margin-footer` and the body's own bottom margin (`margin-bottom`, or `25mm`/`15mm` default depending on the extension and page) share the same budget — asking for more footer space than that budget allows still compiles, but pushes the footer past the page edge rather than shrinking the body area to make room.
+
 ### `document`-only extras
 
-`document` supports a few additional margin keys — PDF-only, layered on top of the four above, and specific to this extension (`lettre`/`compte-rendu` don't read them):
+`document` also supports one additional margin key — PDF-only, and specific to this extension (`lettre`/`compte-rendu` don't read it):
 
 | Key | Sets | Priority / fallback |
 |---|---|---|
 | `margin-top-first` | top offset before the body text starts, page 1 only | falls back to `margin-top`, then `45mm` |
-| `margin-header` | space from the top of the header text to the top of the page | falls back to `5mm` |
-| `margin-footer` | space from the bottom of the footer to the bottom of the page | geometry's own built-in footer spacing, if left unset |
 
 ```yaml
 margin-top-first: 5mm  # pull the body text up close to the header, page 1 only
-margin-header: 10mm    # more breathing room above the header text itself
-margin-footer: 20mm    # generous gap between the footer and the page edge
 ```
 
 `document` has a single `\geometry{}` call that applies to every page — unlike `lettre`/`compte-rendu`, there's no separate first-page geometry to hardcode page-1 values into. `margin-top-first` fills that gap for the one thing that does need to differ on page 1: how far down the body text starts, to leave room for the header above it.

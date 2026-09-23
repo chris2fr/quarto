@@ -5,6 +5,7 @@ date: 2026-06-07
 place: Paris
 organization: Les Grands Voisins
 lang: fr
+header-height: 25mm
 format:
   compte-rendu-html: default
   compte-rendu-pdf: default

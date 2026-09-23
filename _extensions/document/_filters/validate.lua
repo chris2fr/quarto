@@ -2,7 +2,7 @@ local required_meta = { 'title', 'lang' }
 local optional_meta = {
   'author', 'date', 'subtitle', 'ref', 'organization', 'place',
   'doc-date', 'doc-ref', 'doc-header1', 'doc-footer', 'doc-titlepage', 'doc-subject',
-  'margin-top-first', 'margin-header', 'margin-footer',
+  'margin-top-first', 'margin-header', 'margin-footer', 'header-height',
 }
 
 -- Keys that show up in doc.meta by the time this filter runs (after
