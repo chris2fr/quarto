@@ -935,6 +935,98 @@ local function brand_fonts_latex(doc)
   doc.meta['header-includes'] = pandoc.MetaList(groups)
 end
 
+-- ── Heading spacing ─────────────────────────────────────────────────────────
+-- Optional metadata, all in em (so it follows the font size); nothing is
+-- emitted unless one of them is set, leaving each format's own defaults:
+--   heading-space:        a factor applied to the defaults below (e.g. 0.8)
+--   heading-space-above / heading-space-below: one number for every level,
+--                         or a list per level (missing levels keep their default)
+-- Level 1 = \section / h1 / #heading level 1 ... level 5 = \subparagraph;
+-- HTML's h6 reuses level 5.
+local HEADING_DEFAULT_ABOVE = { 5, 2.5, 2, 1.5, 1 }
+local HEADING_DEFAULT_BELOW = { 2.5, 1.3, 1, 0.75, 0.5 }
+
+local function em_number(v)
+  local n = tonumber((pandoc.utils.stringify(v):gsub('%s*em%s*$', '')))
+  return n
+end
+
+-- A scalar applies to every level; a list is per level.
+local function per_level(meta_value, into)
+  if meta_value == nil then return end
+  if pandoc.utils.type(meta_value) == 'List' then
+    for i = 1, 5 do
+      if meta_value[i] ~= nil and em_number(meta_value[i]) then into[i] = em_number(meta_value[i]) end
+    end
+  elseif em_number(meta_value) then
+    for i = 1, 5 do into[i] = em_number(meta_value) end
+  end
+end
+
+local function append_header_include(doc, format, text)
+  local groups = {}
+  if doc.meta['header-includes'] then
+    for _, g in ipairs(doc.meta['header-includes']) do table.insert(groups, g) end
+  end
+  table.insert(groups, pandoc.MetaBlocks({ pandoc.RawBlock(format, text) }))
+  doc.meta['header-includes'] = pandoc.MetaList(groups)
+end
+
+local function heading_spacing(doc)
+  local is_latex, is_html, is_typst = FORMAT:match('latex'), FORMAT:match('html'), FORMAT:match('typst')
+  if not (is_latex or is_html or is_typst) or doc.meta.webhtml then return end
+
+  local scale = doc.meta['heading-space'] and em_number(doc.meta['heading-space'])
+  local above, below = {}, {}
+  if scale then
+    for i = 1, 5 do
+      above[i] = HEADING_DEFAULT_ABOVE[i] * scale
+      below[i] = HEADING_DEFAULT_BELOW[i] * scale
+    end
+  end
+  per_level(doc.meta['heading-space-above'], above)
+  per_level(doc.meta['heading-space-below'], below)
+  if next(above) == nil and next(below) == nil then return end
+
+  local function fmt(n) return string.format('%.3g', n) end
+
+  if is_latex then
+    local names = { 'section', 'subsection', 'subsubsection', 'paragraph', 'subparagraph' }
+    local lines = { '\\AtBeginDocument{%' }
+    for i, name in ipairs(names) do
+      -- A level with only one of the two set keeps the other's default.
+      local a = above[i] or (HEADING_DEFAULT_ABOVE[i])
+      local b = below[i] or (HEADING_DEFAULT_BELOW[i])
+      table.insert(lines, string.format('  \\titlespacing*{\\%s}{0pt}{%sem plus 0.2em}{%sem}%%', name, fmt(a), fmt(b)))
+    end
+    table.insert(lines, '}')
+    -- \AtBeginDocument so it lands after any layout-level \titlespacing.
+    append_header_include(doc, 'latex', table.concat(lines, '\n'))
+  elseif is_html then
+    local css = { '<style>' }
+    for i = 1, 6 do
+      local l = math.min(i, 5)
+      local rule = {}
+      if above[l] then table.insert(rule, 'margin-top: ' .. fmt(above[l]) .. 'em;') end
+      if below[l] then table.insert(rule, 'margin-bottom: ' .. fmt(below[l]) .. 'em;') end
+      if #rule > 0 then table.insert(css, string.format('  h%d { %s }', i, table.concat(rule, ' '))) end
+    end
+    table.insert(css, '</style>')
+    append_header_include(doc, 'html', table.concat(css, '\n'))
+  else
+    local lines = {}
+    for i = 1, 5 do
+      local args = {}
+      if above[i] then table.insert(args, 'above: ' .. fmt(above[i]) .. 'em') end
+      if below[i] then table.insert(args, 'below: ' .. fmt(below[i]) .. 'em') end
+      if #args > 0 then
+        table.insert(lines, string.format('#show heading.where(level: %d): set block(%s)', i, table.concat(args, ', ')))
+      end
+    end
+    append_header_include(doc, 'typst', table.concat(lines, '\n'))
+  end
+end
+
 -- compte-rendu's own divs (participants/agenda/decisions/actions/
 -- next-meeting/approval) have no _parts/ fallback — bucket_blocks/BODY_ORDER
 -- is lettre-only — so unlike lettre's classes, a metadata-driven one that's
@@ -994,6 +1086,7 @@ function Pandoc(doc)
   resolve_margins(doc)
   brand_fonts_html(doc)
   brand_fonts_latex(doc)
+  heading_spacing(doc)
 
   scaffold_parts(is_lettre and FALLBACK_CLASSES or HEADER_FOOTER)
 
