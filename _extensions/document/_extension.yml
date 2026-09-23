@@ -6,6 +6,7 @@ contributes:
   shortcodes:
     - ../base/_shortcodes/toc.lua
     - ../base/_shortcodes/num.lua
+    - ../base/_shortcodes/minipage.lua
   project:
     create:
       scaffold: scaffold/create.lua
