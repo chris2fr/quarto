@@ -18,7 +18,7 @@ $endfor$
 \makeatother
 
 % ── Margins (YAML: margin-inner, margin-outer, margin-top, margin-bottom) ─────
-\geometry{inner=$if(margin-inner)$$margin-inner$$else$20mm$endif$,outer=$if(margin-outer)$$margin-outer$$else$20mm$endif$,top=$if(margin-header)$$margin-header$$else$5mm$endif$,bottom=25mm,headheight=$if(header-height)$$header-height$$else$15mm$endif$,headsep=5mm,includehead$if(margin-footer)$,footskip=\dimexpr 25mm - $margin-footer$\relax$endif$}
+\geometry{inner=$if(margin-inner)$$margin-inner$$else$20mm$endif$,outer=$if(margin-outer)$$margin-outer$$else$20mm$endif$,top=$if(margin-header)$$margin-header$$else$5mm$endif$,bottom=25mm,headheight=$if(header-height)$$header-height$$else$15mm$endif$,headsep=$if(header-gap)$$header-gap$$else$5mm$endif$,includehead$if(margin-footer)$,footskip=\dimexpr 25mm - $margin-footer$\relax$endif$}
 % fancyhdr's \headwidth (used to size/center both header and footer) is
 % captured when the class calls \pagestyle{fancy}, using the .cls's default
 % geometry — before the margin-inner/margin-outer override above runs. Re-sync

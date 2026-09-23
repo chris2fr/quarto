@@ -26,7 +26,7 @@ $endfor$
 % large `top` (TeX silently discards negative glue at the very start of a
 % box's content), so decoupling via two geometries, not vspace math, is what
 % actually works.
-\geometry{$if(margin-inner)$inner=$margin-inner$,$endif$$if(margin-outer)$outer=$margin-outer$,$endif$top=$if(margin-header)$$margin-header$$else$5mm$endif$,bottom=$if(margin-bottom)$$margin-bottom$$else$25mm$endif$,headheight=$if(header-height)$$header-height$$else$15mm$endif$,headsep=5mm,includehead$if(margin-footer)$,footskip=\dimexpr $if(margin-bottom)$$margin-bottom$$else$25mm$endif$ - $margin-footer$\relax$endif$}
+\geometry{$if(margin-inner)$inner=$margin-inner$,$endif$$if(margin-outer)$outer=$margin-outer$,$endif$top=$if(margin-header)$$margin-header$$else$5mm$endif$,bottom=$if(margin-bottom)$$margin-bottom$$else$25mm$endif$,headheight=$if(header-height)$$header-height$$else$15mm$endif$,headsep=$if(header-gap)$$header-gap$$else$5mm$endif$,includehead$if(margin-footer)$,footskip=\dimexpr $if(margin-bottom)$$margin-bottom$$else$25mm$endif$ - $margin-footer$\relax$endif$}
 % \savegeometry{firstpagegeo}
 
 % fancyhdr's \headwidth (used to size/center both header and footer) is
