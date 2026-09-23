@@ -97,6 +97,39 @@ local function writeEnvironments(divEl)
   end
 end
 
+-- Same as writeEnvironments, but for inline Spans rather than block Divs.
+-- A Div is always its own block — Pandoc's LaTeX writer separates adjacent
+-- blocks with a blank line, which forces a paragraph break (and, e.g.,
+-- stacks two side-by-side `::: {.minipage} :::` divs vertically instead of
+-- placing them next to each other). A Span stays inline within the
+-- surrounding paragraph, so two adjacent minipage spans (with plain text or
+-- `\hfill` between them) end up on the same LaTeX line as intended.
+local function writeSpanEnvironments(spanEl)
+  if quarto.doc.is_format("latex") then
+    for k, v in pairs(classEnvironments) do
+      if spanEl.attr.classes:includes(k) then
+        local beginEnv = '\\begin' .. '{' .. v .. '}'
+        local endEnv = '\\end{' .. v .. '}'
+
+        local opts = spanEl.attr.attributes['options']
+        if opts then
+          beginEnv = beginEnv .. '[' .. opts .. ']'
+        end
+
+        local args = spanEl.attr.attributes['arguments']
+        if args then
+          beginEnv = beginEnv .. '{' .. args .. '}'
+        end
+
+        local result = spanEl.content
+        table.insert(result, 1, pandoc.RawInline('tex', beginEnv))
+        table.insert(result, pandoc.RawInline('tex', endEnv))
+        return result
+      end
+    end
+  end
+end
+
 local function buildCommandArgs(opts, format)
   local function wrap(o) 
     return string.format(format, o)
@@ -142,9 +175,13 @@ local function writeCommands(spanEl)
   end
 end
 
--- Run in two passes so we process metadata
--- and then process the divs
+-- Run in three passes: first process metadata, then Divs/Spans for
+-- `commands:`, then Spans again for `environments:` — a Span already
+-- rewritten by writeCommands is no longer a Span (it's raw inlines), so it
+-- won't be revisited here; one still holding an `environments:`-listed
+-- class falls through to writeSpanEnvironments.
 return {
   { Meta = readEnvsAndCommands },
-  { Div = writeEnvironments, Span = writeCommands }
+  { Div = writeEnvironments, Span = writeCommands },
+  { Span = writeSpanEnvironments }
 }
