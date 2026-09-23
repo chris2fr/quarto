@@ -35,10 +35,16 @@
 -- widths and gutter still have to add up to `\textwidth` or less yourself,
 -- same as choosing `width=` by hand.
 --
--- `columns`/`border`/`gutter` are read only by `{{< mp-begin >}}` and
--- apply to the whole row; they reset on every `{{< mp-begin >}}` call (even
--- to "off"/unset when omitted) so one row's settings never leak into the
--- next.
+-- `{{< mp-begin vline=true >}}` draws a `\vrule` in the gap instead of (or
+-- centered within, if `gutter` is also set) the plain space. A bare
+-- `\vrule` with no explicit height/depth stretches to match the tallest
+-- box on its line automatically, so it spans exactly as tall as the row's
+-- columns without any manual height calculation.
+--
+-- `columns`/`border`/`gutter`/`vline` are read only by `{{< mp-begin >}}`
+-- and apply to the whole row; they reset on every `{{< mp-begin >}}` call
+-- (even to "off"/unset when omitted) so one row's settings never leak into
+-- the next.
 local row_default_width = nil
 local row_border = false
 local row_gutter = nil
