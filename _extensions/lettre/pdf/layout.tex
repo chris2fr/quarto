@@ -17,7 +17,7 @@ $endfor$
 \makeatother
 
 % ── Margins (YAML: margin-inner, margin-outer, margin-top, margin-bottom) ─────
-\geometry{inner=$if(margin-inner)$$margin-inner$$else$20mm$endif$,outer=$if(margin-outer)$$margin-outer$$else$20mm$endif$,top=$if(margin-header)$$margin-header$$else$5mm$endif$,bottom=25mm,headheight=$if(header-height)$$header-height$$else$15mm$endif$,headsep=$if(header-gap)$$header-gap$$else$5mm$endif$,includehead$if(margin-footer)$,footskip=\dimexpr 25mm - $margin-footer$\relax$endif$}
+\geometry{inner=$if(margin-inner)$$margin-inner$$else$20mm$endif$,outer=$if(margin-outer)$$margin-outer$$else$20mm$endif$,top=$if(margin-header)$$margin-header$$else$5mm$endif$,bottom=25mm,headheight=$if(header-height)$$header-height$$else$15mm$endif$,headsep=$if(header-gap)$$header-gap$$else$5mm$endif$,includehead$if(footer-gap)$,footskip=$footer-gap$$elseif(footer-height)$,footskip=\dimexpr 25mm - $footer-height$ - $if(margin-footer)$$margin-footer$$else$0mm$endif$\relax$elseif(margin-footer)$,footskip=\dimexpr 25mm - $margin-footer$\relax$endif$}
 % fancyhdr's \headwidth (used to size/center both header and footer) is
 % captured when the class calls \pagestyle{fancy}, using the .cls's default
 % geometry — before the margin-inner/margin-outer override above runs. Re-sync
@@ -150,7 +150,7 @@ $endif$
 \begin{document}
 
 \thispagestyle{firstpage}
-\afterpage{\newgeometry{inner=$if(margin-inner)$$margin-inner$$else$20mm$endif$,outer=$if(margin-outer)$$margin-outer$$else$20mm$endif$,top=$if(margin-top)$$margin-top$$else$25mm$endif$,bottom=$if(margin-bottom)$$margin-bottom$$else$15mm$endif$$if(margin-footer)$,footskip=\dimexpr $if(margin-bottom)$$margin-bottom$$else$15mm$endif$ - $margin-footer$\relax$endif$}}
+\afterpage{\newgeometry{inner=$if(margin-inner)$$margin-inner$$else$20mm$endif$,outer=$if(margin-outer)$$margin-outer$$else$20mm$endif$,top=$if(margin-top)$$margin-top$$else$25mm$endif$,bottom=$if(margin-bottom)$$margin-bottom$$else$15mm$endif$$if(footer-gap)$,footskip=$footer-gap$$elseif(footer-height)$,footskip=\dimexpr $if(margin-bottom)$$margin-bottom$$else$15mm$endif$ - $footer-height$ - $if(margin-footer)$$margin-footer$$else$0mm$endif$\relax$elseif(margin-footer)$,footskip=\dimexpr $if(margin-bottom)$$margin-bottom$$else$15mm$endif$ - $margin-footer$\relax$endif$}}
 $body$
 
 \end{document}

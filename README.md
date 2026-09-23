@@ -441,13 +441,19 @@ All three extensions also support keys that size the header/footer area itself �
 | `margin-footer` | space from the bottom of the footer to the bottom of the page | geometry's own built-in footer spacing, if left unset |
 | `header-height` | height reserved for the header area (bigger logo, multi-line header, ...) | `15mm` |
 | `header-gap` | space between the bottom of the header area and the body text below it | `5mm` |
+| `footer-height` | height reserved for the footer area (multi-line footer, ...) | `0mm` (not reserved — see below) |
+| `footer-gap` | space between the body text and the top of the footer | geometry's own built-in footer spacing, if left unset |
 
 ```yaml
 margin-header: 10mm    # more breathing room above the header text
 margin-footer: 20mm    # generous gap between the footer and the page edge
 header-height: 25mm    # taller header area, e.g. for a bigger logo
 header-gap: 10mm       # more air between the header and the body text
+footer-height: 20mm    # taller footer area, e.g. for a multi-line footer
+footer-gap: 8mm        # less air between the body text and the footer
 ```
+
+`footer-gap`/`footer-height`/`margin-footer` mirror `header-gap`/`header-height`/`margin-header`, but the footer has no `includefoot`-style geometry key to set directly the way the header's `top` (via `includehead`) does — there's only `footskip` (the gap between the body and the footer) to work with, so these three are combined arithmetically instead: `footskip = footer-gap` if `footer-gap` is set explicitly, otherwise `footskip` is derived as the remaining space once `footer-height` and `margin-footer` are subtracted from the bottom margin. If none of the three are set, `footskip` is left alone (geometry's own default), same as before this existed.
 
 `margin-footer` and the body's own bottom margin (`margin-bottom`, or `25mm`/`15mm` default depending on the extension and page) share the same budget — asking for more footer space than that budget allows still compiles, but pushes the footer past the page edge rather than shrinking the body area to make room. The same applies to `header-height`: a value much larger than the page can accommodate alongside its other content can push body content off the page or otherwise break layout (e.g. a `longtable` that doesn't have room to fit) — keep it proportional to the page and header content.
 
