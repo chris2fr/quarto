@@ -1,6 +1,6 @@
 \documentclass[a4paper,11pt,french]{quarto-doc}\usepackage{titlesec}
 
-$if(page-footer)$\QLsetfooter{\vspace*{$if(margin-bottom-footer)$$margin-bottom-footer$$else$5mm$endif$}\par $page-footer$}$endif$
+$if(page-footer)$\QLsetfooter{$page-footer$}$endif$
 $if(page1-header)$\QLsetfirstpageheader{\vspace*{$if(margin-top-first-header)$$margin-top-first-header$$elseif(margin-top-header)$$margin-top-header$$else$5mm$endif$}\par $page1-header$}$endif$
 
 $for(header-includes)$
@@ -25,7 +25,7 @@ $endfor$
 % \geometry{$if(margin-inner)$inner=$margin-inner$,$endif$$if(margin-outer)$outer=$margin-outer$,$endif$$if(margin-top-first)$top=$margin-top-first$,$endif$$if(margin-bottom)$bottom=$margin-bottom$,$endif$$if(margin-topmargin-top-first)$headheight=$margin-top$,$endif$headsep=5mm}
 % \savegeometry{otherpagesgeo}
 
-\geometry{$if(margin-inner)$inner=$margin-inner$,$endif$$if(margin-outer)$outer=$margin-outer$,$endif$$if(margin-top)$top=$margin-top$,$endif$$if(margin-bottom)$bottom=$margin-bottom$,$endif$$if(margin-top)$headheight=$margin-top$,$endif$headsep=5mm}
+\geometry{$if(margin-inner)$inner=$margin-inner$,$endif$$if(margin-outer)$outer=$margin-outer$,$endif$$if(margin-top)$top=$margin-top$,$endif$$if(margin-bottom)$bottom=$margin-bottom$,$endif$$if(margin-top)$headheight=$margin-top$,$endif$headsep=5mm$if(margin-bottom-footer)$,footskip=\dimexpr $if(margin-bottom)$$margin-bottom$$else$30mm$endif$ - $margin-bottom-footer$\relax$endif$}
 % \savegeometry{firstpagegeo}
 
 % fancyhdr's \headwidth (used to size/center both header and footer) is
