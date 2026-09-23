@@ -5,9 +5,9 @@ project:
   brand: _brand/_brand.yml
   post-render: 
     - _extensions/chris2fr/base/scripts/clean-artifacts.sh
-    - ./scripts/firefox-open-version.sh 
+    - _extensions/chris2fr/base/scripts/firefox-open.sh
   execute-dir: file
   render:
     - "*.qmd"
-    - "!./*/*.*"
     - "!*.md"
+    - "!*/*/*.*"
