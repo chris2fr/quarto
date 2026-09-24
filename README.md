@@ -499,6 +499,31 @@ sidenote-margin: 10mm
 
 `sidenote-width` is the switch that turns the feature on — setting only `sidenote-gap` or only `sidenote-margin` does nothing. Once it's set, `margin-outer` is computed as `sidenote-gap + sidenote-width + sidenote-margin` (overriding `margin-outer` if that's also set) and LaTeX's own `\marginparwidth`/`\marginparsep` are set to match, so `\marginpar{...}` (e.g. via a raw `` `\marginpar{...}`{=latex} `` span, or `tex-custom`) places notes correctly. Nothing in any of the three extensions calls `\marginpar` on its own — there's no `::: sidenote :::` div (yet) — so this only sizes the column; placing content into it is on the author.
 
+### Heading spacing
+
+All three extensions let you override the space above and below headings (PDF, HTML and Typst; not the custom web HTML output). All values are in `em`, so they follow the font size:
+
+| Key | Sets |
+|---|---|
+| `heading-space` | a factor applied to every default below (`0.5` = half as much space, `2` = double) |
+| `heading-space-above` | space above headings: one number for every level, or a list per level |
+| `heading-space-below` | space below headings: one number for every level, or a list per level |
+
+```yaml
+heading-space: 0.8              # tighten everything by 20%
+heading-space-above: 3          # same space above every level
+heading-space-below: [1.5, 1]   # per level; levels left out keep their default
+```
+
+Levels run from `#` (level 1: `\section`, `h1`) to level 5 (`\subparagraph`); HTML's `h6` reuses level 5. A trailing `em` is accepted (`1.5em`). Defaults, in em:
+
+| Level | 1 | 2 | 3 | 4 | 5 |
+|---|---|---|---|---|---|
+| above | 5 | 2.5 | 2 | 1.5 | 1 |
+| below | 2.5 | 1.3 | 1 | 0.75 | 0.5 |
+
+`heading-space-above`/`heading-space-below` win over `heading-space` for the levels they set. If none of the three keys is present, nothing is emitted and each format keeps its own spacing. In PDF the override is injected with `\AtBeginDocument`, so it wins over the layout's own `\titlespacing`; for anything more specific, use `_parts/custom.cls` or `tex-custom` (see "PDF class customization").
+
 ### `document`-only extras
 
 `document` also supports one additional margin key — PDF-only, and specific to this extension (`lettre`/`compte-rendu` don't read it):
