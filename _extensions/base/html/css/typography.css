@@ -63,6 +63,7 @@ th { background: color-mix(in srgb, currentColor 6%, transparent); }
 /* Figures: fit the page, softly rounded, small centred captions. */
 img { max-width: 100%; height: auto; border-radius: 6px; }
 figcaption { text-align: center; font-size: .85rem; margin-top: .3rem; }
+.small { font-size: .85em; }
 
 /* Code: rounded, tinted block. */
 pre {

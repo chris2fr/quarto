@@ -312,6 +312,18 @@ format:
 
 No special divs — use standard Markdown headings (H1–H4), paragraphs, tables, lists, and images directly in the document body. It does, however, support `::: header1` and `::: footer`, with the same `_parts/` fallback as `compte-rendu` above — omit them and the page header/footer come from `_parts/header1.qmd` / `_parts/footer.qmd` if present, or from a `doc-header1` / `doc-footer` metadata key (see "Filling a div straight from metadata" under `lettre` above), which takes priority over both.
 
+### Small text
+
+A `::: {.small}` div (or `[...]{.small}` span) renders as LaTeX's `small` environment in PDF (`\small` text), and as a slightly smaller (`.85em`) element in HTML. Available in `lettre`, `compte-rendu` and `document` PDF output with nothing to enable. If your document sets its own `environments:` list, that list replaces this default, so add `small` to it:
+
+```markdown
+::: {.small}
+Fine print, legal mentions, ...
+:::
+```
+
+It also works inline, on a span: `[Centre Interdépartemental de Gestion de la Petite Couronne]{.small}`.
+
 ### Side-by-side columns (PDF only)
 
 `document` supports `{{< mp-begin >}}` / `{{< mp-next >}}` / `{{< mp-end >}}` shortcodes for laying out a row of columns side by side — built on the third-party `latex-environment` extension. `{{< mp-begin >}}` opens the first column, `{{< mp-next >}}` closes the current one, inserts a gap, and opens the next one, and `{{< mp-end >}}` closes the last one:

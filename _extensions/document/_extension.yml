@@ -92,6 +92,7 @@ contributes:
       link-bibliography: true
       link-citations: true
       keep-tex: true
+      environments: [small]
       csl: ../base/resources/biblio.csl
       include-before-body: pdf/_partials/body-before.tex
       include-after-body: pdf/_partials/body-after.tex
