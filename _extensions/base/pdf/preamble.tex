@@ -109,7 +109,9 @@
 % declares a headings font that's actually available; empty (no-op) otherwise.
 % \newcommand{\QLheadingfont}{}
 % \newcommand{\QLheadingfont}{\sfdefault}
-\newcommand{\QLheadingfont}{\plexsans}
+% Defaults to the document's sans family (\setsansfont above, or the brand's
+% / sansfont metadata's through page.lua) instead of hard-coding Plex Sans.
+\newcommand{\QLheadingfont}{\sffamily}
 % plex-sans's \defaultfontfeatures{Extension=.otf} is cleared again at the end
 % of that package, so it must be repeated here for this direct fontspec call.
 \newfontfamily\QLheadingfontmd[Extension=.otf, ItalicFont=IBMPlexSans-MediumItalic]{IBMPlexSans-Medium}

@@ -131,7 +131,7 @@
 \titleformat{\subsubsection}  {\normalfont\QLheadingfont\Large}{}{0pt}{} % [\vspace{0.25em}]
 \titlespacing*{\subsubsection}{0pt}{0.8cm plus 0.8cm} {0.4cm}
 
-\titleformat{\paragraph}      {\normalfont\QLheadingfontmd\large\itshape}{}{0pt}{} % flushright
+\titleformat{\paragraph}      {\normalfont\QLheadingfont\large\itshape}{}{0pt}{} % flushright
 \titlespacing*{\paragraph}    {0pt}{0.6cm plus 0.6cm} {0.3cm}
 
 \titleformat{\subparagraph}   {\normalfont\QLheadingfont\normalsize\bfseries}{}{0pt}{}
