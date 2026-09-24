@@ -1,0 +1,6 @@
+---
+title: "Contact"
+subtitle: "Une question, un problème : écrivez-nous."
+---
+
+Écrivez-nous à contact@lesgrandsvoisins.com.

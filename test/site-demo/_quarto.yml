@@ -1,0 +1,25 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "LesGrandsVoisins.com"
+  search: false
+  navbar:
+    left:
+      - href: index.qmd
+        text: Accueil
+      - text: Nos pôles
+        menu:
+          - href: poles/civisme.qmd
+            text: Civisme
+          - href: poles/arts.qmd
+            text: Arts plastiques
+      - href: contact.qmd
+        text: Contact
+  page-footer:
+    left: "Porté par Les Grands Voisins, à Fontenay-aux-Roses et dans le 14ᵉ arrondissement de Paris."
+    right: "Aucun traceur, rien n'est chargé depuis un tiers."
+
+format:
+  site-html: default

@@ -1,0 +1,19 @@
+title: Site
+author: Chris Mann
+version: 0.1.0
+quarto-required: ">=1.9.0"
+contributes:
+  formats:
+    # site-html: for small static Quarto *websites* (project type: website),
+    # in the spirit of lesgrandsvoisins.com — its palette, type and rhythm on
+    # top of Bootstrap, so the navbar, footer, dark mode and responsive menu
+    # are Quarto's own (no JavaScript of ours). Fonts come once from
+    # _parts/<brand>/fonts/<family>/ (see base/_filters/bundled_fonts.lua).
+    html:
+      theme:
+        light: theme/site-light.scss
+        dark: theme/site-dark.scss
+      toc: false
+      lang: fr
+      filters:
+        - _filters/webfonts.lua

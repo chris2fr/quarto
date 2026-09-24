@@ -1,0 +1,29 @@
+---
+title: "L'Autre est une chance"
+subtitle: "Une association de voisins, pour que chacun trouve sa place."
+---
+
+::: {.grid}
+::: {.g-col-12 .g-col-md-4}
+::: {.card .p-3}
+### Civisme
+Profession d'empathie nationale, prix d'excellence en service public.
+:::
+:::
+::: {.g-col-12 .g-col-md-4}
+::: {.card .p-3}
+### Arts plastiques
+Galeries d'art dans des lieux insolites et soutien aux artistes.
+:::
+:::
+::: {.g-col-12 .g-col-md-4}
+::: {.card .p-3}
+### Numérique
+Salles de sociabilité numérique.
+:::
+:::
+:::
+
+> Une citation mise en valeur : la mise en page du site, sans son moteur.
+
+[Nous contacter](contact.qmd){.btn .btn-sun}

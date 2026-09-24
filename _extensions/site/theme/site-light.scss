@@ -1,0 +1,68 @@
+/*-- scss:defaults --*/
+$sky: #EAF2F7;
+$paper: #FFFFFF;
+$ink: #1C2A35;
+$soft: #4A5A66;
+$line: #C9D6DF;
+$brand: #345899;
+$sun: #F2B705;
+$hover: #DCE8F0;
+
+$body-bg: $sky;
+$body-color: $ink;
+$link-color: $ink;
+$link-hover-color: $ink;
+$link-decoration: underline;
+$border-color: $line;
+$font-family-sans-serif: "Fira Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+$font-family-base: $font-family-sans-serif;
+$headings-font-family: "Fengardo Neue", Charter, "Bitstream Charter", Cambria, Georgia, serif;
+$headings-font-weight: 700;
+$headings-line-height: 1.1;
+$font-size-base: 1.0625rem;
+$line-height-base: 1.55;
+$navbar-bg: $sky;
+$navbar-fg: $ink;
+$navbar-hl: $brand;
+$footer-bg: #1C2A35;
+$footer-fg: #EAF2F7;
+$code-block-bg: $paper;
+$code-color: $ink;
+
+/*-- scss:rules --*/
+/* Palette, type and rhythm of lesgrandsvoisins.com on Bootstrap. */
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 { letter-spacing: -.01em; text-wrap: balance; }
+h2, .h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+h1.title { font-size: clamp(2.1rem, 4.5vw, 3.2rem); margin: 0 0 .8rem; }
+
+a { text-decoration-color: $sun; text-underline-offset: .12em; text-decoration-thickness: .1em; }
+a:hover { text-decoration-thickness: .18em; }
+:focus-visible { outline: 3px solid $sun; outline-offset: 3px; border-radius: 4px; }
+
+/* Header: sticky, hairline below, like .top */
+.navbar { border-bottom: 1px solid $line; min-height: 4.25rem; }
+.navbar-brand, .navbar-title { font-family: "Fengardo Neue", serif; font-weight: 700; font-size: clamp(1.1rem, 4.6vw, 1.6rem); color: $brand; }
+.navbar .nav-link { border-radius: 8px; }
+.navbar .nav-link:hover, .navbar .nav-link.active { background: $hover; }
+.dropdown-menu { background: $paper; border: 1px solid $line; border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+.dropdown-item:hover, .dropdown-item.active { background: $hover; color: $ink; }
+
+/* Page title block: the .page-head band */
+#title-block-header { background: $sky; border-bottom: 1px solid $line; padding: 2.75rem 0 2rem; margin-bottom: 2rem; }
+#title-block-header .subtitle, #title-block-header .description { font-size: 1.18rem; color: $soft; max-width: 34em; margin-bottom: 0; }
+
+/* Cards and buttons, as .pole-card / .btn */
+.card, .callout { background: $paper; border: 1px solid $line; border-top: 4px solid $ink; border-radius: 10px; }
+.card:hover { background: $hover; }
+.btn { font-weight: 600; border-radius: 8px; border: 2px solid $ink; padding: .7rem 1.15rem; }
+.btn-sun, .btn-primary { background: $sun; border-color: $sun; color: #1C2A35; }
+.btn-sun:hover, .btn-primary:hover { filter: brightness(1.05); background: $sun; border-color: $sun; color: #1C2A35; }
+
+blockquote { border-inline-start: 3px solid $line; color: $soft; padding-inline-start: 1rem; }
+table, .table { --bs-table-border-color: #{$line}; }
+img { border-radius: 6px; }
+
+/* Footer: the dark .foot-wrap band */
+.nav-footer { background: $footer-bg; color: $footer-fg; padding: 3rem 0 2rem; border-top: 0; }
+.nav-footer a, .nav-footer .nav-link { color: $footer-fg; }
+.nav-footer .nav-footer-left, .nav-footer .nav-footer-center, .nav-footer .nav-footer-right { opacity: .85; }
