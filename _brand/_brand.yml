@@ -5,6 +5,12 @@ meta:
   url: ""
 typography:
   fonts:
+    - family: PT Mono
+      source: google
+    - family: PT Sans
+      source: google
+    - family: PT Serif
+      source: google
     - family: IBM Plex Mono
       source: google
     - family: IBM Plex Sans
@@ -27,9 +33,17 @@ typography:
     #   source: google
     # - family: Inter
     #   source: google
-  base: IBM Plex Serif
-  headings: IBM Plex Sans
-  monospace: IBM Plex Mono
+  base:
+    family: "Latin Modern Roman"
+    fallbacks: ["Century Schoolbook", "New Century Schoolbook", "TeX Gyre Schola", "PT Serif", "Georgia", "serif"]
+    size: 12pt
+    line-height: 1.3
+  headings: 
+    family: "Latin Modern Roman"
+    fallbacks: ["Century Schoolbook", "New Century Schoolbook", "TeX Gyre Schola", "PT Serif", "Georgia", "serif"]
+    size: 12pt
+    line-height: 1.3
+  monospace: PT Mono
   # base: IBM Plex Sans Condensed
   # headings: IBM Plex Serif
   # monospace: Plex Mono
