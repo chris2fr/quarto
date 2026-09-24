@@ -27,11 +27,14 @@ local upstream_meta = {
   -- page.lua (base filter): margin resolution, brand fonts, bibliography wiring
   'margin-inner', 'margin-outer', 'margin-top', 'margin-bottom',
   'margin-left', 'margin-right', 'margin-all', 'marginx', 'marginy', 'margins',
+  'mainfont', 'sansfont', 'monofont', 'headingfont', 'fontsize', 'linestretch',
+  'parskip', 'heading-space', 'heading-space-above', 'heading-space-below',
   'header-includes', 'bibliography', 'csl', 'tex-custom', 'labels',
   'nocite', 'tab-stop', 'page1-header', 'page-footer',
   -- Quarto/Pandoc reserved or auto-injected
   'authors', 'by-author', 'language', 'toc-title', 'quarto-version',
   'include-before', 'include-after', 'fig-responsive', 'revealjs-plugins',
+  'number-depth', 'link-citations', 'link-bibliography',
   'colorlinks', 'linkcolor', 'block-headings', 'biblio-config', 'document-css',
   'format', 'metadata-files', 'brand',
   -- latex-environment

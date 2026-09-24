@@ -776,7 +776,8 @@ local function brand_fonts_html(doc)
   local monospace = meta_str(doc.meta.monofont) or fonts.monospace
 
   local families, added = {}, {}
-  for _, f in ipairs({ base, headings, monospace }) do
+  -- Explicit indices: ipairs would stop at the first nil (e.g. no base font).
+  for _, f in pairs({ [1] = base, [2] = headings, [3] = monospace }) do
     if f and not added[f] then
       added[f] = true
       table.insert(families, f)
