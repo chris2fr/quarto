@@ -940,6 +940,7 @@ end
 -- Optional metadata, all in em (so it follows the font size); nothing is
 -- emitted unless one of them is set, leaving each format's own defaults:
 --   heading-space:        a factor applied to the defaults below (e.g. 0.8)
+--   heading-align:        left | center | right, level 1 only
 --   heading-space-above / heading-space-below: one number for every level,
 --                         or a list per level (missing levels keep their default)
 -- Level 1 = \section / h1 / #heading level 1 ... level 5 = \subparagraph;
@@ -987,7 +988,9 @@ local function heading_spacing(doc)
   end
   per_level(doc.meta['heading-space-above'], above)
   per_level(doc.meta['heading-space-below'], below)
-  if next(above) == nil and next(below) == nil then return end
+  local align = doc.meta['heading-align'] and pandoc.utils.stringify(doc.meta['heading-align']):lower()
+  if align ~= 'left' and align ~= 'center' and align ~= 'right' then align = nil end
+  if next(above) == nil and next(below) == nil and not align then return end
 
   local function fmt(n) return string.format('%.3g', n) end
 
@@ -999,6 +1002,11 @@ local function heading_spacing(doc)
       local a = above[i] or (HEADING_DEFAULT_ABOVE[i])
       local b = below[i] or (HEADING_DEFAULT_BELOW[i])
       table.insert(lines, string.format('  \\titlespacing*{\\%s}{0pt}{%sem plus 0.2em}{%sem}%%', name, fmt(a), fmt(b)))
+    end
+    if align then
+      -- Level 1's \titleformat calls \QLsectionalign (preamble.tex, compte-rendu layout.tex).
+      local cmd = ({ left = '\\raggedright', center = '\\centering', right = '\\raggedleft' })[align]
+      table.insert(lines, '  \\renewcommand{\\QLsectionalign}{' .. cmd .. '}%')
     end
     table.insert(lines, '}')
     -- \AtBeginDocument so it lands after any layout-level \titlespacing.
@@ -1012,6 +1020,7 @@ local function heading_spacing(doc)
       if below[l] then table.insert(rule, 'margin-bottom: ' .. fmt(below[l]) .. 'em;') end
       if #rule > 0 then table.insert(css, string.format('  h%d { %s }', i, table.concat(rule, ' '))) end
     end
+    if align then table.insert(css, '  h1 { text-align: ' .. align .. '; }') end
     table.insert(css, '</style>')
     append_header_include(doc, 'html', table.concat(css, '\n'))
   else
@@ -1023,6 +1032,9 @@ local function heading_spacing(doc)
       if #args > 0 then
         table.insert(lines, string.format('#show heading.where(level: %d): set block(%s)', i, table.concat(args, ', ')))
       end
+    end
+    if align then
+      table.insert(lines, '#show heading.where(level: 1): set align(' .. align .. ')')
     end
     append_header_include(doc, 'typst', table.concat(lines, '\n'))
   end

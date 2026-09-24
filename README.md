@@ -499,20 +499,22 @@ sidenote-margin: 10mm
 
 `sidenote-width` is the switch that turns the feature on — setting only `sidenote-gap` or only `sidenote-margin` does nothing. Once it's set, `margin-outer` is computed as `sidenote-gap + sidenote-width + sidenote-margin` (overriding `margin-outer` if that's also set) and LaTeX's own `\marginparwidth`/`\marginparsep` are set to match, so `\marginpar{...}` (e.g. via a raw `` `\marginpar{...}`{=latex} `` span, or `tex-custom`) places notes correctly. Nothing in any of the three extensions calls `\marginpar` on its own — there's no `::: sidenote :::` div (yet) — so this only sizes the column; placing content into it is on the author.
 
-### Heading spacing
+### Heading spacing and alignment
 
-All three extensions let you override the space above and below headings (PDF, HTML and Typst; not the custom web HTML output). All values are in `em`, so they follow the font size:
+All three extensions let you override the space above and below headings, and the alignment of level-1 headings (PDF, HTML and Typst; not the custom web HTML output). Spacing values are in `em`, so they follow the font size:
 
 | Key | Sets |
 |---|---|
 | `heading-space` | a factor applied to every default below (`0.5` = half as much space, `2` = double) |
 | `heading-space-above` | space above headings: one number for every level, or a list per level |
 | `heading-space-below` | space below headings: one number for every level, or a list per level |
+| `heading-align` | alignment of level-1 headings (`#`): `left`, `center` or `right`. Other levels are unaffected |
 
 ```yaml
 heading-space: 0.8              # tighten everything by 20%
 heading-space-above: 3          # same space above every level
 heading-space-below: [1.5, 1]   # per level; levels left out keep their default
+heading-align: left             # left-align level-1 headings (centered by default in lettre/document PDF)
 ```
 
 Levels run from `#` (level 1: `\section`, `h1`) to level 5 (`\subparagraph`); HTML's `h6` reuses level 5. A trailing `em` is accepted (`1.5em`). Defaults, in em:
