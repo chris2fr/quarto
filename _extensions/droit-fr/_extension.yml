@@ -1,0 +1,38 @@
+title: Droit FR
+author: Chris Mann
+version: 0.1.0
+quarto-required: ">=1.9.0"
+contributes:
+  formats:
+    # droit-fr-pdf: thèse de droit français, built on the CTAN `droit-fr`
+    # class (memoir-based) and its biblatex style — both ship with TeX Live.
+    # The class redefines \title and \author (two arguments) and provides its
+    # own title page (\maketitlepage), so title.tex / before-body.tex replace
+    # Pandoc's; see partials/.
+    pdf:
+      documentclass: droit-fr
+      classoption:
+        - a4paper
+        - twoside
+      fontsize: 12pt
+      lang: fr
+      pdf-engine: lualatex
+      top-level-division: chapter
+      cite-method: biblatex
+      biblio-style: droit-fr-patched
+      biblatexoptions:
+        - backend=biber
+      toc: true
+      toc-depth: 4
+      number-sections: true
+      colorlinks: false
+      keep-tex: true
+      format-resources:
+        - latex/droit-fr-patched.bbx
+        - latex/droit-fr-patched.cbx
+      template-partials:
+        - partials/title.tex
+        - partials/before-body.tex
+        - partials/toc.tex
+        - partials/before-bib.tex
+        - partials/babel-lang.tex

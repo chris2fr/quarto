@@ -1,0 +1,9 @@
+\frontmatter % roman page numbers, unnumbered sections
+\pagestyle{plain}
+$if(title)$
+\maketitlepage
+$endif$
+$if(abstract)$
+\chapter*{$if(abstract-title)$$abstract-title$$else$Résumé$endif$}
+$abstract$
+$endif$

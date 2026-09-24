@@ -336,6 +336,28 @@ PDF only — for every other format these shortcodes emit nothing (silently), so
 
 ---
 
+## droit-fr
+
+`droit-fr-pdf` formats a French law thesis with the CTAN [`droit-fr`](https://ctan.org/pkg/droit-fr) class (memoir-based; ships with TeX Live) and its biblatex style. It is PDF-only and standalone — it does not use the `lettre`/`document` filters, `header1`/`footer` divs or brand handling.
+
+```yaml
+format: droit-fr-pdf
+title: "Mon titre de thèse"
+author:
+  - name: {given: Prénom, family: Nom}
+university: "Nom de l'université"
+school: "École doctorale ..."
+speciality: "Droit privé"
+approvaldate: "2 janvier 2012"
+director: {civility: Monsieur, given: Amstram, family: Gram, job: "Professeur à l'Université ..."}
+reporter-a: {civility: ..., given: ..., family: ..., job: ...}   # also reporter-b, member-a, member-b
+bibliography: refs.bib
+```
+
+These keys fill the class's title page (`\maketitlepage`). Headings map to the class's levels: `#` chapitre, `##` Section I, `###` § 1., `####` A., and so on; use raw `\partie{}` / `\titre{}` for parties and titres. Citations become footnotes in the French legal style.
+
+The style is shipped as `droit-fr-patched` (`_extensions/droit-fr/latex/`): upstream `droit-fr.bbx` (2016) no longer compiles with biblatex ≥ 3.20 (name formats using the old `#1`–`#8` arguments), so a renamed copy with those two formats ported is bundled, as the LPPL requires. Requires `biber` and lualatex. See `test/droit-fr/`.
+
 ## Table of contents
 
 All three extensions support a `{{< toc >}}` shortcode for HTML and PDF output — place it anywhere in the document body to insert a table of contents at that spot, built from the document's own headings:

@@ -1,0 +1,30 @@
+---
+title: "Mon titre de thèse"
+author:
+  - name:
+      given: Prénom
+      family: Nom
+university: "Nom de l'université"
+school: "Droit international, droit européen, relations internationales et droit comparé"
+speciality: "Droit privé"
+approvaldate: "2 janvier 2012"
+director: {civility: Monsieur, given: Amstram, family: Gram, job: "Professeur à l'Université Rébenthine"}
+reporter-a: {civility: Monsieur, given: Bidule, family: Trucmuche, job: "Professeur à l'Université Lévision"}
+reporter-b: {civility: Monsieur, given: Blabla, family: Chose, job: "Professeur à l'Université Tanisé"}
+member-a: {civility: Madame, given: Machin, family: Chouette, job: "Professeur à l'Université Lorisation"}
+member-b: {civility: Monsieur, given: Pif, family: Pouf, job: "Professeur à l'Université Alamenthe"}
+bibliography: refs.bib
+format: droit-fr-pdf
+---
+
+# Introduction
+
+Une citation d'ouvrage [@malaurie_obligations, p. 35]^[Une note de bas de page.].
+
+# Première partie
+
+## Premier titre
+
+### Premier paragraphe
+
+Du texte.

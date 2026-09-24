@@ -1,0 +1,15 @@
+$-- The droit-fr class redefines \title{} and \author{first}{LAST}, and takes
+$-- the title-page data from the macros below (see droit-fr.cls). The author's
+$-- first name and surname come from Quarto's normalized `authors`.
+\title{$title$}
+\author{$for(authors/first)$$it.name.given$}{$it.name.family$$endfor$}
+$if(university)$\university{$university$}$endif$
+$if(school)$\school{$school$}$endif$
+$if(speciality)$\speciality{$speciality$}$endif$
+$if(approvaldate)$\approvaldate{$approvaldate$}$endif$
+$-- {civilité}{prénom}{nom}{poste}
+$if(director)$\director{$director.civility$}{$director.given$}{$director.family$}{$director.job$}$endif$
+$if(reporter-a)$\reportera{$reporter-a.civility$}{$reporter-a.given$}{$reporter-a.family$}{$reporter-a.job$}$endif$
+$if(reporter-b)$\reporterb{$reporter-b.civility$}{$reporter-b.given$}{$reporter-b.family$}{$reporter-b.job$}$endif$
+$if(member-a)$\membera{$member-a.civility$}{$member-a.given$}{$member-a.family$}{$member-a.job$}$endif$
+$if(member-b)$\memberb{$member-b.civility$}{$member-b.given$}{$member-b.family$}{$member-b.job$}$endif$

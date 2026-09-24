@@ -121,6 +121,9 @@
   - `site` (format `site-html`): light/dark Bootstrap themes
     (`site-light.scss`, `site-dark.scss`) and `webfonts.lua` for small
     Quarto websites; demo in `test/site-demo/`.
+  - `droit-fr` (format `droit-fr-pdf`): French law thesis on the CTAN
+    `droit-fr` class, with a bundled `droit-fr-patched` biblatex style (the
+    upstream one fails on biblatex ≥ 3.20); demo in `test/droit-fr/`.
   - `latex-environment` (vendored from `quarto-ext`, with its LICENSE):
     turns divs/spans into LaTeX environments.
 - **Shortcodes**: `{{< mp-begin >}}` / `{{< mp-next >}}` / `{{< mp-end >}}`

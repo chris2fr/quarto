@@ -1,0 +1,15 @@
+$if(toc)$
+$if(toc-title)$
+\renewcommand*\contentsname{$toc-title$}
+$endif$
+\setcounter{tocdepth}{$toc-depth$}
+\tableofcontents
+$endif$
+$if(lof)$
+\listoffigures
+$endif$
+$if(lot)$
+\listoftables
+$endif$
+\mainmatter % arabic page numbers, numbered sections
+\pagestyle{corpus}
