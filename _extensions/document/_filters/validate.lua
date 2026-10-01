@@ -29,6 +29,7 @@ local upstream_meta = {
   'margin-left', 'margin-right', 'margin-all', 'marginx', 'marginy', 'margins',
   'mainfont', 'sansfont', 'monofont', 'headingfont', 'fontsize', 'linestretch',
   'parskip', 'heading-space', 'heading-space-above', 'heading-space-below',
+  'heading-align',
   'header-includes', 'bibliography', 'csl', 'tex-custom', 'labels',
   'nocite', 'tab-stop', 'page1-header', 'page-footer',
   -- Quarto/Pandoc reserved or auto-injected

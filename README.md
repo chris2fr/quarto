@@ -324,6 +324,32 @@ Fine print, legal mentions, ...
 
 It also works inline, on a span: `[Centre Interdépartemental de Gestion de la Petite Couronne]{.small}`.
 
+### Automatic counters: `{{< num >}}` and `{{< numref >}}`
+
+Legal and administrative texts often number items by hand ("Condition 1", "Condition 2", ...) and then cite them elsewhere ("see condition 2"). Renumber one and every citation is stale. These two shortcodes, available in `lettre` and `document`, remove that problem.
+
+`{{< num >}}` was added first, as a plain counter: each call prints the next integer (1, 2, 3, ...) in document order, in every format.
+
+`{{< numref >}}` came next, because a counter you can't cite only solves half the problem. Give a counter an `id` and cite it from anywhere with `numref`:
+
+```markdown
+**Condition {{< num id=cond-a >}}** — the tenant pays the rent on time.
+
+...
+
+As stated in condition {{< numref cond-a >}}, the rent is due monthly.
+```
+
+`numref` renders as a link to the counter, with its current number as text. References may come before the counter (forward references work). An unknown id prints `?` and a warning on stderr.
+
+How it works:
+
+- `_shortcodes/num.lua` keeps a running count. With an `id`, it wraps the number in a `Span` carrying that id and the class `num`.
+- `_shortcodes/numref.lua` can't know the number at that point, since the target may come later. It emits a placeholder link (`#id`, text `?`).
+- `_filters/numref.lua` runs at `post-quarto`, after all shortcodes are resolved. It first collects every `num` span's number, then fills in each placeholder link.
+
+Counters are one global sequence per document. There is no per-section reset and no separate series, so use one `num` sequence per kind of item.
+
 ### Side-by-side columns (PDF only)
 
 `document` supports `{{< mp-begin >}}` / `{{< mp-next >}}` / `{{< mp-end >}}` shortcodes for laying out a row of columns side by side — built on the third-party `latex-environment` extension. `{{< mp-begin >}}` opens the first column, `{{< mp-next >}}` closes the current one, inserts a gap, and opens the next one, and `{{< mp-end >}}` closes the last one:
@@ -567,6 +593,8 @@ For PDF output, an optional `_parts/custom.cls` at the project root (next to `_q
 
 Unlike the generated `quarto-lettre.cls`/`.tex` at the project root (removed after every render by `clean-artifacts.lua`), `_parts/custom.cls` is user-owned content and is never touched by cleanup — same guarantee as the `_parts/*.qmd` overrides above.
 
+Level-1 heading alignment is controlled by a `\QLsectionalign` macro (`\centering` by default in `lettre`/`document`, empty i.e. left in `compte-rendu`) used inside each extension's `\titleformat{\section}`. The `heading-align` key redefines it; to change it by hand, `\renewcommand{\QLsectionalign}{\raggedright}` in `custom.cls` or `tex-custom` — note this runs before `heading-align`'s own override, which is applied at `\AtBeginDocument` and therefore wins if both are set.
+
 A `tex-custom` metadata key (raw LaTeX, as a `|` block scalar) does the same thing, inline in the document's or project's YAML instead of a separate file — handy for a one-document tweak, or for keeping everything in `_quarto.yml`. It's injected right after `_parts/custom.cls`, so when both are present, `tex-custom` wins — same "metadata always wins" priority as everywhere else in this extension:
 
 ```yaml
@@ -635,6 +663,9 @@ _extensions/
 │   ├── _filters/tablerule.lua     # thin rule between PDF table rows (\QLrowrule, defined in quarto-lettre.cls)
 │   ├── _shortcodes/toc.lua        # {{< toc >}} shortcode — drops a placeholder for _filters/toc.lua to expand
 │   ├── _shortcodes/minipage.lua   # {{< mp-begin/next/end >}} — side-by-side PDF columns (document only)
+│   ├── _shortcodes/num.lua        # {{< num >}} — automatic counter, optional id=
+│   ├── _shortcodes/numref.lua     # {{< numref id >}} — placeholder link to a counter
+│   ├── _filters/numref.lua        # fills numref placeholders with the counter's number (post-quarto)
 │   ├── brand.yml                  # default brand (contributed to every project via _extension.yml)
 │   ├── parts/                     # bundled default section content (see _parts/ above)
 │   │   └── <div>.qmd              # header1.qmd, footer.qmd (all 3); from/date/... (lettre only)

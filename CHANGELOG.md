@@ -113,6 +113,20 @@
 
 ### Added
 
+- **Heading spacing and alignment** (`document`, `lettre`, `compte-rendu`;
+  PDF, HTML, Typst): `heading-space`, `heading-space-above`,
+  `heading-space-below` (em, scalar or per level) and `heading-align`
+  (`left` | `center` | `right`, level 1 only), handled in `page.lua`. In PDF,
+  level-1 alignment goes through a new `\QLsectionalign` hook in
+  `preamble.tex` (centered by default) and `compte-rendu`'s `layout.tex`
+  (left by default); `heading-align` added to `validate.lua`'s allow-list.
+- **`{{< numref id >}}`** (`document`, `lettre`): link to the number of a
+  `{{< num id=... >}}` counter, forward references included. The shortcode
+  emits a placeholder link; `_filters/numref.lua` (`post-quarto`) fills in
+  the number. Unknown ids print `?` and warn on stderr.
+- **`.small` div/span**: renders as LaTeX's `small` environment in PDF
+  (`environments: [small]` set in each extension's `pdf:` block) and as
+  `.85em` text in HTML (`typography.css`).
 - **New formats/extensions**
   - `document-web` (format `document-web-html`) and `lettre-web`
     (`lettre-web-html`): strict lesgrandsvoisins.com look for standalone
