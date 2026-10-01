@@ -616,6 +616,8 @@ Every Markdown table (and lettre/compte-rendu's own label/value divs like `::: r
 
 Citations and the bibliography use a shorthand label — the CSL `citation-label` variable — instead of a plain running number: `[@doe99]` renders as `(Doe99)` both at the citation site and in the bibliography's own margin, rather than `(1)`. Generated automatically from the author's surname and the year (no `shorthand`/`label` field needed in the `.bib` entry), and disambiguated with an `a`/`b`/... suffix if two entries would otherwise collide (e.g. two 1999 books by the same author become `Doe99a` / `Doe99b`). Defined in `_extensions/base/resources/biblio.csl`, used only by the `pdf` format in all three extensions — HTML/typst citation rendering is unaffected.
 
+To use a different style, set `csl: my-style.csl` in the document's front matter (path relative to the `.qmd`); it overrides the extension's default. Start from a copy of `biblio.csl` to keep the shorthand labels and their sort order, which rely on the `citation-label` variable and on the sort key `shorthand.lua` stores in `version`. A standard style such as APA works but loses them.
+
 ---
 
 ## Brand fonts

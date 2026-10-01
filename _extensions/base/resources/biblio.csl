@@ -267,7 +267,7 @@
         </group>
         <group display="right-inline">
           <text macro="responsability" font-weight="normal" prefix="" suffix=". "/>
-          <text macro="date" form="short" font-style="none" font-weight="normal" suffix=". "/>
+          <text macro="date" form="short" font-style="normal" font-weight="normal" suffix=". "/>
         </group>
         <group display="indent">
           <text macro="genre" prefix="(" suffix="). "/>
@@ -297,9 +297,9 @@
           <!-- <text macro="keyword" font-weight="light" font-style="italic" prefix="(mots clefs: " suffix="). "/> -->
         <choose>
           <if variable="abstract note annote" match="any">
-              <text macro="annote" font-weight="light" font-style="none" prefix="[Annotation:&#160;" suffix="]. "/>
-              <text macro="note" font-style="none" font-weight="light" prefix="[Note:&#160;" suffix="]. "/>
-              <text macro="abstract" font-style="none" font-weight="light" prefix="[Résumé:&#160;" suffix="]. "/>
+              <text macro="annote" font-weight="light" font-style="normal" prefix="[Annotation:&#160;" suffix="]. "/>
+              <text macro="note" font-style="normal" font-weight="light" prefix="[Note:&#160;" suffix="]. "/>
+              <text macro="abstract" font-style="normal" font-weight="light" prefix="[Résumé:&#160;" suffix="]. "/>
           </if>
         </choose>
         <choose>
