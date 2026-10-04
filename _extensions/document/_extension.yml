@@ -6,7 +6,6 @@ contributes:
   shortcodes:
     - ../base/_shortcodes/toc.lua
     - ../base/_shortcodes/num.lua
-    - ../base/_filters/filtre-pieces.lua
     - ../base/_shortcodes/numref.lua
     - ../base/_shortcodes/minipage.lua
   project:
@@ -28,10 +27,8 @@ contributes:
         - html/css/styles.css
         - html/css/boilerplate.css
       filters:
-        - ../base/_filters/filtre-pieces.lua
         - ../base/_filters/shorthand.lua
         - ../base/_filters/page.lua
-        - ../base/_filters/filtre-pieces.lua
         - _filters/validate.lua
         - path: ../base/_filters/numref.lua
           at: post-quarto
@@ -49,7 +46,6 @@ contributes:
       toc: false
       filters:
         - ../base/_filters/page.lua
-        - ../base/_filters/filtre-pieces.lua
         - _filters/validate.lua
         - path: ../base/_filters/numref.lua
           at: post-quarto
@@ -62,7 +58,6 @@ contributes:
       filters:
         - ../base/_filters/shorthand.lua
         - ../base/_filters/page.lua
-        - ../base/_filters/filtre-pieces.lua
         - _filters/validate.lua
         - path: ../base/_filters/numref.lua
           at: post-quarto
@@ -81,7 +76,6 @@ contributes:
       filters:
         - ../base/_filters/shorthand.lua
         - ../base/_filters/page.lua
-        - ../base/_filters/filtre-pieces.lua
         - _filters/validate.lua
         - path: ../base/_filters/numref.lua
           at: post-quarto
@@ -115,7 +109,6 @@ contributes:
         - ../latex-environment/latex-environment.lua
         - ../base/_filters/shorthand.lua
         - ../base/_filters/page.lua
-        - ../base/_filters/filtre-pieces.lua
         - _filters/validate.lua
         - path: ../base/_filters/numref.lua
           at: post-quarto
