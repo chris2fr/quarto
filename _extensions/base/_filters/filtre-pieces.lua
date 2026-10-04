@@ -1,61 +1,88 @@
 -- filtre-pieces.lua
 --
--- Injecte les numéros de pièces dans les entrées bibliographiques
--- à partir d'un mapping `clé → numéro` défini dans le YAML frontmatter
--- du document, sous le champ `pieces`.
+-- Injecte les numéros de pièces en modifiant le fichier .bib lu par citeproc.
 --
--- Utilisation dans le .qmd :
---
---   ---
---   filters:
---     - filtre-pieces.lua
---   pieces:
---     "2024-06-20-sipperecfr-0002": 10
---     "2023-12-14-sipperec-0001": 70
---     ...
---   ---
---
--- Le filtre s'exécute AVANT citeproc (comportement par défaut de Quarto).
+-- Fonctionnement :
+--   1. Le filtre lit le(s) fichier(s) .bib listé(s) dans `meta.bibliography`.
+--   2. Pour chaque clé présente dans `meta.pieces`, il injecte un champ `number`.
+--   3. Il écrit un fichier .bib temporaire et redirige `meta.bibliography` vers lui.
+--   4. citeproc charge ensuite le fichier temporaire, avec les numéros.
+
+local function lire_fichier(chemin)
+  local f, err = io.open(chemin, 'r')
+  if not f then
+    io.stderr:write("[filtre-pieces] Impossible de lire " .. chemin .. " : " .. tostring(err) .. "\n")
+    return nil
+  end
+  local contenu = f:read('*all')
+  f:close()
+  return contenu
+end
+
+local function ecrire_fichier(chemin, contenu)
+  local f, err = io.open(chemin, 'w')
+  if not f then
+    io.stderr:write("[filtre-pieces] Impossible d'écrire " .. chemin .. " : " .. tostring(err) .. "\n")
+    return false
+  end
+  f:write(contenu)
+  f:close()
+  return true
+end
+
+local function injecter_number(contenu, cle, num)
+  -- Cherche @misc{cle, ... } et injecte number juste après la première ligne.
+  -- Gère @article, @book, @inproceedings, etc.
+  local motif = '(@%w+{' .. cle:gsub('([%^%$%(%)%%%.%[%]%*%+%-%?])', '%%%1') .. ',)'
+  local remplacement = '%1\n\tnumber = {' .. num .. '},'
+  local nouveau, n = contenu:gsub(motif, remplacement, 1)
+  if n == 0 then
+    io.stderr:write("[filtre-pieces] Clé introuvable dans le .bib : " .. cle .. "\n")
+  end
+  return nouveau
+end
 
 function Meta(meta)
-  if not meta.pieces then
-    return meta
-  end
-
-  if not meta.references then
-    io.stderr:write("[filtre-pieces] Aucune référence chargée.\n")
-    return meta
-  end
-
   local pieces = meta.pieces
-  local n_injectes = 0
-  local cles_absentes = {}
+  if not pieces then
+    return meta
+  end
 
-  for i, ref in ipairs(meta.references) do
-    local cle = ref.id
-    if cle then
-      local num = pieces[cle]
-      if num then
-        ref.number = pandoc.MetaString(pandoc.utils.stringify(num))
+  local bibs = meta.bibliography
+  if not bibs then
+    io.stderr:write("[filtre-pieces] Aucun fichier .bib déclaré dans meta.bibliography.\n")
+    return meta
+  end
+
+  -- Normaliser en liste
+  if bibs.t == 'MetaString' then
+    bibs = pandoc.MetaList({ bibs })
+  end
+
+  local n_injectes = 0
+
+  for i, bib in ipairs(bibs) do
+    local chemin = pandoc.utils.stringify(bib)
+    local contenu = lire_fichier(chemin)
+    if contenu then
+      for cle, num in pairs(pieces) do
+        contenu = injecter_number(contenu, cle, pandoc.utils.stringify(num))
         n_injectes = n_injectes + 1
-      else
-        table.insert(cles_absentes, cle)
+      end
+      -- Écrire dans un fichier temporaire
+      local temp = os.tmpname() .. '.bib'
+      if ecrire_fichier(temp, contenu) then
+        bibs[i] = pandoc.MetaString(temp)
       end
     end
   end
 
-  io.stderr:write(string.format(
-    "[filtre-pieces] %d numéro(s) injecté(s).\n", n_injectes
-  ))
+  meta.bibliography = bibs
 
-  if #cles_absentes > 0 then
-    io.stderr:write(string.format(
-      "[filtre-pieces] %d référence(s) sans numéro :\n", #cles_absentes
-    ))
-    for _, c in ipairs(cles_absentes) do
-      io.stderr:write("  - " .. c .. "\n")
-    end
-  end
+  io.stderr:write(string.format(
+    "[filtre-pieces] %d numéro(s) injecté(s) dans %d fichier(s) .bib.\n",
+    n_injectes, #bibs
+  ))
 
   return meta
 end
