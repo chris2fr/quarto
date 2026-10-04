@@ -26,7 +26,6 @@ contributes:
       filters:
         - ../base/_filters/shorthand.lua
         - ../base/_filters/page.lua
-        - ../base/_filters/filtre-pieces.lua
         - _filters/validate.lua
         - path: ../base/_filters/toc.lua
           at: post-quarto
@@ -42,7 +41,6 @@ contributes:
       toc: false
       filters:
         - ../base/_filters/page.lua
-        - ../base/_filters/filtre-pieces.lua
         - _filters/validate.lua
         - typst/_filters/divs.lua
     plain:
@@ -52,7 +50,6 @@ contributes:
       filters:
         - ../base/_filters/shorthand.lua
         - ../base/_filters/page.lua
-        - ../base/_filters/filtre-pieces.lua
         - _filters/validate.lua
         - path: ../base/_filters/floatreftarget.lua
           at: post-quarto
@@ -69,7 +66,6 @@ contributes:
       filters:
         - ../base/_filters/shorthand.lua
         - ../base/_filters/page.lua
-        - ../base/_filters/filtre-pieces.lua
         - _filters/validate.lua
         - ../base/md/_filters/tables.lua
         - md/_filters/divs.lua
@@ -94,7 +90,6 @@ contributes:
       include-after-body: pdf/_partials/body-after.tex
       filters:
         - ../latex-environment/latex-environment.lua
-        - ../base/_filters/filtre-pieces.lua
         - ../base/_filters/shorthand.lua
         - ../base/_filters/page.lua
         - _filters/validate.lua

@@ -25,7 +25,6 @@ contributes:
       filters:
         - ../base/_filters/shorthand.lua
         - ../base/_filters/page.lua
-        - ../base/_filters/filtre-pieces.lua
         - ../document/_filters/validate.lua
         - ../base/html/web/_filters/webhtml.lua
         - path: ../base/_filters/toc.lua
