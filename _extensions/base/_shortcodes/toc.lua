@@ -11,6 +11,11 @@
 -- the filter runs in a separate pass with no access to the shortcode's own
 -- arguments.
 --
+-- Its optional `env` kwarg (e.g. {{< toc env=serre >}}) wraps the TOC in a
+-- user-defined environment, so spacing etc. can be tuned per TOC: in LaTeX
+-- \begin{serre}...\end{serre} (the author defines it with \newenvironment in
+-- their own header), in HTML a Div carrying the class `serre`.
+--
 -- {{< lot >}} lists tables that have a crossref id (`::: {#tbl-xxx
 -- .list-table}` — this extensions' own table mechanism; see ../_filters/toc.lua
 -- for why a plain pandoc table/figure with a `{#tbl-xxx}` caption attribute
@@ -23,6 +28,10 @@ return {
     local level = kwargs.level and pandoc.utils.stringify(kwargs.level)
     if level and level:match('^[1-5]$') then
       attributes.level = level
+    end
+    local env = kwargs.env and pandoc.utils.stringify(kwargs.env)
+    if env and env:match('^[%w_%-]+%*?$') then
+      attributes.env = env
     end
     return pandoc.Div({}, pandoc.Attr('', { 'quarto-lettre-toc' }, attributes))
   end,

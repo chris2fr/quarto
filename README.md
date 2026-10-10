@@ -412,6 +412,7 @@ All three extensions support a `{{< toc >}}` shortcode for HTML and PDF output �
 - **PDF**: renders as a native `\tableofcontents`, so it only lists headings that actually become numbered/unstarred LaTeX sections — `compte-rendu`'s fixed section labels (Participants, Décisions, Actions, ...) use `\section*` internally and are correctly excluded, leaving just the headings you wrote yourself. Goes 4 levels deep (`#` through `####`, i.e. down to `\paragraph`) — `secnumdepth`/`tocdepth` are both set to `4`.
 - **HTML**: renders as a nested list of anchor links to each heading, since these extensions use a fully custom template (`page-layout: custom`) and never emit Quarto's own `$toc$`. Not depth-limited — every heading level is included.
 - Other formats (Typst, docx, odt, Markdown, plain text) are not currently supported — the shortcode is silently dropped, with no visible artifact.
+- **`env`**: `{{< toc level=2 env=serre >}}` wraps that TOC in an arbitrary environment, to tune spacing per TOC. PDF: `\begin{serre}…\end{serre}` — define it yourself, e.g. `\newenvironment{serre}{\setstretch{0.8}}{}` (an undefined environment is a LaTeX error). HTML: the list's `div` gets the class `serre` for your CSS.
 
 > In `lettre`, `::: subject :::` is conventionally written as a level-2 heading (`## {{< meta title >}}`) — it will show up as a table-of-contents entry like any other heading if you add `{{< toc >}}` to a letter.
 

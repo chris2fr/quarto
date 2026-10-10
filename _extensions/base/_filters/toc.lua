@@ -168,12 +168,15 @@ function Pandoc(doc)
       end
       if not div.classes:includes('quarto-lettre-toc') then return nil end
       local level = tonumber(div.attributes.level)
+      local env = div.attributes.env
       if FORMAT:match('latex') then
         -- \QLtoc (quarto-lettre.cls) takes the same depth \tableofcontents
         -- would via tocdepth, but as an explicit argument rather than a
         -- counter to scope — see \QLtoc's own definition for why plain
         -- \tableofcontents can't be reused here for a second/third {{< toc >}}.
-        return pandoc.RawBlock('latex', level and ('\\QLtoc[' .. level .. ']') or '\\QLtoc')
+        local toc = level and ('\\QLtoc[' .. level .. ']') or '\\QLtoc'
+        if env then toc = '\\begin{' .. env .. '}' .. toc .. '\\end{' .. env .. '}' end
+        return pandoc.RawBlock('latex', toc)
       elseif FORMAT:match('html') then
         local capped = headers
         if level then
@@ -184,7 +187,9 @@ function Pandoc(doc)
         end
         local tree = nest_headers(capped)
         if #tree == 0 then return {} end
-        return pandoc.Div({ pandoc.BulletList(render_toc_items(tree)) }, pandoc.Attr('', { 'toc' }))
+        local classes = { 'toc' }
+        if env then table.insert(classes, env) end
+        return pandoc.Div({ pandoc.BulletList(render_toc_items(tree)) }, pandoc.Attr('', classes))
       end
       return {}
     end
