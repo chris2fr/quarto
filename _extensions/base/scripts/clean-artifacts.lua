@@ -20,10 +20,25 @@ local function is_dir(p)
   return (pcall(system.list_directory, p))
 end
 
+-- Lua patterns (not globs): `%` escapes, `.*` is the wildcard
+local keep = { "^custom%.cls$", "^_.*%.tex$", "^_.*%.cls$", "^_.*%.csl$"   }
+
+-- Files untouched for this long are not render leftovers: keep them.
+-- `times` yields a UTC ISO-8601 string, which sorts chronologically.
+local MAX_AGE = 5 * 60
+
+local function is_recent(p)
+  local ok, mtime = pcall(system.times, p)
+  if not ok then return true end
+  return tostring(mtime) >= os.date("!%Y-%m-%dT%H:%M:%S", os.time() - MAX_AGE)
+end
+
 local function is_artifact(name)
-  return name ~= "custom.cls"
-    and (name:match("%.tex$") or name:match("^quarto%-.*%.cls$")
-      or name:match("%.typ$") or name:match("%.ptc$")) ~= nil
+  for _, pat in ipairs(keep) do
+    if name:match(pat) then return false end
+  end
+  return (name:match("%.tex$") or name:match("^quarto%-.*%.cls$")
+    or name:match("%.typ$") or name:match("%.ptc$")) ~= nil
 end
 
 -- Intermediate files and *_files support directories, at any depth
@@ -40,7 +55,7 @@ local function sweep(dir, top)
       else
         sweep(p, false)
       end
-    elseif is_artifact(name) then
+    elseif is_artifact(name) and is_recent(p) then
       os.remove(p)
     end
   end
