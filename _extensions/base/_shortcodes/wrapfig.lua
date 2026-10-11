@@ -7,6 +7,12 @@
 --   src      image path (required)
 --   caption  caption text (default: none, and no \caption is emitted)
 --   width    wrapfigure width as a percentage of \textwidth (default 35)
+--   height   PDF only: max image height, any LaTeX length (`7cm`,
+--            `0.3\\textheight`); the image is scaled down to fit, aspect
+--            ratio kept. For tall images (phone screenshots) that wrapfig
+--            otherwise reserves room for and silently never draws.
+--   lines    PDF only: wrapfig's [N] — number of text lines the figure
+--            spans, when the default guess from the box height is off.
 --   align    l or r (also i/o for inner/outer, PDF only; HTML maps i->l,
 --            o->r) (default l)
 --
@@ -41,12 +47,17 @@ return {
     local width = tonumber(kwarg(kwargs, 'width', '35')) or 35
     local align = kwarg(kwargs, 'align', 'l')
     local inner = width - 2
+    local height = kwarg(kwargs, 'height', '')
+    local lines = kwarg(kwargs, 'lines', '')
 
     if quarto.doc.is_format('latex') then
       quarto.doc.use_latex_package('wrapfig')
-      local tex = '\\begin{wrapfigure}{' .. align .. '}{' .. fmt(width / 100) .. '\\textwidth}\n'
+      local opts = 'width=' .. fmt(inner / 100) .. '\\textwidth'
+      if height ~= '' then opts = opts .. ',height=' .. height .. ',keepaspectratio' end
+      local lopt = lines ~= '' and ('[' .. lines .. ']') or ''
+      local tex = '\\begin{wrapfigure}' .. lopt .. '{' .. align .. '}{' .. fmt(width / 100) .. '\\textwidth}\n'
         .. '\\centering\n'
-        .. '\\includegraphics[width=' .. fmt(inner / 100) .. '\\textwidth]{' .. src .. '}\n'
+        .. '\\includegraphics[' .. opts .. ']{' .. src .. '}\n'
       if caption ~= '' then
         tex = tex .. '\\caption{' .. latex_escape(caption) .. '}\n'
       end
