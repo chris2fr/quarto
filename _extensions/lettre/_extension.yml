@@ -13,6 +13,7 @@ contributes:
       scaffold: scaffold/create.lua
   formats:
     common:
+      lang: fr
       variables:
         labels:
           subject: "Objet"

@@ -11,6 +11,7 @@ contributes:
       scaffold: scaffold/create.lua
   formats:
     common:
+      lang: fr
       date-format: long
       date: today
     html:
