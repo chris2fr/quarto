@@ -55,7 +55,9 @@ return {
       local opts = 'width=' .. fmt(inner / 100) .. '\\textwidth'
       if height ~= '' then opts = opts .. ',height=' .. height .. ',keepaspectratio' end
       local lopt = lines ~= '' and ('[' .. lines .. ']') or ''
-      local tex = '\\begin{wrapfigure}' .. lopt .. '{' .. align .. '}{' .. fmt(width / 100) .. '\\textwidth}\n'
+      -- \intextsep (default 12pt plus 2pt minus 2pt) is what makes wrapfig
+      -- reserve a line or two more than the figure needs.
+      local tex = '\\setlength{\\intextsep}{0pt}\n\\begin{wrapfigure}' .. lopt .. '{' .. align .. '}{' .. fmt(width / 100) .. '\\textwidth}\n'
         .. '\\centering\\setlength{\\parskip}{0pt}\\setlength{\\abovecaptionskip}{3pt}'
         .. '\\setlength{\\belowcaptionskip}{0pt}\n'
         .. '\\includegraphics[' .. opts .. ']{' .. src .. '}\n'
