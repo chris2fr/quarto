@@ -67,9 +67,9 @@ return {
       return pandoc.RawBlock('html', html .. '</figure>')
     end
 
+    -- A lone image in a Para becomes a captioned figure (implicit figure);
+    -- returning a Figure block makes quarto's shortcode handling choke.
     local caption_inlines = caption ~= '' and {pandoc.Str(caption)} or {}
-    local img = pandoc.Image(caption_inlines, src)
-    if caption == '' then return pandoc.Para({img}) end
-    return pandoc.Figure(pandoc.Plain({img}), {pandoc.Plain(caption_inlines)})
+    return pandoc.Para({pandoc.Image(caption_inlines, src)})
   end,
 }
