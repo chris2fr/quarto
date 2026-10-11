@@ -9,6 +9,7 @@ contributes:
     - ../base/_filters/filtre-pieces.lua
   shortcodes:
     - ../base/_shortcodes/toc.lua
+    - ../base/_shortcodes/wrapfig.lua
     - ../base/_shortcodes/num.lua
     - ../base/_shortcodes/numref.lua
     - ../base/_shortcodes/minipage.lua

@@ -350,6 +350,17 @@ How it works:
 
 Counters are one global sequence per document. There is no per-section reset and no separate series, so use one `num` sequence per kind of item.
 
+### Text-wrapped figure
+
+`{{< wrapfig src="./images/x.jpg" caption="Légende" width=35 align=l >}}` places a figure the following paragraph flows around. Available in `lettre`, `document` and `compte-rendu`. Put it on its own line right before the paragraph.
+
+- `src` — image path (required).
+- `caption` — caption text; default empty, in which case no caption is emitted.
+- `width` — box width in % of the text width; default `35`. The image is `width - 2` %.
+- `align` — `l` (default) or `r` (`i`/`o` for inner/outer in PDF).
+
+PDF uses `wrapfigure`, HTML a floated `<figure>`; other formats get a plain figure without wrapping.
+
 ### Side-by-side columns (PDF only)
 
 `document` supports `{{< mp-begin >}}` / `{{< mp-next >}}` / `{{< mp-end >}}` shortcodes for laying out a row of columns side by side — built on the third-party `latex-environment` extension. `{{< mp-begin >}}` opens the first column, `{{< mp-next >}}` closes the current one, inserts a gap, and opens the next one, and `{{< mp-end >}}` closes the last one:
