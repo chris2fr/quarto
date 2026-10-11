@@ -7,10 +7,13 @@
 --   src      image path (required)
 --   caption  caption text (default: none, and no \caption is emitted)
 --   width    wrapfigure width as a percentage of \textwidth (default 35)
---   height   PDF only: max image height, any LaTeX length (`7cm`,
---            `0.3\\textheight`); the image is scaled down to fit, aspect
---            ratio kept. For tall images (phone screenshots) that wrapfig
---            otherwise reserves room for and silently never draws.
+--   height   PDF only: max image height, any LaTeX length (`7cm`); the
+--            image is scaled down to fit, aspect ratio kept. Default
+--            0.3\\textheight, so a tall phone screenshot can't become a
+--            float wrapfig reserves room for and silently never draws.
+--            `none` removes the cap.
+--   raise    PDF only: shift the figure up by this length (`3pt`) to line
+--            it up with the first line of text.
 --   lines    PDF only: wrapfig's [N] — number of text lines the figure
 --            spans, when the default guess from the box height is off.
 --   align    l or r (also i/o for inner/outer, PDF only; HTML maps i->l,
@@ -47,19 +50,21 @@ return {
     local width = tonumber(kwarg(kwargs, 'width', '35')) or 35
     local align = kwarg(kwargs, 'align', 'l')
     local inner = width - 2
-    local height = kwarg(kwargs, 'height', '')
+    local height = kwarg(kwargs, 'height', '0.3\\textheight')
+    local raise = kwarg(kwargs, 'raise', '')
     local lines = kwarg(kwargs, 'lines', '')
 
     if quarto.doc.is_format('latex') then
       quarto.doc.use_latex_package('wrapfig')
       local opts = 'width=' .. fmt(inner / 100) .. '\\textwidth'
-      if height ~= '' then opts = opts .. ',height=' .. height .. ',keepaspectratio' end
+      if height ~= 'none' then opts = opts .. ',height=' .. height .. ',keepaspectratio' end
       local lopt = lines ~= '' and ('[' .. lines .. ']') or ''
       -- \intextsep (default 12pt plus 2pt minus 2pt) is what makes wrapfig
       -- reserve a line or two more than the figure needs.
       local tex = '\\setlength{\\intextsep}{0pt}\n\\begin{wrapfigure}' .. lopt .. '{' .. align .. '}{' .. fmt(width / 100) .. '\\textwidth}\n'
         .. '\\centering\\setlength{\\parskip}{0pt}\\setlength{\\abovecaptionskip}{3pt}'
         .. '\\setlength{\\belowcaptionskip}{0pt}\n'
+        .. (raise ~= '' and ('\\vspace{-' .. raise .. '}\n') or '')
         .. '\\includegraphics[' .. opts .. ']{' .. src .. '}\n'
       if caption ~= '' then
         tex = tex .. '\\caption{' .. latex_escape(caption) .. '}\n'

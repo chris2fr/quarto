@@ -357,6 +357,9 @@ Counters are one global sequence per document. There is no per-section reset and
 - `src` — image path (required).
 - `caption` — caption text; default empty, in which case no caption is emitted.
 - `width` — box width in % of the text width; default `35`. The image is `width - 2` %.
+- `height` — PDF only: max image height (`7cm`), aspect ratio kept; default `0.3\textheight`, so tall screenshots don't vanish. `none` removes the cap.
+- `lines` — PDF only: number of text lines the figure spans (wrapfig's `[N]`), when the automatic count is off.
+- `raise` — PDF only: shift the figure up (`3pt`) to align with the first line of text.
 - `align` — `l` (default) or `r` (`i`/`o` for inner/outer in PDF).
 
 PDF uses `wrapfigure`, HTML a floated `<figure>`; other formats get a plain figure without wrapping.
