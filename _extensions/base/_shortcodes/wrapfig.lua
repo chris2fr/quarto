@@ -9,7 +9,7 @@
 --   width    wrapfigure width as a percentage of \textwidth (default 35)
 --   height   PDF only: max image height, any LaTeX length (`7cm`); the
 --            image is scaled down to fit, aspect ratio kept. Default
---            0.3\\textheight, so a tall phone screenshot can't become a
+--            0.45\textheight, so a tall phone screenshot can't become a
 --            float wrapfig reserves room for and silently never draws.
 --            `none` removes the cap.
 --   raise    PDF only: shift the figure up by this length (`3pt`) to line
@@ -50,7 +50,7 @@ return {
     local width = tonumber(kwarg(kwargs, 'width', '35')) or 35
     local align = kwarg(kwargs, 'align', 'l')
     local inner = width - 2
-    local height = kwarg(kwargs, 'height', '0.3\\textheight')
+    local height = kwarg(kwargs, 'height', '0.45\\textheight')
     local raise = kwarg(kwargs, 'raise', '')
     local lines = kwarg(kwargs, 'lines', '')
 
