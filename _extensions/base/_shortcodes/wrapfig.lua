@@ -56,7 +56,8 @@ return {
       if height ~= '' then opts = opts .. ',height=' .. height .. ',keepaspectratio' end
       local lopt = lines ~= '' and ('[' .. lines .. ']') or ''
       local tex = '\\begin{wrapfigure}' .. lopt .. '{' .. align .. '}{' .. fmt(width / 100) .. '\\textwidth}\n'
-        .. '\\centering\n'
+        .. '\\centering\\setlength{\\parskip}{0pt}\\setlength{\\abovecaptionskip}{3pt}'
+        .. '\\setlength{\\belowcaptionskip}{0pt}\n'
         .. '\\includegraphics[' .. opts .. ']{' .. src .. '}\n'
       if caption ~= '' then
         tex = tex .. '\\caption{' .. latex_escape(caption) .. '}\n'
