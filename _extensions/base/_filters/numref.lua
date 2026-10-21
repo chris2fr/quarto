@@ -1,15 +1,21 @@
 -- Resolves {{< numref id >}} links to the number of {{< num id=id >}}.
-local numbers = {}
-
 function Pandoc(doc)
-  doc:walk({
+  local numbers = {}
+  -- Number every {{< num >}} in document order, starting at 1.
+  local count = 0
+  doc.blocks = doc.blocks:walk({
     Span = function(span)
-      if span.classes:includes('num') and span.identifier ~= '' then
-        numbers[span.identifier] = pandoc.utils.stringify(span.content)
+      if not span.classes:includes('num') then return nil end
+      count = count + 1
+      local n = tostring(count)
+      if span.identifier ~= '' and numbers[span.identifier] == nil then
+        numbers[span.identifier] = n
       end
+      span.content = { pandoc.Str(n) }
+      return span
     end,
   })
-  return doc:walk({
+  doc.blocks = doc.blocks:walk({
     Link = function(link)
       if not link.classes:includes('numref') then return nil end
       local id = link.target:gsub('^#', '')
@@ -22,4 +28,5 @@ function Pandoc(doc)
       return link
     end,
   })
+  return doc
 end
