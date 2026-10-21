@@ -90,8 +90,11 @@ $endif$
 
 \thispagestyle{firstpage}
 
-\vspace*{$if(margin-top-first)$$margin-top-first$$elseif(margin-top)$$margin-top$$else$45mm$endif$}\par
-
+$if(margin-top-first)$
+\vspace*{$margin-top-first$}\par
+$elseif(margin-top)$
+\vspace*{$margin-top$}\par
+$endif$
 % From page 2 onward, switch to the body-margin geometry (see the comment
 % above the first \geometry{} call): top is margin-top here, not
 % margin-header — there's no header past page 1, so nothing for margin-top
