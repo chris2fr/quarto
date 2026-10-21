@@ -76,7 +76,9 @@ local function keeps_tex(source)
 
   local formats = doc.meta.format
   for format_name, options in pairs(formats) do
-    if format_name == "pdf" or format_name:match("%-pdf$") then
+    -- `format: pdf` (a string) makes pairs() yield integer keys: skip those
+    if type(format_name) == "string"
+        and (format_name == "pdf" or format_name:match("%-pdf$")) then
       if type(options) == "table" and options["keep-tex"] ~= nil then
         return yaml_value(options["keep-tex"])
       end
@@ -105,9 +107,8 @@ local function cleanup_for_output(output_file)
   local dirs = { output_dir }
   if source then
     local source_dir = path.directory(source)
-    if source_dir ~= "" and source_dir ~= output_dir then
-      dirs[#dirs + 1] = source_dir
-    end
+    if source_dir == "" then source_dir = "." end
+    if source_dir ~= output_dir then dirs[#dirs + 1] = source_dir end
   end
 
   for _, dir in ipairs(dirs) do
@@ -116,6 +117,7 @@ local function cleanup_for_output(output_file)
       for _, name in ipairs(names) do
         local stem = name:gsub("%.[^./\\]+$", "")
         local belongs_to_document = stem == document_base
+          or name == document_base .. "_files"
           or name:match(output_pattern .. "%-") ~= nil
         local p = path.join({ dir, name })
 
