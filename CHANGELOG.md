@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.2.12
+
+### Changed
+
+- Bumped the lockstep extensions (`base`, `document`, `lettre`, and
+  `compte-rendu`) from `0.2.11` to `0.2.12`.
+
 ## v0.2.11
 
 ### Breaking changes — existing documents and projects need updating
