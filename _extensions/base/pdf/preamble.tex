@@ -173,6 +173,8 @@
 \MakeOuterQuote{"}
 
 % ── Configurable header / footer (set these before \begin{document}) ──────────
+% Internal command names and \@empty require @ to have letter catcode here.
+\makeatletter
 \newcommand{\@QLfooter}{}
 \newcommand{\@QLfirstpageheader}{}
 \newcommand{\QLsetfooter}[1]{\renewcommand{\@QLfooter}{#1}}
@@ -211,6 +213,7 @@
   \fancyhead[C]{\@QLfirstpageheader}
   \fancyfoot[C]{\footnotesize\@QLfooter}
 }
+\makeatother
 
 % ── Pandoc image bounding ─────────────────────────────────────────────────────
 \makeatletter
