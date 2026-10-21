@@ -114,6 +114,12 @@
   {0pt}
   {2cm plus 1cm minus 0.5cm}
   {1cm}
+% Keep each level-1 heading with a little of its following content. Raising
+% this penalty makes a page break before the heading more likely when little
+% room remains below it; negative values allow more flexibility.
+\makeatletter
+\@secpenalty=300
+\makeatother
 
 \titleformat{\subsection}     {\normalfont\QLheadingfont\large\selectfont}{}{0pt}{} % [\vspace{0.5em}]
 \titlespacing*{\subsection}   {0pt}{1cm plus 1cm}     {0.5cm}
