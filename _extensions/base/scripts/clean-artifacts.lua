@@ -76,7 +76,7 @@ local function keeps_tex(source)
 
   local formats = doc.meta.format
   for format_name, options in pairs(formats) do
-    -- `format: pdf` (a string) makes pairs() yield integer keys: skip those
+    -- `format: pdf` (a string) yields integer keys from `pairs`; skip those.
     if type(format_name) == "string"
         and (format_name == "pdf" or format_name:match("%-pdf$")) then
       if type(options) == "table" and options["keep-tex"] ~= nil then
