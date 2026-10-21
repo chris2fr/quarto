@@ -36,8 +36,8 @@ local function read_file(p)
 end
 
 local function source_for_output(output_file)
-  -- Quarto reports outputs relative to the project root; for a source such as
-  -- letters/notice.qmd, the output's stem maps back to letters/notice.qmd.
+  -- Quarto reports files it rendered relative to the project root. PDF output
+  -- and the generated TeX share the source document's basename.
   local stem = output_file:gsub("%.[^./\\]+$", "")
   for _, extension in ipairs({ ".qmd", ".md", ".Rmd", ".rmd" }) do
     local source = stem .. extension
@@ -75,32 +75,43 @@ end
 
 local function cleanup_for_output(output_file)
   local source = source_for_output(output_file)
-  if not source then return end
-
-  local source_base = path.filename(source):gsub("%.[^./\\]+$", "")
-  local output_dir = path.directory(source)
+  local document_base = path.filename(output_file):gsub("%.[^./\\]+$", "")
+  local output_dir = path.directory(output_file)
   if output_dir == "" then output_dir = "." end
-  local source_pattern = "^" .. escape_pattern(source_base)
-  local keep_tex = keeps_tex(source)
+  local keep_tex = source and keeps_tex(source) or false
+  local output_pattern = "^" .. escape_pattern(document_base)
 
-  for _, name in ipairs(system.list_directory(output_dir)) do
-    local stem = name:gsub("%.[^./\\]+$", "")
-    local belongs_to_document = stem == source_base
-      or name:match(source_pattern .. "%-") ~= nil
-    local p = path.join({ output_dir, name })
+  -- Generated .tex/.ptc files and support directories live in Quarto's
+  -- render working directory. Quarto reports the output file's location;
+  -- check that directory first, then the source directory for execute-dir:file.
+  local dirs = { output_dir }
+  if source then
+    local source_dir = path.directory(source)
+    if source_dir ~= "" and source_dir ~= output_dir then
+      dirs[#dirs + 1] = source_dir
+    end
+  end
 
-    if belongs_to_document then
-      local ok = pcall(system.list_directory, p)
-      if ok then
-        if name:match("_files$") then system.remove_directory(p, true) end
-      elseif is_artifact(name) and is_recent(p) then
-        if not (keep_tex and name:match("%.tex$")) then os.remove(p) end
+  for _, dir in ipairs(dirs) do
+    for _, name in ipairs(system.list_directory(dir)) do
+      local stem = name:gsub("%.[^./\\]+$", "")
+      local belongs_to_document = stem == document_base
+        or name:match(output_pattern .. "%-") ~= nil
+      local p = path.join({ dir, name })
+
+      if belongs_to_document then
+        local ok = pcall(system.list_directory, p)
+        if ok then
+          if name:match("_files$") then system.remove_directory(p, true) end
+        elseif is_artifact(name) and is_recent(p) then
+          if not (keep_tex and name:match("%.tex$")) then os.remove(p) end
+        end
       end
     end
   end
 end
 
 local output_files = os.getenv("QUARTO_PROJECT_OUTPUT_FILES") or ""
-for output_file in output_files:gmatch("[^\r\n]+") do
+for output_file in output_files:gmatch("[^\\r\\n]+") do
   cleanup_for_output(output_file)
 end
